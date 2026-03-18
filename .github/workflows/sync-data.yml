@@ -1,0 +1,87 @@
+# Gigante Intelligence Dashboard — Auto-Sync Data Pipeline
+# Pulls from Toast, SevenRooms, and Tripleseat APIs
+# Runs every 15 min during operating hours (3PM-2AM ET), hourly otherwise
+# Can also be triggered manually from GitHub Actions tab
+
+name: Sync Dashboard Data
+
+on:
+  schedule:
+    # Every 15 min during operating hours (3PM-2AM ET = 20:00-07:00 UTC)
+    - cron: '*/15 20-23 * * *'   # 3PM-7PM ET (every 15 min)
+    - cron: '*/15 0-6 * * *'     # 7PM-2AM ET (every 15 min)
+    # Hourly during off-hours (2AM-3PM ET = 07:00-20:00 UTC)
+    - cron: '0 7-19 * * *'       # 2AM-3PM ET (hourly)
+
+  # Manual trigger from GitHub Actions tab
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (no API calls)'
+        required: false
+        default: 'false'
+        type: boolean
+
+# Only allow one sync at a time
+concurrency:
+  group: "data-sync"
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run data sync pipeline
+        env:
+          TOAST_CLIENT_ID: ${{ secrets.TOAST_CLIENT_ID }}
+          TOAST_CLIENT_SECRET: ${{ secrets.TOAST_CLIENT_SECRET }}
+          TOAST_RESTAURANT_GUID: ${{ secrets.TOAST_RESTAURANT_GUID }}
+          SEVENROOMS_VENUE_ID: ${{ secrets.SEVENROOMS_VENUE_ID }}
+          SEVENROOMS_CLIENT_SECRET: ${{ secrets.SEVENROOMS_CLIENT_SECRET }}
+          TRIPLESEAT_API_TOKEN: ${{ secrets.TRIPLESEAT_API_TOKEN }}
+          TRIPLESEAT_CONSUMER_KEY: ${{ secrets.TRIPLESEAT_CONSUMER_KEY }}
+          TRIPLESEAT_CONSUMER_SECRET: ${{ secrets.TRIPLESEAT_CONSUMER_SECRET }}
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            python sync_dashboard_data.py --dry-run
+          else
+            python sync_dashboard_data.py --output dashboard_data.json
+          fi
+
+      - name: Rebuild dashboard with fresh data
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          python rebuild_dashboard.py
+
+      - name: Commit and push updated dashboard
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          git config user.name "Gigante Bot"
+          git config user.email "bot@gigantehospitality.com"
+
+          # Check if there are actual changes
+          if git diff --quiet index.html dashboard_data.json 2>/dev/null; then
+            echo "No data changes detected, skipping commit"
+          else
+            git add index.html dashboard_data.json
+            git commit -m "Auto-sync: $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git push
+            echo "Dashboard updated and pushed!"
+          fi

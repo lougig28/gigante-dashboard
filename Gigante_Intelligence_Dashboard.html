@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+<title>Gigante Intelligence Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4"></script>
+<style>
+:root{--bg:#0A0A0A;--card:#141414;--card2:#1a1a1a;--g:#D4A843;--g2:#c9a84c;--g3:#b8943f;--text:#e8e8e8;--text2:#999;--text3:#666;--pos:#22c55e;--neg:#ef4444;--neu:#f59e0b;--blue:#3b82f6;--purple:#8b5cf6;--cyan:#06b6d4;--r:10px;--gap:12px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;overflow-x:hidden;-webkit-tap-highlight-color:transparent;padding-bottom:env(safe-area-inset-bottom)}
+.dash{max-width:1440px;margin:0 auto;padding:12px}
+.hdr{background:linear-gradient(135deg,#1a1a1a 0%,#0f0f0f 100%);border:1px solid #222;border-radius:var(--r);padding:16px 24px;margin-bottom:var(--gap);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.hdr h1{font-size:22px;font-weight:700;color:var(--g);letter-spacing:0.5px}
+.hdr .sub{font-size:12px;color:var(--text2);margin-top:2px}
+.time-toggle{display:flex;gap:4px;background:#0a0a0a;border-radius:6px;padding:3px}
+.time-toggle button{padding:6px 16px;border:none;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;background:transparent;color:var(--text2)}
+.time-toggle button.active{background:var(--g);color:#000}
+.time-toggle button:hover:not(.active){background:#222;color:var(--text)}
+.tabs{display:flex;gap:4px;margin-bottom:var(--gap);background:var(--card);border-radius:var(--r);padding:4px;border:1px solid #222}
+.tabs button{flex:1;padding:10px 8px;border:none;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;background:transparent;color:var(--text2)}
+.tabs button.active{background:var(--g);color:#000}
+.tabs button:hover:not(.active){background:#222;color:var(--text)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:var(--gap);margin-bottom:var(--gap)}
+.k{background:var(--card);border:1px solid #222;border-radius:var(--r);padding:14px 16px;transition:border-color .2s}
+.k:hover{border-color:var(--g3)}
+.k .lb{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px}
+.k .vl{font-size:24px;font-weight:700;color:var(--text);line-height:1.2}
+.k .sm{font-size:11px;color:var(--text3);margin-top:3px}
+.k .sm.pos{color:var(--pos)}.k .sm.neg{color:var(--neg)}
+.chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:var(--gap);margin-bottom:var(--gap)}
+.chart-box{background:var(--card);border:1px solid #222;border-radius:var(--r);padding:16px 18px}
+.chart-box h3{font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.chart-box h3 span{font-size:11px;color:var(--text2);font-weight:400}
+.chart-box canvas{max-height:260px}
+.chart-full{grid-column:1/-1}
+.tbl-wrap{background:var(--card);border:1px solid #222;border-radius:var(--r);padding:16px 18px;margin-bottom:var(--gap);overflow-x:auto}
+.tbl-wrap h3{font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:8px 10px;border-bottom:1px solid #333;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;font-size:10px;cursor:pointer;user-select:none;white-space:nowrap}
+th:hover{color:var(--g)}
+td{padding:8px 10px;border-bottom:1px solid #1a1a1a;color:var(--text)}
+tr:hover td{background:#1a1a1a}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
+.badge.high{background:rgba(239,68,68,.15);color:var(--neg)}
+.badge.med{background:rgba(245,158,11,.15);color:var(--neu)}
+.badge.low{background:rgba(34,197,94,.15);color:var(--pos)}
+.strat-card{background:var(--card);border:1px solid #222;border-radius:var(--r);padding:18px 20px;margin-bottom:10px;transition:border-color .2s}
+.strat-card:hover{border-color:var(--g3)}
+.strat-card .strat-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:12px}
+.strat-card .strat-num{font-size:28px;font-weight:800;color:var(--g);opacity:.5;line-height:1}
+.strat-card .strat-title{font-size:14px;font-weight:700;color:var(--text);flex:1}
+.strat-card .strat-cat{font-size:10px;color:var(--g);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.strat-card .strat-detail{font-size:12px;color:var(--text2);margin-bottom:8px;line-height:1.5}
+.strat-card .strat-action{font-size:12px;color:var(--text);background:#1a1a1a;padding:10px 12px;border-radius:6px;border-left:3px solid var(--g)}
+.sec-hdr{font-size:15px;font-weight:700;color:var(--g);margin-bottom:var(--gap);padding-bottom:6px;border-bottom:1px solid #222;display:flex;align-items:center;gap:8px}
+.sec-hdr .ico{font-size:18px}
+.disclaimer{background:#1a1a0a;border:1px solid #333300;border-radius:6px;padding:8px 12px;font-size:11px;color:#999966;margin-bottom:var(--gap)}
+
+/* INSIGHT BOXES */
+.insight-row{display:flex;flex-direction:column;gap:8px;margin-bottom:var(--gap)}
+.insight{padding:12px 16px;border-radius:8px;font-size:12px;line-height:1.6;display:flex;align-items:flex-start;gap:10px}
+.insight .ico{font-size:16px;flex-shrink:0;margin-top:1px}
+.insight.pos{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);color:#a7f3d0}
+.insight.neg{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#fca5a5}
+.insight.warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:#fde68a}
+.insight.info{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);color:#93c5fd}
+
+/* AI Chat */
+.chat-toggle{position:fixed;bottom:20px;right:20px;width:48px;height:48px;border-radius:50%;background:var(--g);color:#000;border:none;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(212,168,67,.3);z-index:1000;transition:transform .2s}
+.chat-toggle:hover{transform:scale(1.1)}
+.chat-panel{position:fixed;bottom:80px;right:20px;width:380px;max-height:520px;background:var(--card);border:1px solid #333;border-radius:var(--r);box-shadow:0 8px 32px rgba(0,0,0,.5);z-index:999;display:none;flex-direction:column;overflow:hidden}
+.chat-panel.open{display:flex}
+.chat-header{padding:12px 16px;background:#1a1a1a;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center}
+.chat-header h4{font-size:13px;color:var(--g);font-weight:700}
+.chat-header button{background:none;border:none;color:var(--text2);cursor:pointer;font-size:16px}
+.chat-messages{flex:1;overflow-y:auto;padding:12px 16px;max-height:360px}
+.chat-msg{margin-bottom:10px;font-size:12px;line-height:1.5}
+.chat-msg.system{color:var(--text2);background:#1a1a1a;padding:8px 10px;border-radius:6px}
+.chat-msg.user{color:var(--text);text-align:right}
+.chat-msg.user span{background:var(--g);color:#000;padding:6px 10px;border-radius:8px 8px 2px 8px;display:inline-block;text-align:left}
+.chat-msg.ai span{background:#1a1a1a;padding:8px 10px;border-radius:8px 8px 8px 2px;display:inline-block;border:1px solid #222}
+.chat-input{display:flex;gap:6px;padding:10px 12px;border-top:1px solid #333;background:#0f0f0f}
+.chat-input input{flex:1;padding:8px 12px;background:#1a1a1a;border:1px solid #333;border-radius:6px;color:var(--text);font-size:12px;outline:none}
+.chat-input input:focus{border-color:var(--g)}
+.chat-input button{padding:8px 14px;background:var(--g);color:#000;border:none;border-radius:6px;font-weight:600;cursor:pointer;font-size:12px}
+
+/* MOBILE RESPONSIVE */
+@media(max-width:1024px){
+  .chart-grid{grid-template-columns:1fr}
+  .kpi-row{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+}
+@media(max-width:768px){
+  .dash{padding:8px}
+  .hdr{flex-direction:column;align-items:stretch;padding:12px 14px;gap:10px}
+  .hdr h1{font-size:18px;text-align:center}
+  .hdr .sub{font-size:10px;text-align:center}
+  .time-toggle{justify-content:center}
+  .time-toggle button{padding:8px 14px;font-size:11px}
+  .tabs{gap:2px;padding:3px;overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
+  .tabs button{flex:0 0 auto;padding:10px 12px;font-size:11px;white-space:nowrap;min-width:60px}
+  .kpi-row{grid-template-columns:repeat(2,1fr);gap:8px}
+  .k{padding:10px 12px}
+  .k .vl{font-size:20px}
+  .k .lb{font-size:9px}
+  .k .sm{font-size:10px}
+  .chart-grid{grid-template-columns:1fr;gap:8px}
+  .chart-box{padding:12px 14px}
+  .chart-box h3{font-size:12px}
+  .chart-box canvas{max-height:200px}
+  .tbl-wrap{padding:10px 12px;-webkit-overflow-scrolling:touch}
+  .tbl-wrap h3{font-size:12px}
+  table{font-size:11px;min-width:600px}
+  th{padding:6px 8px;font-size:9px}
+  td{padding:6px 8px}
+  .insight{padding:10px 12px;font-size:11px}
+  .insight .ico{font-size:14px}
+  .sec-hdr{font-size:13px}
+  .strat-card{padding:14px 16px}
+  .strat-card .strat-head{flex-wrap:wrap;gap:8px}
+  .strat-card .strat-num{font-size:22px}
+  .strat-card .strat-title{font-size:13px}
+  .strat-card .strat-detail{font-size:11px}
+  .strat-card .strat-action{font-size:11px;padding:8px 10px}
+  .badge{font-size:9px;padding:2px 6px}
+  .disclaimer{font-size:10px;padding:6px 10px}
+  /* Chat panel fullscreen on mobile */
+  .chat-panel{width:calc(100vw - 16px);right:8px;bottom:72px;max-height:70vh}
+  .chat-messages{max-height:50vh}
+  .chat-toggle{bottom:14px;right:14px;width:44px;height:44px;font-size:18px}
+  .chat-input input{font-size:14px;padding:10px 12px}
+  .chat-input button{padding:10px 14px}
+}
+@media(max-width:380px){
+  .kpi-row{grid-template-columns:1fr 1fr;gap:6px}
+  .k .vl{font-size:18px}
+  .tabs button{padding:8px 8px;font-size:10px;min-width:50px}
+  .time-toggle button{padding:6px 10px;font-size:10px}
+  .hdr h1{font-size:16px}
+  table{min-width:500px}
+}
+@media print{body{background:#fff;color:#000}.k,.chart-box,.tbl-wrap{border-color:#ddd;background:#fff}.k .vl{color:#000}.chat-toggle,.chat-panel{display:none!important}}
+</style>
+</head>
+<body>
+<div class="dash">
+<div class="hdr">
+  <div><h1>GIGANTE INTELLIGENCE</h1><div class="sub">12 data sources &bull; Updated Mar 17, 2026 &bull; SevenRooms + Toast + Tripleseat + Instagram + Mailchimp + GBP</div></div>
+  <div class="time-toggle" id="timeToggle">
+    <button onclick="setWindow('30d')" class="active">Last 30 Days</button>
+    <button onclick="setWindow('ytd')">YTD 2026</button>
+    <button onclick="setWindow('all')">All Time</button>
+  </div>
+</div>
+<div class="tabs" id="mainTabs">
+  <button class="active" onclick="showTab('pulse')">&#9889; Pulse</button>
+  <button onclick="showTab('guests')">&#128101; Guests</button>
+  <button onclick="showTab('marketing')">&#128226; Marketing</button>
+  <button onclick="showTab('operations')">&#9881; Operations</button>
+  <button onclick="showTab('strategy')">&#127919; Strategy</button>
+</div>
+
+<div class="tab-panel active" id="tab-pulse">
+  <div class="kpi-row" id="pulse-kpis"></div>
+  <div class="insight-row" id="pulse-insights"></div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Rating Trend <span>Monthly Average</span></h3><canvas id="c-rating-trend"></canvas></div>
+    <div class="chart-box"><h3>Covers by Day of Week</h3><canvas id="c-dow-covers"></canvas></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Review Volume <span>Daily</span></h3><canvas id="c-review-spark"></canvas></div>
+    <div class="chart-box"><h3>Cover Volume <span>Daily</span></h3><canvas id="c-cover-spark"></canvas></div>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab-guests">
+  <div class="kpi-row" id="guests-kpis"></div>
+  <div class="insight-row" id="guests-insights"></div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Visit Frequency Distribution</h3><canvas id="c-visit-dist"></canvas></div>
+    <div class="chart-box"><h3>Guest Recency <span>Days Since Last Visit</span></h3><canvas id="c-recency"></canvas></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Negative Feedback Reasons <span>Toast</span></h3><canvas id="c-neg-reasons"></canvas></div>
+    <div class="chart-box"><h3>Positive Feedback Reasons <span>Toast</span></h3><canvas id="c-pos-reasons"></canvas></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Review Platforms</h3><canvas id="c-platforms"></canvas></div>
+    <div class="chart-box"><h3>Loyalty Tiers</h3><canvas id="c-loyalty"></canvas></div>
+  </div>
+  <div class="tbl-wrap"><h3>&#11088; Unified Server Performance — SevenRooms Reviews + Toast Feedback Combined</h3><div id="server-table"></div></div>
+  <div class="tbl-wrap"><h3>Top Guests by Visits</h3><div id="guests-table"></div></div>
+</div>
+
+<div class="tab-panel" id="tab-marketing">
+  <div class="insight-row" id="mkt-insights"></div>
+  <div class="sec-hdr"><span class="ico">&#128172;</span> SMS (SevenRooms)</div>
+  <div class="kpi-row" id="sms-kpis"></div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>SMS Revenue by Day Sent</h3><canvas id="c-sms-dow"></canvas></div>
+    <div class="chart-box chart-full"><h3>SMS Campaign Detail</h3><div id="sms-table"></div></div>
+  </div>
+  <div class="sec-hdr"><span class="ico">&#128231;</span> Email (Mailchimp)</div>
+  <div class="kpi-row" id="mc-kpis"></div>
+  <div class="tbl-wrap"><h3>Mailchimp Campaigns</h3><div id="mc-table"></div></div>
+  <div class="sec-hdr"><span class="ico">&#128247;</span> Instagram</div>
+  <div class="kpi-row" id="ig-kpis"></div>
+  <div class="chart-grid">
+    <div class="chart-box chart-full"><h3>Daily Reach & Follows</h3><canvas id="c-ig-trend"></canvas></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Reach by Day of Week</h3><canvas id="c-ig-dow"></canvas></div>
+    <div class="chart-box"><h3>Top Posts</h3><div id="ig-posts-table"></div></div>
+  </div>
+  <div class="sec-hdr"><span class="ico">&#127760;</span> Google Business Profile</div>
+  <div class="kpi-row" id="gbp-kpis"></div>
+  <div class="sec-hdr"><span class="ico">&#128202;</span> Channel Comparison</div>
+  <div class="tbl-wrap"><div id="channel-table"></div></div>
+</div>
+
+<div class="tab-panel" id="tab-operations">
+  <div class="insight-row" id="ops-insights"></div>
+  <div class="sec-hdr"><span class="ico">&#128197;</span> Reservations</div>
+  <div class="kpi-row" id="ops-res-kpis"></div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Covers by Day of Week</h3><canvas id="c-ops-dow"></canvas></div>
+    <div class="chart-box"><h3>Reservations by Time</h3><canvas id="c-ops-time"></canvas></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Monthly Trend</h3><canvas id="c-ops-monthly"></canvas></div>
+    <div class="chart-box"><h3>No-Show Rate by DOW</h3><canvas id="c-noshow-dow"></canvas></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Booking Source</h3><canvas id="c-source"></canvas></div>
+    <div class="chart-box"><h3>Shift Breakdown</h3><canvas id="c-shift"></canvas></div>
+  </div>
+  <div class="sec-hdr"><span class="ico">&#127881;</span> Private Events (Tripleseat)</div>
+  <div class="disclaimer">&#9888; Event revenue is already reflected in Toast/SevenRooms — shown here for booking reference only.</div>
+  <div class="kpi-row" id="ops-ev-kpis"></div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Events by Month</h3><canvas id="c-ev-monthly"></canvas></div>
+    <div class="chart-box"><h3>Events by Room</h3><canvas id="c-ev-rooms"></canvas></div>
+  </div>
+  <div class="sec-hdr"><span class="ico">&#128172;</span> Toast Guest Feedback</div>
+  <div class="kpi-row" id="ops-tf-kpis"></div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Feedback by Hour</h3><canvas id="c-fb-hour"></canvas></div>
+    <div class="chart-box"><h3>Feedback by DOW</h3><canvas id="c-fb-dow"></canvas></div>
+  </div>
+  <div class="sec-hdr"><span class="ico">&#11088;</span> SevenRooms Reviews</div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Rating Distribution</h3><canvas id="c-rating-dist"></canvas></div>
+    <div class="chart-box"><h3>Monthly Review Volume & Avg Rating</h3><canvas id="c-rev-monthly"></canvas></div>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab-strategy">
+  <div class="sec-hdr"><span class="ico">&#127919;</span> Prioritized Actions — Ranked by Revenue Impact</div>
+  <div id="strategy-cards"></div>
+</div>
+</div>
+
+<button class="chat-toggle" id="chatToggle" title="Ask about your data">&#9889;</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header"><h4>&#9889; Gigante Intelligence</h4><button onclick="toggleChat()">&#10005;</button></div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg system">Ask me anything about your data across all 12 sources. Try: "What's our biggest revenue opportunity?" or "Compare server performance"</div>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Ask about your data..." onkeypress="if(event.key==='Enter')sendChat()">
+    <button onclick="sendChat()">Ask</button>
+  </div>
+</div>
+
+<script>
+const D={"pulse": {"30d": {"total_reviews": 66, "avg_rating": 4.5, "food_rating": 4.33, "drink_rating": 4.23, "service_rating": 4.38, "ambience_rating": 4.48, "total_res": 478, "total_covers": 1781, "completed": 293, "noshow_rate": 4.4, "cancel_rate": 13.6, "noshow": 21, "canceled": 65, "tf_total": 169, "tf_pos_rate": 98.8, "events_count": 398, "events_revenue": 1985009.0, "events_guests": 25174, "sms_revenue": 1989.0, "sms_recipients": 3438, "ig_reach": 47510, "ig_follows": 2012, "avg_spend": 311.47, "median_spend": 226.0, "rec_rate": 95.6, "spark_reviews": [10, 1, 3, 1, 2, 2, 3, 1, 1, 1, 1, 5, 3, 2, 2, 3, 1, 3, 7, 2, 4, 2, 3, 3], "spark_covers": [72, 21, 11, 38, 101, 153, 49, 43, 109, 220, 106, 27, 39, 81, 195, 41, 3, 59, 121, 202, 90], "rating_trend_labels": ["2026-02", "2026-03"], "rating_trend_vals": [4.16, 4.8], "dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "dow_vals": [0, 24, 38, 179, 412, 770, 358], "insights": [{"type": "neg", "text": "No-show rate is 4.4% - above the 3-4% industry benchmark (NRA upscale-casual avg). <strong>Goal: Under 3% with CC holds + auto-confirm SMS</strong>"}, {"type": "pos", "text": "Toast positive rate at 98.8% is solid - above the 75% restaurant benchmark."}, {"type": "pos", "text": "Food (4.33) and Service (4.38) are well-aligned - within 0.0 pts of each other."}, {"type": "pos", "text": "Overall rating 4.5/5 exceeds the 4.3-4.7 upscale-casual benchmark - strong brand signal."}, {"type": "pos", "text": "Recommend rate at 95.6% - strong word-of-mouth potential."}, {"type": "info", "text": "Avg check $311 (median $226). Each 1% improvement in return rate = ~$2,218 incremental revenue."}, {"type": "info", "text": "21 no-shows represent ~$16,352 in estimated lost revenue (2.5 covers/res x $311 avg spend)."}]}, "ytd": {"total_reviews": 125, "avg_rating": 4.5, "food_rating": 4.14, "drink_rating": 4.07, "service_rating": 4.25, "ambience_rating": 4.35, "total_res": 1117, "total_covers": 4424, "completed": 789, "noshow_rate": 4.4, "cancel_rate": 16.1, "noshow": 49, "canceled": 180, "tf_total": 579, "tf_pos_rate": 98.6, "events_count": 398, "events_revenue": 1985009.0, "events_guests": 25174, "sms_revenue": 5130.0, "sms_recipients": 6638, "ig_reach": 114692, "ig_follows": 6053, "avg_spend": 322.46, "median_spend": 268.0, "rec_rate": 93.4, "spark_reviews": [10, 1, 3, 1, 2, 2, 3, 1, 1, 1, 1, 5, 3, 2, 2, 3, 1, 3, 7, 2, 4, 2, 3, 3], "spark_covers": [102, 39, 209, 72, 21, 11, 38, 101, 153, 49, 43, 109, 220, 106, 27, 39, 81, 195, 41, 3, 59, 121, 202, 90], "rating_trend_labels": ["2026-01", "2026-02", "2026-03"], "rating_trend_vals": [4.49, 4.33, 4.8], "dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "dow_vals": [0, 101, 102, 444, 932, 2193, 652], "insights": [{"type": "neg", "text": "No-show rate is 4.4% - above the 3-4% industry benchmark (NRA upscale-casual avg). <strong>Goal: Under 3% with CC holds + auto-confirm SMS</strong>"}, {"type": "warn", "text": "Cancel rate at 16.1% is at the upper end of the 12-15% benchmark. <strong>Goal: Under 15% with waitlist auto-fill</strong>"}, {"type": "pos", "text": "Toast positive rate at 98.6% is solid - above the 75% restaurant benchmark."}, {"type": "pos", "text": "Food (4.14) and Service (4.25) are well-aligned - within 0.1 pts of each other."}, {"type": "pos", "text": "Overall rating 4.5/5 exceeds the 4.3-4.7 upscale-casual benchmark - strong brand signal."}, {"type": "pos", "text": "Recommend rate at 93.4% - strong word-of-mouth potential."}, {"type": "info", "text": "Avg check $322 (median $268). Each 1% improvement in return rate = ~$5,706 incremental revenue."}, {"type": "info", "text": "49 no-shows represent ~$39,501 in estimated lost revenue (2.5 covers/res x $322 avg spend)."}]}, "all": {"total_reviews": 5097, "avg_rating": 4.64, "food_rating": 4.13, "drink_rating": 4.22, "service_rating": 4.2, "ambience_rating": 4.26, "total_res": 51630, "total_covers": 199161, "completed": 39716, "noshow_rate": 4.5, "cancel_rate": 18.4, "noshow": 2317, "canceled": 9498, "tf_total": 1422, "tf_pos_rate": 98.2, "events_count": 398, "events_revenue": 1985009.0, "events_guests": 25174, "sms_revenue": 21609.0, "sms_recipients": 30024, "ig_reach": 114692, "ig_follows": 6053, "avg_spend": 242.82, "median_spend": 183.0, "rec_rate": 95.8, "spark_reviews": [10, 1, 3, 1, 2, 2, 3, 1, 1, 1, 1, 5, 3, 2, 2, 3, 1, 3, 7, 2, 4, 2, 3, 3], "spark_covers": [102, 39, 209, 72, 21, 11, 38, 101, 153, 49, 43, 109, 220, 106, 27, 39, 81, 195, 41, 3, 59, 121, 202, 90], "rating_trend_labels": ["2018-02", "2018-03", "2018-05", "2018-06", "2018-07", "2018-08", "2018-09", "2018-10", "2018-11", "2018-12", "2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03"], "rating_trend_vals": [5.0, 5.0, 5.0, 4.62, 4.5, 4.36, 4.67, 4.4, 4.36, 4.12, 4.12, 4.57, 4.51, 4.88, 4.67, 4.8, 4.68, 4.52, 4.67, 4.75, 4.5, 4.66, 4.77, 4.7, 4.94, 4.0, 5.0, 4.83, 4.88, 4.76, 4.77, 4.65, 4.82, 4.55, 4.82, 4.67, 4.93, 4.78, 4.75, 4.58, 4.29, 4.42, 4.77, 4.59, 4.56, 4.59, 4.5, 4.25, 4.63, 4.88, 4.56, 4.27, 4.47, 4.58, 4.71, 4.87, 4.85, 4.68, 4.66, 4.54, 4.45, 4.53, 4.59, 4.82, 4.49, 4.61, 4.69, 4.87, 4.86, 4.64, 4.82, 4.66, 4.82, 4.71, 4.63, 4.48, 4.8, 4.71, 4.72, 4.91, 4.79, 4.6, 4.55, 4.34, 4.34, 4.67, 4.77, 4.79, 4.79, 4.65, 4.5, 4.84, 4.77, 4.67, 4.49, 4.33, 4.8], "dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "dow_vals": [1171, 9878, 11744, 25215, 45566, 72655, 32932], "insights": [{"type": "neg", "text": "No-show rate is 4.5% - above the 3-4% industry benchmark (NRA upscale-casual avg). <strong>Goal: Under 3% with CC holds + auto-confirm SMS</strong>"}, {"type": "warn", "text": "Cancel rate at 18.4% is at the upper end of the 12-15% benchmark. <strong>Goal: Under 15% with waitlist auto-fill</strong>"}, {"type": "pos", "text": "Toast positive rate at 98.2% is solid - above the 75% restaurant benchmark."}, {"type": "pos", "text": "Food (4.13) and Service (4.2) are well-aligned - within 0.1 pts of each other."}, {"type": "pos", "text": "Overall rating 4.64/5 exceeds the 4.3-4.7 upscale-casual benchmark - strong brand signal."}, {"type": "pos", "text": "Recommend rate at 95.8% - strong word-of-mouth potential."}, {"type": "info", "text": "Avg check $243 (median $183). Each 1% improvement in return rate = ~$193,441 incremental revenue."}, {"type": "info", "text": "2317 no-shows represent ~$1,406,534 in estimated lost revenue (2.5 covers/res x $243 avg spend)."}]}}, "guests": {"30d": {"total_unique_guests": 275, "one_visit_pct": 98.2, "avg_visits": 1.0, "one_visit": 270, "two_three": 5, "four_plus": 0, "pareto_pct": 21.7, "optin_yes": 22, "optin_no": 271, "toast_guests": 4950, "visit_dist_labels": ["1 Visit", "2 Visits", "3 Visits", "4-5", "6-10", "11-20", "21+"], "visit_dist_vals": [270, 4, 1, 0, 0, 0, 0], "rec_labels": ["0-30 days", "31-60", "61-90", "91-180", "181-365", "1-2 years", "2+ years"], "rec_vals": [121, 89, 112, 390, 571, 669, 2856], "neg_reason_labels": [], "neg_reason_vals": [], "pos_reason_labels": ["", "Service", "Atmosphere", "Food quality", "Wait time", "Other"], "pos_reason_vals": [87, 73, 30, 29, 14, 4], "plat_labels": ["SevenRooms", "Google", "TripAdvisor"], "plat_vals": [49, 16, 1], "loyalty_labels": [], "loyalty_vals": [], "server_unified": [{"name": "Alyssa Conforth", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 3, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Angela Marasevic", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 26, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Brianna  Barletta", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 2, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Cindy Demaj", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 2, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Daniel", "sr_reviews": 4, "sr_overall": 5.0, "sr_food": 5.0, "sr_drink": 4.5, "sr_service": 5.0, "sr_ambience": 5.0, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Danny O", "sr_reviews": 5, "sr_overall": 5.0, "sr_food": 4.0, "sr_drink": 4.0, "sr_service": 4.0, "sr_ambience": 4.0, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Errol Fernandes", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 50, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Fabrisio Hernandez", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 22, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Florencio Rocha", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 2, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Juan Daniel Fuentes", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 32, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Silvio Vinciguerra", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 3, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Fab", "sr_reviews": 11, "sr_overall": 4.82, "sr_food": 4.1, "sr_drink": 3.9, "sr_service": 4.3, "sr_ambience": 4.5, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 96.4}, {"name": "Daniel Otto", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 15, "toast_pos_rate": 93.3, "toast_neg": 0, "combined_score": 93.3}, {"name": "Tianna Mpazicos", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 6, "toast_pos_rate": 83.3, "toast_neg": 0, "combined_score": 83.3}, {"name": "Angela", "sr_reviews": 7, "sr_overall": 4.0, "sr_food": 4.29, "sr_drink": 4.29, "sr_service": 4.0, "sr_ambience": 4.43, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 80.0}, {"name": "Errol", "sr_reviews": 6, "sr_overall": 3.83, "sr_food": 3.67, "sr_drink": 3.5, "sr_service": 4.0, "sr_ambience": 4.17, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 76.6}], "top_guests": [{"name": "Renee Palompelli", "visits": 3, "covers": 20, "first": "2026-02-17", "last": "2026-03-05"}, {"name": "lourdes Lopez", "visits": 2, "covers": 29, "first": "2026-02-27", "last": "2026-03-01"}, {"name": "Rosanna Provenzale Provenzale", "visits": 2, "covers": 10, "first": "2026-03-14", "last": "2026-03-14"}, {"name": "Nick Lomangino", "visits": 2, "covers": 39, "first": "2026-02-20", "last": "2026-02-20"}, {"name": "Adriana Cabrera", "visits": 2, "covers": 22, "first": "2026-03-14", "last": "2026-03-14"}, {"name": "christine farina", "visits": 1, "covers": 7, "first": "2026-02-21", "last": "2026-02-21"}, {"name": "Mike (mike)", "visits": 1, "covers": 10, "first": "2026-02-21", "last": "2026-02-21"}, {"name": "Mary Mazza", "visits": 1, "covers": 5, "first": "2026-03-08", "last": "2026-03-08"}, {"name": "Massimo Maffei", "visits": 1, "covers": 2, "first": "2026-02-21", "last": "2026-02-21"}, {"name": "Max Polanco", "visits": 1, "covers": 8, "first": "2026-03-07", "last": "2026-03-07"}, {"name": "Maylyn Bernabe", "visits": 1, "covers": 4, "first": "2026-03-07", "last": "2026-03-07"}, {"name": "Melanie Martino", "visits": 1, "covers": 2, "first": "2026-02-22", "last": "2026-02-22"}, {"name": "Melanie Quigley", "visits": 1, "covers": 7, "first": "2026-03-07", "last": "2026-03-07"}, {"name": "Melissa Abab", "visits": 1, "covers": 5, "first": "2026-03-07", "last": "2026-03-07"}, {"name": "Meredith Music", "visits": 1, "covers": 5, "first": "2026-02-17", "last": "2026-02-17"}], "insights": [{"type": "neg", "text": "98.2% of guests never return - above the 60-70% benchmark. <strong>Goal: Under 65% with post-visit SMS + loyalty program</strong>"}, {"type": "info", "text": "Top 20% of guests drive 21.7% of visits - classic Pareto. Protect these relationships."}, {"type": "warn", "text": "Marketing opt-in at 7.5% - below 25% benchmark. <strong>Goal: 25%+ with checkout prompts</strong>"}]}, "ytd": {"total_unique_guests": 726, "one_visit_pct": 95.7, "avg_visits": 1.0, "one_visit": 695, "two_three": 30, "four_plus": 1, "pareto_pct": 23.6, "optin_yes": 59, "optin_no": 730, "toast_guests": 4950, "visit_dist_labels": ["1 Visit", "2 Visits", "3 Visits", "4-5", "6-10", "11-20", "21+"], "visit_dist_vals": [695, 29, 1, 1, 0, 0, 0], "rec_labels": ["0-30 days", "31-60", "61-90", "91-180", "181-365", "1-2 years", "2+ years"], "rec_vals": [121, 89, 112, 390, 571, 669, 2856], "neg_reason_labels": [""], "neg_reason_vals": [6], "pos_reason_labels": ["", "Service", "Atmosphere", "Food quality", "Wait time", "Other"], "pos_reason_vals": [300, 243, 127, 104, 63, 12], "plat_labels": ["SevenRooms", "Google", "TripAdvisor"], "plat_vals": [96, 28, 1], "loyalty_labels": [], "loyalty_vals": [], "server_unified": [{"name": "Alyssa Conforth", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 13, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Angela Marasevic", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 66, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Brianna  Barletta", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 2, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Brittany Ricciardi", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 8, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Cindy Demaj", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 5, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Daniel", "sr_reviews": 6, "sr_overall": 5.0, "sr_food": 5.0, "sr_drink": 4.67, "sr_service": 5.0, "sr_ambience": 5.0, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Danny O", "sr_reviews": 10, "sr_overall": 5.0, "sr_food": 4.0, "sr_drink": 4.0, "sr_service": 4.0, "sr_ambience": 4.0, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Drilon Perolli", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 25, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Florencio Rocha", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 3, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Gabriella Curanovic", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 4, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Jankaira Hernandez", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 15, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Jessica Kaminsky", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 11, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Juan Daniel Fuentes", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 41, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Nol Ajeti", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 5, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Salvador Orzuna", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 16, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Sandra Osorio Lopez", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 4, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Silvio Vinciguerra", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 3, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Vanessa Rivas", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 2, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Errol Fernandes", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 190, "toast_pos_rate": 98.9, "toast_neg": 2, "combined_score": 98.9}, {"name": "Fabrisio Hernandez", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 54, "toast_pos_rate": 98.1, "toast_neg": 1, "combined_score": 98.1}, {"name": "Daniel Otto", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 43, "toast_pos_rate": 95.3, "toast_neg": 1, "combined_score": 95.3}, {"name": "Tianna Mpazicos", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 64, "toast_pos_rate": 95.3, "toast_neg": 2, "combined_score": 95.3}, {"name": "Fab", "sr_reviews": 17, "sr_overall": 4.71, "sr_food": 4.12, "sr_drink": 3.69, "sr_service": 4.31, "sr_ambience": 4.56, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 94.2}, {"name": "Errol", "sr_reviews": 16, "sr_overall": 4.38, "sr_food": 3.19, "sr_drink": 3.06, "sr_service": 3.31, "sr_ambience": 3.31, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 87.6}, {"name": "Gabi", "sr_reviews": 3, "sr_overall": 4.33, "sr_food": 3.67, "sr_drink": 4.67, "sr_service": 4.67, "sr_ambience": 4.67, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 86.6}], "top_guests": [{"name": "Renee Palompelli", "visits": 4, "covers": 24, "first": "2026-01-08", "last": "2026-03-05"}, {"name": "Mary Mazza", "visits": 3, "covers": 11, "first": "2026-01-04", "last": "2026-03-08"}, {"name": "Mya Curanovic", "visits": 2, "covers": 13, "first": "2026-01-03", "last": "2026-01-03"}, {"name": "Alex Cabraie", "visits": 2, "covers": 6, "first": "2026-01-30", "last": "2026-03-07"}, {"name": "Elizabeth Salas", "visits": 2, "covers": 17, "first": "2026-02-06", "last": "2026-02-06"}, {"name": "Riley Sheehan", "visits": 2, "covers": 4, "first": "2026-01-09", "last": "2026-02-14"}, {"name": "Norman Sherran", "visits": 2, "covers": 4, "first": "2026-01-17", "last": "2026-03-12"}, {"name": "Beth Rabinowitz", "visits": 2, "covers": 9, "first": "2026-02-08", "last": "2026-02-15"}, {"name": "Vanessa Ventura", "visits": 2, "covers": 15, "first": "2026-01-04", "last": "2026-01-11"}, {"name": "Mary Maza", "visits": 2, "covers": 9, "first": "2026-02-01", "last": "2026-02-15"}, {"name": "Ben Artani", "visits": 2, "covers": 6, "first": "2026-02-13", "last": "2026-02-21"}, {"name": "Toni DeGrazio", "visits": 2, "covers": 5, "first": "2026-01-08", "last": "2026-01-17"}, {"name": "Rocco Paladino", "visits": 2, "covers": 6, "first": "2026-01-30", "last": "2026-02-27"}, {"name": "Giulio Zangrilli", "visits": 2, "covers": 4, "first": "2026-01-03", "last": "2026-02-28"}, {"name": "Nick Lomangino", "visits": 2, "covers": 39, "first": "2026-02-20", "last": "2026-02-20"}], "insights": [{"type": "neg", "text": "95.7% of guests never return - above the 60-70% benchmark. <strong>Goal: Under 65% with post-visit SMS + loyalty program</strong>"}, {"type": "info", "text": "Top 20% of guests drive 23.6% of visits - classic Pareto. Protect these relationships."}, {"type": "warn", "text": "Marketing opt-in at 7.5% - below 25% benchmark. <strong>Goal: 25%+ with checkout prompts</strong>"}]}, "all": {"total_unique_guests": 21792, "one_visit_pct": 78.9, "avg_visits": 1.5, "one_visit": 17204, "two_three": 3586, "four_plus": 1002, "pareto_pct": 46.7, "optin_yes": 6109, "optin_no": 33607, "toast_guests": 4950, "visit_dist_labels": ["1 Visit", "2 Visits", "3 Visits", "4-5", "6-10", "11-20", "21+"], "visit_dist_vals": [17204, 2686, 900, 560, 315, 83, 44], "rec_labels": ["0-30 days", "31-60", "61-90", "91-180", "181-365", "1-2 years", "2+ years"], "rec_vals": [121, 89, 112, 390, 571, 669, 2856], "neg_reason_labels": ["", "Other"], "neg_reason_vals": [18, 1], "pos_reason_labels": ["", "Service", "Atmosphere", "Food quality", "Wait time", "Other"], "pos_reason_vals": [775, 537, 350, 233, 158, 44], "plat_labels": ["SevenRooms", "Google", "OpenTable USA", "Yelp", "Facebook", "TripAdvisor"], "plat_vals": [3889, 605, 249, 158, 139, 57], "loyalty_labels": [], "loyalty_vals": [], "server_unified": [{"name": "Alyssa Conforth", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 23, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Brianna  Barletta", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 11, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Brittany Ricciardi", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 32, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Christopher  Luna", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 3, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Cindy Demaj", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 7, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Damian", "sr_reviews": 8, "sr_overall": 5.0, "sr_food": 3.12, "sr_drink": null, "sr_service": 2.88, "sr_ambience": 3.0, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Gabriella Curanovic", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 8, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Jankaira Hernandez", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 35, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Jessica Kaminsky", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 19, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Juan Daniel Fuentes", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 78, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Kelli", "sr_reviews": 3, "sr_overall": 5.0, "sr_food": 4.67, "sr_drink": 4.0, "sr_service": 4.67, "sr_ambience": 4.67, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Kelvin", "sr_reviews": 9, "sr_overall": 5.0, "sr_food": 4.22, "sr_drink": 4.33, "sr_service": 4.44, "sr_ambience": 4.44, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Kelvin Bardhi", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 23, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Luis", "sr_reviews": 7, "sr_overall": 5.0, "sr_food": 4.0, "sr_drink": null, "sr_service": 4.0, "sr_ambience": 4.0, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Max", "sr_reviews": 3, "sr_overall": 5.0, "sr_food": 5.0, "sr_drink": 4.67, "sr_service": 5.0, "sr_ambience": 5.0, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Salvador Orzuna", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 20, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Silvio Vinciguerra", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 7, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Steffany", "sr_reviews": 4, "sr_overall": 5.0, "sr_food": 5.0, "sr_drink": 4.75, "sr_service": 5.0, "sr_ambience": 5.0, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Vanessa Rivas", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 9, "toast_pos_rate": 100.0, "toast_neg": 0, "combined_score": 100.0}, {"name": "Fabrisio Hernandez", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 116, "toast_pos_rate": 99.1, "toast_neg": 1, "combined_score": 99.1}, {"name": "Delia", "sr_reviews": 16, "sr_overall": 4.94, "sr_food": 4.88, "sr_drink": null, "sr_service": 5.0, "sr_ambience": 4.94, "toast_total": 0, "toast_pos_rate": 0, "toast_neg": 0, "combined_score": 98.8}, {"name": "Nol Ajeti", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 71, "toast_pos_rate": 98.6, "toast_neg": 1, "combined_score": 98.6}, {"name": "Errol Fernandes", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 448, "toast_pos_rate": 98.4, "toast_neg": 6, "combined_score": 98.4}, {"name": "Angela Marasevic", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 117, "toast_pos_rate": 98.3, "toast_neg": 2, "combined_score": 98.3}, {"name": "Drilon Perolli", "sr_reviews": 0, "sr_overall": 0, "sr_food": null, "sr_drink": null, "sr_service": null, "sr_ambience": null, "toast_total": 167, "toast_pos_rate": 98.2, "toast_neg": 2, "combined_score": 98.2}], "top_guests": [{"name": "John Degrazio", "visits": 188, "covers": 781, "first": "2018-05-23", "last": "2026-03-13"}, {"name": "Louis Gigante, Sr", "visits": 116, "covers": 522, "first": "2018-05-16", "last": "2025-04-12"}, {"name": "Louis Gigante Jr", "visits": 83, "covers": 408, "first": "2018-06-17", "last": "2025-07-05"}, {"name": "Toni DeGrazio", "visits": 83, "covers": 196, "first": "2018-08-15", "last": "2026-01-17"}, {"name": "Anne Bicker", "visits": 81, "covers": 255, "first": "2018-05-29", "last": "2025-05-25"}, {"name": "Bubbles ", "visits": 73, "covers": 335, "first": "2020-07-02", "last": "2025-12-13"}, {"name": "Rod Grace", "visits": 70, "covers": 235, "first": "2019-10-03", "last": "2024-03-09"}, {"name": "Anthony Gigante", "visits": 64, "covers": 596, "first": "2018-05-17", "last": "2025-05-16"}, {"name": "Susan Marinaccio", "visits": 63, "covers": 255, "first": "2018-05-26", "last": "2025-12-31"}, {"name": "Marie Russo", "visits": 53, "covers": 171, "first": "2021-12-02", "last": "2026-01-04"}, {"name": "Mario Gigante (grandfather)", "visits": 53, "covers": 135, "first": "2018-05-25", "last": "2020-11-14"}, {"name": "Norman Sherran", "visits": 53, "covers": 137, "first": "2018-06-14", "last": "2026-03-12"}, {"name": "Stephen Masiello", "visits": 46, "covers": 245, "first": "2018-06-02", "last": "2023-08-12"}, {"name": "Diane Senderoff", "visits": 42, "covers": 143, "first": "2019-01-18", "last": "2025-11-19"}, {"name": "Richard Bertoncin", "visits": 40, "covers": 173, "first": "2018-06-09", "last": "2025-07-05"}], "insights": [{"type": "neg", "text": "78.9% of guests never return - above the 60-70% benchmark. <strong>Goal: Under 65% with post-visit SMS + loyalty program</strong>"}, {"type": "info", "text": "Top 20% of guests drive 46.7% of visits - classic Pareto. Protect these relationships."}, {"type": "warn", "text": "Marketing opt-in at 15.4% - below 25% benchmark. <strong>Goal: 25%+ with checkout prompts</strong>"}]}}, "marketing": {"30d": {"sms_count": 2, "sms_revenue": 1989.0, "sms_recipients": 3438, "sms_click_rate": 6.1, "sms_res": 14, "sms_covers": 66, "sms_rev_per_camp": 994.0, "sms_dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "sms_dow_vals": [0, 0, 0.0, 1989.0, 0, 0, 0], "sms_campaigns": [{"name": "Night of Red Bottoms", "date": "2026-03-05", "recipients": 1717, "clicks": 0, "click_rate": 0.0, "revenue": 1989.0, "reservations": 14, "covers": 66}, {"name": "Red Bottoms", "date": "2026-03-04", "recipients": 1721, "clicks": 210, "click_rate": 12.2, "revenue": 0.0, "reservations": 0, "covers": 0}], "mc_count": 0, "mc_sent": 0, "mc_opens": 0, "mc_clicks": 0, "mc_open_rate": 0, "mc_click_rate": 0, "mc_campaigns": [], "ig_days": 30, "ig_reach": 47510, "ig_avg_reach": 1583, "ig_follows": 2012, "ig_interactions": 861, "ig_avg_eng": 2.52, "ig_profile": 3923, "ig_link": 533, "ig_trend_labels": ["2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-14", "2026-03-15", "2026-03-16"], "ig_trend_reach": [1464, 1049, 548, 190, 1112, 1535, 1347, 803, 998, 53, 2584, 1303, 1036, 987, 1288, 145, 4365, 5742, 9411, 2252, 1928, 1466, 1326, 1185, 493, 619, 854, 763, 621, 43], "ig_trend_follows": [69, 66, 66, 61, 72, 41, 84, 60, 49, 59, 50, 70, 60, 71, 91, 75, 101, 74, 116, 69, 63, 80, 71, 60, 58, 72, 69, 79, 56, 0], "ig_dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "ig_dow_vals": [712, 1537, 2252, 3111, 1419, 1256, 1128], "ig_posts": [{"date": "Lifetime", "type": "IG reel", "reach": 14375, "likes": 269, "saves": 23, "eng_rate": 2.55}, {"date": "Lifetime", "type": "IG carousel", "reach": 7301, "likes": 85, "saves": 7, "eng_rate": 1.6}, {"date": "Lifetime", "type": "IG image", "reach": 4764, "likes": 76, "saves": 7, "eng_rate": 2.02}, {"date": "Lifetime", "type": "IG carousel", "reach": 4478, "likes": 106, "saves": 4, "eng_rate": 2.61}, {"date": "Lifetime", "type": "IG carousel", "reach": 4487, "likes": 82, "saves": 5, "eng_rate": 2.16}, {"date": "Lifetime", "type": "IG carousel", "reach": 9192, "likes": 329, "saves": 37, "eng_rate": 4.96}, {"date": "Lifetime", "type": "IG carousel", "reach": 6797, "likes": 73, "saves": 6, "eng_rate": 1.21}, {"date": "Lifetime", "type": "IG reel", "reach": 14942, "likes": 186, "saves": 13, "eng_rate": 1.67}, {"date": "Lifetime", "type": "IG reel", "reach": 34090, "likes": 613, "saves": 82, "eng_rate": 5.79}, {"date": "Lifetime", "type": "IG reel", "reach": 17054, "likes": 582, "saves": 82, "eng_rate": 8.02}, {"date": "Lifetime", "type": "IG reel", "reach": 37975, "likes": 712, "saves": 229, "eng_rate": 5.62}, {"date": "Lifetime", "type": "IG carousel", "reach": 13092, "likes": 97, "saves": 11, "eng_rate": 0.84}, {"date": "Lifetime", "type": "IG reel", "reach": 16955, "likes": 364, "saves": 61, "eng_rate": 3.95}, {"date": "Lifetime", "type": "IG reel", "reach": 5736, "likes": 122, "saves": 14, "eng_rate": 3.97}, {"date": "Lifetime", "type": "IG reel", "reach": 39109, "likes": 525, "saves": 77, "eng_rate": 3.26}, {"date": "Lifetime", "type": "IG carousel", "reach": 6980, "likes": 227, "saves": 21, "eng_rate": 4.47}, {"date": "Lifetime", "type": "IG image", "reach": 10364, "likes": 171, "saves": 2, "eng_rate": 1.89}, {"date": "Lifetime", "type": "IG image", "reach": 4744, "likes": 37, "saves": 5, "eng_rate": 1.14}, {"date": "Lifetime", "type": "IG reel", "reach": 16679, "likes": 170, "saves": 19, "eng_rate": 1.83}, {"date": "Lifetime", "type": "IG reel", "reach": 6757, "likes": 209, "saves": 17, "eng_rate": 4.96}, {"date": "Lifetime", "type": "IG reel", "reach": 6398, "likes": 127, "saves": 24, "eng_rate": 5.44}, {"date": "Lifetime", "type": "IG reel", "reach": 5378, "likes": 86, "saves": 5, "eng_rate": 2.53}, {"date": "Lifetime", "type": "IG reel", "reach": 17976, "likes": 185, "saves": 16, "eng_rate": 1.73}], "gbp_kpis": {"total_impressions": 0, "avg_daily_impressions": 0, "total_directions": 0, "total_clicks": 0, "conversion_rate": 0, "trend_direction": ""}, "channels": [{"channel": "SMS (SevenRooms)", "campaigns": 2, "reach": 3438, "engagement": "6.1% click", "revenue": 1989.0, "note": "Highest ROI"}, {"channel": "Email (Mailchimp)", "campaigns": 0, "reach": 0, "engagement": "0% open", "revenue": null, "note": "Brand awareness"}, {"channel": "Instagram", "campaigns": 30, "reach": 47510, "engagement": "2.52% eng", "revenue": null, "note": "Discovery + FOMO"}], "insights": [{"type": "pos", "text": "SMS driving $1,989 revenue from 2 campaigns - highest ROI channel."}, {"type": "warn", "text": "IG engagement 2.52% - below the 3%+ target for upscale dining. <strong>Goal: 3%+ with Reels + Stories</strong>"}]}, "ytd": {"sms_count": 4, "sms_revenue": 5130.0, "sms_recipients": 6638, "sms_click_rate": 8.4, "sms_res": 31, "sms_covers": 129, "sms_rev_per_camp": 1282.0, "sms_dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "sms_dow_vals": [0, 0, 3141.0, 1989.0, 0, 0, 0], "sms_campaigns": [{"name": "Night of Red Bottoms", "date": "2026-03-05", "recipients": 1717, "clicks": 0, "click_rate": 0.0, "revenue": 1989.0, "reservations": 14, "covers": 66}, {"name": "Red Bottoms", "date": "2026-03-04", "recipients": 1721, "clicks": 210, "click_rate": 12.2, "revenue": 0.0, "reservations": 0, "covers": 0}, {"name": "Gig Thursday", "date": "2026-01-28", "recipients": 1604, "clicks": 170, "click_rate": 10.6, "revenue": 2089.0, "reservations": 12, "covers": 39}, {"name": "A night of red bottoms", "date": "2026-01-21", "recipients": 1596, "clicks": 180, "click_rate": 11.3, "revenue": 1052.0, "reservations": 5, "covers": 24}], "mc_count": 0, "mc_sent": 0, "mc_opens": 0, "mc_clicks": 0, "mc_open_rate": 0, "mc_click_rate": 0, "mc_campaigns": [], "ig_days": 75, "ig_reach": 114692, "ig_avg_reach": 1529, "ig_follows": 6053, "ig_interactions": 2723, "ig_avg_eng": 3.41, "ig_profile": 10646, "ig_link": 1310, "ig_trend_labels": ["2026-01-01", "2026-01-02", "2026-01-03", "2026-01-04", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-10", "2026-01-11", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-17", "2026-01-18", "2026-01-19", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-24", "2026-01-25", "2026-01-26", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-01-31", "2026-02-01", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-07", "2026-02-08", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-14", "2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-14", "2026-03-15", "2026-03-16"], "ig_trend_reach": [2298, 1273, 1256, 1013, 575, 58, 59, 682, 903, 1637, 1320, 69, 52, 53, 674, 995, 1714, 1038, 1339, 538, 1539, 647, 547, 1150, 1855, 525, 592, 873, 1021, 615, 953, 1034, 849, 464, 636, 623, 906, 1472, 782, 571, 3126, 13280, 11357, 2823, 1396, 1464, 1049, 548, 190, 1112, 1535, 1347, 803, 998, 53, 2584, 1303, 1036, 987, 1288, 145, 4365, 5742, 9411, 2252, 1928, 1466, 1326, 1185, 493, 619, 854, 763, 621, 43], "ig_trend_follows": [67, 71, 80, 95, 71, 71, 67, 69, 63, 80, 75, 31, 26, 91, 43, 152, 192, 409, 56, 75, 64, 77, 70, 81, 77, 62, 64, 74, 78, 63, 91, 64, 60, 71, 54, 77, 70, 95, 138, 99, 108, 155, 183, 103, 79, 69, 66, 66, 61, 72, 41, 84, 60, 49, 59, 50, 70, 60, 71, 91, 75, 101, 74, 116, 69, 63, 80, 71, 60, 58, 72, 69, 79, 56, 0], "ig_dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "ig_dow_vals": [680, 1098, 2544, 2704, 1249, 1327, 1153], "ig_posts": [{"date": "Lifetime", "type": "IG reel", "reach": 14375, "likes": 269, "saves": 23, "eng_rate": 2.55}, {"date": "Lifetime", "type": "IG carousel", "reach": 7301, "likes": 85, "saves": 7, "eng_rate": 1.6}, {"date": "Lifetime", "type": "IG image", "reach": 4764, "likes": 76, "saves": 7, "eng_rate": 2.02}, {"date": "Lifetime", "type": "IG carousel", "reach": 4478, "likes": 106, "saves": 4, "eng_rate": 2.61}, {"date": "Lifetime", "type": "IG carousel", "reach": 4487, "likes": 82, "saves": 5, "eng_rate": 2.16}, {"date": "Lifetime", "type": "IG carousel", "reach": 9192, "likes": 329, "saves": 37, "eng_rate": 4.96}, {"date": "Lifetime", "type": "IG carousel", "reach": 6797, "likes": 73, "saves": 6, "eng_rate": 1.21}, {"date": "Lifetime", "type": "IG reel", "reach": 14942, "likes": 186, "saves": 13, "eng_rate": 1.67}, {"date": "Lifetime", "type": "IG reel", "reach": 34090, "likes": 613, "saves": 82, "eng_rate": 5.79}, {"date": "Lifetime", "type": "IG reel", "reach": 17054, "likes": 582, "saves": 82, "eng_rate": 8.02}, {"date": "Lifetime", "type": "IG reel", "reach": 37975, "likes": 712, "saves": 229, "eng_rate": 5.62}, {"date": "Lifetime", "type": "IG carousel", "reach": 13092, "likes": 97, "saves": 11, "eng_rate": 0.84}, {"date": "Lifetime", "type": "IG reel", "reach": 16955, "likes": 364, "saves": 61, "eng_rate": 3.95}, {"date": "Lifetime", "type": "IG reel", "reach": 5736, "likes": 122, "saves": 14, "eng_rate": 3.97}, {"date": "Lifetime", "type": "IG reel", "reach": 39109, "likes": 525, "saves": 77, "eng_rate": 3.26}, {"date": "Lifetime", "type": "IG carousel", "reach": 6980, "likes": 227, "saves": 21, "eng_rate": 4.47}, {"date": "Lifetime", "type": "IG image", "reach": 10364, "likes": 171, "saves": 2, "eng_rate": 1.89}, {"date": "Lifetime", "type": "IG image", "reach": 4744, "likes": 37, "saves": 5, "eng_rate": 1.14}, {"date": "Lifetime", "type": "IG reel", "reach": 16679, "likes": 170, "saves": 19, "eng_rate": 1.83}, {"date": "Lifetime", "type": "IG reel", "reach": 6757, "likes": 209, "saves": 17, "eng_rate": 4.96}, {"date": "Lifetime", "type": "IG reel", "reach": 6398, "likes": 127, "saves": 24, "eng_rate": 5.44}, {"date": "Lifetime", "type": "IG reel", "reach": 5378, "likes": 86, "saves": 5, "eng_rate": 2.53}, {"date": "Lifetime", "type": "IG reel", "reach": 17976, "likes": 185, "saves": 16, "eng_rate": 1.73}], "gbp_kpis": {"total_impressions": 0, "avg_daily_impressions": 0, "total_directions": 0, "total_clicks": 0, "conversion_rate": 0, "trend_direction": ""}, "channels": [{"channel": "SMS (SevenRooms)", "campaigns": 4, "reach": 6638, "engagement": "8.4% click", "revenue": 5130.0, "note": "Highest ROI"}, {"channel": "Email (Mailchimp)", "campaigns": 0, "reach": 0, "engagement": "0% open", "revenue": null, "note": "Brand awareness"}, {"channel": "Instagram", "campaigns": 75, "reach": 114692, "engagement": "3.41% eng", "revenue": null, "note": "Discovery + FOMO"}], "insights": [{"type": "pos", "text": "SMS driving $5,130 revenue from 4 campaigns - highest ROI channel."}, {"type": "pos", "text": "IG engagement 3.41% - above the 1-3% restaurant benchmark."}]}, "all": {"sms_count": 29, "sms_revenue": 21609.0, "sms_recipients": 30024, "sms_click_rate": 10.2, "sms_res": 107, "sms_covers": 446, "sms_rev_per_camp": 745.0, "sms_dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "sms_dow_vals": [805.0, 4444.0, 5461.0, 5033.0, 5730.0, 136.0, 0.0], "sms_campaigns": [{"name": "Night of Red Bottoms", "date": "2026-03-05", "recipients": 1717, "clicks": 0, "click_rate": 0.0, "revenue": 1989.0, "reservations": 14, "covers": 66}, {"name": "Red Bottoms", "date": "2026-03-04", "recipients": 1721, "clicks": 210, "click_rate": 12.2, "revenue": 0.0, "reservations": 0, "covers": 0}, {"name": "Gig Thursday", "date": "2026-01-28", "recipients": 1604, "clicks": 170, "click_rate": 10.6, "revenue": 2089.0, "reservations": 12, "covers": 39}, {"name": "A night of red bottoms", "date": "2026-01-21", "recipients": 1596, "clicks": 180, "click_rate": 11.3, "revenue": 1052.0, "reservations": 5, "covers": 24}, {"name": "NYE 2 weeks out", "date": "2025-12-17", "recipients": 1479, "clicks": 154, "click_rate": 10.4, "revenue": 2135.0, "reservations": 6, "covers": 30}, {"name": "SATURDAY PROMO", "date": "2025-11-29", "recipients": 1427, "clicks": 128, "click_rate": 9.0, "revenue": 0.0, "reservations": 0, "covers": 0}, {"name": "TGE DAY OF", "date": "2025-11-26", "recipients": 1419, "clicks": 130, "click_rate": 9.2, "revenue": 0.0, "reservations": 0, "covers": 0}, {"name": "Copy of thanksgiving week", "date": "2025-11-25", "recipients": 1422, "clicks": 143, "click_rate": 10.1, "revenue": 293.0, "reservations": 1, "covers": 5}, {"name": "thanksgiving week", "date": "2025-11-24", "recipients": 1422, "clicks": 166, "click_rate": 11.7, "revenue": 0.0, "reservations": 0, "covers": 0}, {"name": "TGE soft", "date": "2025-11-17", "recipients": 1404, "clicks": 221, "click_rate": 15.7, "revenue": 0.0, "reservations": 0, "covers": 0}, {"name": "DINING IN THE DARK day before", "date": "2025-10-29", "recipients": 1328, "clicks": 123, "click_rate": 9.3, "revenue": 185.0, "reservations": 2, "covers": 5}, {"name": "DINING IN THE DARK", "date": "2025-10-28", "recipients": 1326, "clicks": 150, "click_rate": 11.3, "revenue": 145.0, "reservations": 2, "covers": 6}, {"name": "Promo", "date": "2025-09-26", "recipients": 1214, "clicks": 112, "click_rate": 9.2, "revenue": 267.0, "reservations": 1, "covers": 2}, {"name": "Cocktail Menu Drop", "date": "2025-09-12", "recipients": 1170, "clicks": 154, "click_rate": 13.2, "revenue": 0.0, "reservations": 0, "covers": 0}, {"name": "LABOR DAY WKND KICKOFF", "date": "2025-08-28", "recipients": 1126, "clicks": 111, "click_rate": 9.9, "revenue": 1236.0, "reservations": 3, "covers": 15}, {"name": "amalfi - exclusive", "date": "2025-08-02", "recipients": 1048, "clicks": 145, "click_rate": 13.8, "revenue": 136.0, "reservations": 3, "covers": 10}, {"name": "Night in Tulum", "date": "2025-07-13", "recipients": 978, "clicks": 158, "click_rate": 16.2, "revenue": 0.0, "reservations": 0, "covers": 0}, {"name": "fathers day - day prior", "date": "2025-06-14", "recipients": 881, "clicks": 98, "click_rate": 11.1, "revenue": 0.0, "reservations": 0, "covers": 0}, {"name": "white party push", "date": "2025-06-09", "recipients": 864, "clicks": 0, "click_rate": 0.0, "revenue": 805.0, "reservations": 3, "covers": 15}, {"name": "MDW Push", "date": "2025-05-23", "recipients": 819, "clicks": 88, "click_rate": 10.7, "revenue": 1744.0, "reservations": 13, "covers": 45}, {"name": "MOTHER'S DAY", "date": "2025-05-06", "recipients": 777, "clicks": 101, "click_rate": 13.0, "revenue": 997.0, "reservations": 4, "covers": 16}, {"name": "EASTER 2025", "date": "2025-04-15", "recipients": 695, "clicks": 92, "click_rate": 13.2, "revenue": 427.0, "reservations": 7, "covers": 28}, {"name": "Gigante Thursday Push Morning Of", "date": "2025-03-27", "recipients": 626, "clicks": 90, "click_rate": 14.4, "revenue": 162.0, "reservations": 1, "covers": 3}, {"name": "Gig Thursday PUSH day of", "date": "2025-03-13", "recipients": 600, "clicks": 79, "click_rate": 13.2, "revenue": 1206.0, "reservations": 5, "covers": 27}, {"name": "Friday Push", "date": "2025-02-21", "recipients": 551, "clicks": 0, "click_rate": 0.0, "revenue": 3615.0, "reservations": 11, "covers": 49}, {"name": "Thanksgiving eve and day marketing", "date": "2024-11-26", "recipients": 313, "clicks": 15, "click_rate": 4.8, "revenue": 2582.0, "reservations": 10, "covers": 44}, {"name": "HALLOWEEN NIGHT", "date": "2024-10-31", "recipients": 231, "clicks": 8, "click_rate": 3.5, "revenue": 440.0, "reservations": 2, "covers": 7}, {"name": "Halloween", "date": "2024-10-25", "recipients": 208, "clicks": 7, "click_rate": 3.4, "revenue": 104.0, "reservations": 2, "covers": 10}, {"name": "SUMMER JAM", "date": "2024-08-21", "recipients": 58, "clicks": 15, "click_rate": 25.9, "revenue": 0.0, "reservations": 0, "covers": 0}], "mc_count": 25, "mc_sent": 487446, "mc_opens": 133822, "mc_clicks": 6832, "mc_open_rate": 27.5, "mc_click_rate": 1.4, "mc_campaigns": [{"title": "Valentine's Day 2024", "date": "2024-01-12", "recipients": 21616, "opens": 11008, "open_rate": 0.509, "clicks": 521, "click_rate": 0.024}, {"title": "Galentine's", "date": "2024-01-30", "recipients": 21437, "opens": 11281, "open_rate": 0.526, "clicks": 534, "click_rate": 0.025}, {"title": "Easter 2024", "date": "2024-03-18", "recipients": 21266, "opens": 9552, "open_rate": 0.449, "clicks": 249, "click_rate": 0.012}, {"title": "jersey shore 1 week out", "date": "2024-07-13", "recipients": 24841, "opens": 10505, "open_rate": 0.423, "clicks": 850, "click_rate": 0.034}, {"title": "jersey shore 1 week out (copy 01)", "date": "2024-07-15", "recipients": 24569, "opens": 12295, "open_rate": 0.5, "clicks": 746, "click_rate": 0.03}, {"title": "fall kickoff", "date": "2024-09-30", "recipients": 24292, "opens": 7773, "open_rate": 0.32, "clicks": 870, "click_rate": 0.036000000000000004}, {"title": " Two Unforgettable NYE Parties ,\u00c4\u00ec Where", "date": "2024-12-28", "recipients": 24117, "opens": 6863, "open_rate": 0.285, "clicks": 305, "click_rate": 0.013000000000000001}, {"title": "Easter 2025", "date": "2025-04-10", "recipients": 23953, "opens": 6048, "open_rate": 0.252, "clicks": 252, "click_rate": 0.011000000000000001}, {"title": "Easter resend", "date": "2025-04-14", "recipients": 18162, "opens": 1388, "open_rate": 0.076, "clicks": 38, "click_rate": 0.002}, {"title": "Easter resend (copy 01)", "date": "2025-04-14", "recipients": 295, "opens": 56, "open_rate": 0.19, "clicks": 2, "click_rate": 0.006999999999999999}, {"title": "Mother's Day", "date": "2025-04-30", "recipients": 23968, "opens": 4577, "open_rate": 0.191, "clicks": 232, "click_rate": 0.01}, {"title": "[Resend] Mother's Day", "date": "2025-05-01", "recipients": 19833, "opens": 1623, "open_rate": 0.08199999999999999, "clicks": 46, "click_rate": 0.002}, {"title": "[Resend] Mother's Day (copy 01)", "date": "2025-05-06", "recipients": 19462, "opens": 1431, "open_rate": 0.07400000000000001, "clicks": 42, "click_rate": 0.002}, {"title": "[Resend] Mother's Day (copy 02)", "date": "2025-05-10", "recipients": 19369, "opens": 1562, "open_rate": 0.081, "clicks": 39, "click_rate": 0.002}, {"title": "FATHER'S DAY", "date": "2025-06-03", "recipients": 23710, "opens": 5220, "open_rate": 0.22, "clicks": 181, "click_rate": 0.008}, {"title": "FATHER'S DAY (copy 02)", "date": "2025-06-05", "recipients": 23646, "opens": 4743, "open_rate": 0.201, "clicks": 187, "click_rate": 0.008}, {"title": "Untitled", "date": "2025-06-09", "recipients": 23594, "opens": 4936, "open_rate": 0.209, "clicks": 350, "click_rate": 0.015}, {"title": "Friday, July 18: Pack nothing, arrive at", "date": "2025-07-10", "recipients": 12772, "opens": 2646, "open_rate": 0.207, "clicks": 122, "click_rate": 0.01}, {"title": "Friday, July 18: Pack nothing, arrive at", "date": "2025-07-10", "recipients": 23533, "opens": 4836, "open_rate": 0.205, "clicks": 218, "click_rate": 0.009000000000000001}, {"title": "Untitled (copy 01)", "date": "2025-09-16", "recipients": 23461, "opens": 9084, "open_rate": 0.387, "clicks": 275, "click_rate": 0.012}, {"title": "Untitled (copy 02)", "date": "2025-09-16", "recipients": 169, "opens": 88, "open_rate": 0.521, "clicks": 6, "click_rate": 0.036000000000000004}, {"title": "Untitled", "date": "2025-09-16", "recipients": 15771, "opens": 3122, "open_rate": 0.198, "clicks": 191, "click_rate": 0.012}, {"title": "Three nights. One address. Dining in the", "date": "2025-10-28", "recipients": 15269, "opens": 3717, "open_rate": 0.243, "clicks": 201, "click_rate": 0.013000000000000001}, {"title": "Three nights. One address. Dining in the", "date": "2025-10-29", "recipients": 15074, "opens": 3578, "open_rate": 0.237, "clicks": 128, "click_rate": 0.008}, {"title": "Three nights. One address. Dining in the", "date": "2025-10-29", "recipients": 23267, "opens": 5890, "open_rate": 0.253, "clicks": 247, "click_rate": 0.011000000000000001}], "ig_days": 75, "ig_reach": 114692, "ig_avg_reach": 1529, "ig_follows": 6053, "ig_interactions": 2723, "ig_avg_eng": 3.41, "ig_profile": 10646, "ig_link": 1310, "ig_trend_labels": ["2026-01-01", "2026-01-02", "2026-01-03", "2026-01-04", "2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08", "2026-01-09", "2026-01-10", "2026-01-11", "2026-01-12", "2026-01-13", "2026-01-14", "2026-01-15", "2026-01-16", "2026-01-17", "2026-01-18", "2026-01-19", "2026-01-20", "2026-01-21", "2026-01-22", "2026-01-23", "2026-01-24", "2026-01-25", "2026-01-26", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-01-31", "2026-02-01", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-07", "2026-02-08", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-14", "2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-14", "2026-03-15", "2026-03-16"], "ig_trend_reach": [2298, 1273, 1256, 1013, 575, 58, 59, 682, 903, 1637, 1320, 69, 52, 53, 674, 995, 1714, 1038, 1339, 538, 1539, 647, 547, 1150, 1855, 525, 592, 873, 1021, 615, 953, 1034, 849, 464, 636, 623, 906, 1472, 782, 571, 3126, 13280, 11357, 2823, 1396, 1464, 1049, 548, 190, 1112, 1535, 1347, 803, 998, 53, 2584, 1303, 1036, 987, 1288, 145, 4365, 5742, 9411, 2252, 1928, 1466, 1326, 1185, 493, 619, 854, 763, 621, 43], "ig_trend_follows": [67, 71, 80, 95, 71, 71, 67, 69, 63, 80, 75, 31, 26, 91, 43, 152, 192, 409, 56, 75, 64, 77, 70, 81, 77, 62, 64, 74, 78, 63, 91, 64, 60, 71, 54, 77, 70, 95, 138, 99, 108, 155, 183, 103, 79, 69, 66, 66, 61, 72, 41, 84, 60, 49, 59, 50, 70, 60, 71, 91, 75, 101, 74, 116, 69, 63, 80, 71, 60, 58, 72, 69, 79, 56, 0], "ig_dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "ig_dow_vals": [680, 1098, 2544, 2704, 1249, 1327, 1153], "ig_posts": [{"date": "Lifetime", "type": "IG reel", "reach": 14375, "likes": 269, "saves": 23, "eng_rate": 2.55}, {"date": "Lifetime", "type": "IG carousel", "reach": 7301, "likes": 85, "saves": 7, "eng_rate": 1.6}, {"date": "Lifetime", "type": "IG image", "reach": 4764, "likes": 76, "saves": 7, "eng_rate": 2.02}, {"date": "Lifetime", "type": "IG carousel", "reach": 4478, "likes": 106, "saves": 4, "eng_rate": 2.61}, {"date": "Lifetime", "type": "IG carousel", "reach": 4487, "likes": 82, "saves": 5, "eng_rate": 2.16}, {"date": "Lifetime", "type": "IG carousel", "reach": 9192, "likes": 329, "saves": 37, "eng_rate": 4.96}, {"date": "Lifetime", "type": "IG carousel", "reach": 6797, "likes": 73, "saves": 6, "eng_rate": 1.21}, {"date": "Lifetime", "type": "IG reel", "reach": 14942, "likes": 186, "saves": 13, "eng_rate": 1.67}, {"date": "Lifetime", "type": "IG reel", "reach": 34090, "likes": 613, "saves": 82, "eng_rate": 5.79}, {"date": "Lifetime", "type": "IG reel", "reach": 17054, "likes": 582, "saves": 82, "eng_rate": 8.02}, {"date": "Lifetime", "type": "IG reel", "reach": 37975, "likes": 712, "saves": 229, "eng_rate": 5.62}, {"date": "Lifetime", "type": "IG carousel", "reach": 13092, "likes": 97, "saves": 11, "eng_rate": 0.84}, {"date": "Lifetime", "type": "IG reel", "reach": 16955, "likes": 364, "saves": 61, "eng_rate": 3.95}, {"date": "Lifetime", "type": "IG reel", "reach": 5736, "likes": 122, "saves": 14, "eng_rate": 3.97}, {"date": "Lifetime", "type": "IG reel", "reach": 39109, "likes": 525, "saves": 77, "eng_rate": 3.26}, {"date": "Lifetime", "type": "IG carousel", "reach": 6980, "likes": 227, "saves": 21, "eng_rate": 4.47}, {"date": "Lifetime", "type": "IG image", "reach": 10364, "likes": 171, "saves": 2, "eng_rate": 1.89}, {"date": "Lifetime", "type": "IG image", "reach": 4744, "likes": 37, "saves": 5, "eng_rate": 1.14}, {"date": "Lifetime", "type": "IG reel", "reach": 16679, "likes": 170, "saves": 19, "eng_rate": 1.83}, {"date": "Lifetime", "type": "IG reel", "reach": 6757, "likes": 209, "saves": 17, "eng_rate": 4.96}, {"date": "Lifetime", "type": "IG reel", "reach": 6398, "likes": 127, "saves": 24, "eng_rate": 5.44}, {"date": "Lifetime", "type": "IG reel", "reach": 5378, "likes": 86, "saves": 5, "eng_rate": 2.53}, {"date": "Lifetime", "type": "IG reel", "reach": 17976, "likes": 185, "saves": 16, "eng_rate": 1.73}], "gbp_kpis": {"total_impressions": 0, "avg_daily_impressions": 0, "total_directions": 0, "total_clicks": 0, "conversion_rate": 0, "trend_direction": ""}, "channels": [{"channel": "SMS (SevenRooms)", "campaigns": 29, "reach": 30024, "engagement": "10.2% click", "revenue": 21609.0, "note": "Highest ROI"}, {"channel": "Email (Mailchimp)", "campaigns": 25, "reach": 487446, "engagement": "27.5% open", "revenue": null, "note": "Brand awareness"}, {"channel": "Instagram", "campaigns": 75, "reach": 114692, "engagement": "3.41% eng", "revenue": null, "note": "Discovery + FOMO"}], "insights": [{"type": "pos", "text": "SMS driving $21,609 revenue from 29 campaigns - highest ROI channel."}, {"type": "pos", "text": "Email open rate 27.5% exceeds 18-22% restaurant benchmark."}, {"type": "pos", "text": "IG engagement 3.41% - above the 1-3% restaurant benchmark."}]}}, "operations": {"30d": {"total_res": 478, "total_covers": 1781, "complete": 293, "noshow": 21, "canceled": 65, "avg_party": 6.1, "completion_rate": 61.3, "noshow_rate": 4.4, "cancel_rate": 13.6, "dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "dow_cover_vals": [0, 24, 38, 179, 412, 770, 358], "noshow_dow_pct": [0, 0.0, 0.0, 2.9, 6.9, 4.5, 3.7], "time_labels": ["11:00", "12:00", "13:00", "14:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"], "time_vals": [11, 21, 20, 3, 12, 45, 79, 62, 32, 8], "monthly_labels": ["2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09", "2026-10", "2026-11", "2026-12"], "monthly_res": [176, 246, 43, 6, 5, 1, 0, 0, 0, 0, 1], "monthly_covers": [817, 964, 0, 0, 0, 0, 0, 0, 0, 0, 0], "source_labels": ["Booking Widget", "Google Reserve Integ", "Ivana Maljevic", "Sal Orzuna", "Walk In", "Cindy ", "Gabi", "Gigante Host"], "source_vals": [151, 104, 74, 58, 37, 20, 18, 7], "shift_labels": ["DINNER", "BRUNCH"], "shift_vals": [238, 55], "ev_count": 398, "ev_guests": 25174, "ev_revenue": 1985009.0, "ev_avg_size": 63, "ev_monthly_labels": [], "ev_monthly_vals": [], "room_labels": ["G Room", "Private Dining Room ", "Upper Dining Area (3", "Left Dining Area (10", "Right Dining Area (6", "Buy Out (entire rest", "Lower Dining Area (1", "Right Curved Dining "], "room_vals": [110, 91, 41, 34, 23, 23, 16, 11], "tf_total": 167, "tf_pos": 167, "tf_neg": 0, "tf_neu": 0, "fb_hour_labels": ["0:00", "13:00", "14:00", "15:00", "16:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"], "fb_hour_total": [5, 2, 3, 2, 1, 1, 12, 20, 27, 52, 44], "fb_hour_neg": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "fb_dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "fb_dow_total": [0, 0, 0, 0, 0, 0, 0], "fb_dow_neg": [0, 0, 0, 0, 0, 0, 0], "rating_dist_labels": ["1", "2", "3", "4", "5"], "rating_dist_vals": [5, 1, 4, 2, 54], "rev_monthly_labels": ["2026-02", "2026-03"], "rev_monthly_count": [31, 35], "rev_monthly_avg": [4.16, 4.8], "insights": [{"type": "neg", "text": "No-show rate 4.4% exceeds 3-4% benchmark. <strong>Goal: Under 3% with CC holds</strong>"}]}, "ytd": {"total_res": 1117, "total_covers": 4424, "complete": 789, "noshow": 49, "canceled": 180, "avg_party": 5.6, "completion_rate": 70.6, "noshow_rate": 4.4, "cancel_rate": 16.1, "dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "dow_cover_vals": [0, 101, 102, 444, 932, 2193, 652], "noshow_dow_pct": [0, 0.0, 0.0, 4.8, 4.1, 5.0, 4.1], "time_labels": ["11:00", "12:00", "13:00", "14:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"], "time_vals": [22, 35, 35, 8, 35, 135, 220, 199, 79, 21], "monthly_labels": ["2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09", "2026-10", "2026-11", "2026-12"], "monthly_res": [372, 443, 246, 43, 6, 5, 1, 0, 0, 0, 0, 1], "monthly_covers": [1724, 1736, 964, 0, 0, 0, 0, 0, 0, 0, 0, 0], "source_labels": ["Booking Widget", "Google Reserve Integ", "Ivana Maljevic", "Gabi", "Walk In", "Sal Orzuna", "Cindy ", "Gigante Host"], "source_vals": [359, 288, 123, 116, 87, 61, 40, 20], "shift_labels": ["DINNER", "BRUNCH"], "shift_vals": [689, 100], "ev_count": 398, "ev_guests": 25174, "ev_revenue": 1985009.0, "ev_avg_size": 63, "ev_monthly_labels": [], "ev_monthly_vals": [], "room_labels": ["G Room", "Private Dining Room ", "Upper Dining Area (3", "Left Dining Area (10", "Right Dining Area (6", "Buy Out (entire rest", "Lower Dining Area (1", "Right Curved Dining "], "room_vals": [110, 91, 41, 34, 23, 23, 16, 11], "tf_total": 577, "tf_pos": 571, "tf_neg": 6, "tf_neu": 0, "fb_hour_labels": ["0:00", "1:00", "2:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"], "fb_hour_total": [42, 11, 1, 3, 4, 3, 1, 2, 7, 36, 52, 84, 144, 189], "fb_hour_neg": [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 3], "fb_dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "fb_dow_total": [0, 0, 0, 0, 0, 0, 0], "fb_dow_neg": [0, 0, 0, 0, 0, 0, 0], "rating_dist_labels": ["1", "2", "3", "4", "5"], "rating_dist_vals": [9, 1, 9, 5, 101], "rev_monthly_labels": ["2026-01", "2026-02", "2026-03"], "rev_monthly_count": [35, 55, 35], "rev_monthly_avg": [4.49, 4.33, 4.8], "insights": [{"type": "neg", "text": "No-show rate 4.4% exceeds 3-4% benchmark. <strong>Goal: Under 3% with CC holds</strong>"}, {"type": "warn", "text": "Cancel rate 16.1% above 12-15% benchmark. <strong>Goal: Under 15%</strong>"}]}, "all": {"total_res": 51630, "total_covers": 199161, "complete": 39716, "noshow": 2317, "canceled": 9498, "avg_party": 5.0, "completion_rate": 76.9, "noshow_rate": 4.5, "cancel_rate": 18.4, "dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "dow_cover_vals": [1171, 9878, 11744, 25215, 45566, 72655, 32932], "noshow_dow_pct": [3.0, 4.4, 2.9, 4.6, 5.0, 4.8, 3.8], "time_labels": ["9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"], "time_vals": [1, 18, 746, 1478, 1305, 703, 193, 405, 2775, 8054, 11456, 8536, 3203, 826, 17], "monthly_labels": ["2018-05", "2018-06", "2018-07", "2018-08", "2018-09", "2018-10", "2018-11", "2018-12", "2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09", "2026-10", "2026-11", "2026-12"], "monthly_res": [124, 656, 681, 657, 437, 443, 613, 624, 353, 556, 676, 458, 472, 532, 536, 640, 441, 453, 663, 572, 394, 524, 198, 15, 12, 750, 837, 968, 843, 810, 672, 485, 536, 542, 568, 686, 1000, 700, 879, 884, 621, 768, 615, 719, 483, 708, 541, 553, 546, 701, 812, 658, 504, 509, 498, 651, 455, 586, 447, 503, 493, 564, 610, 550, 423, 447, 486, 676, 383, 498, 467, 391, 462, 531, 399, 410, 354, 475, 525, 651, 405, 573, 489, 550, 657, 545, 456, 469, 360, 449, 496, 501, 372, 443, 246, 43, 6, 5, 1, 0, 0, 0, 0, 1], "monthly_covers": [374, 2039, 2022, 2113, 1541, 1385, 1717, 2274, 1303, 1812, 2133, 1832, 2290, 2033, 1886, 2346, 1692, 1543, 2145, 2355, 1581, 1584, 487, 308, 363, 1849, 2451, 2981, 2798, 2871, 2030, 1340, 1583, 1293, 1728, 2160, 3478, 2905, 2743, 2709, 2214, 3102, 2408, 2674, 1812, 2343, 2337, 2423, 2354, 2721, 2553, 2341, 2104, 2266, 2180, 3096, 1918, 1765, 2042, 2342, 2181, 2424, 2210, 1922, 1814, 1849, 2197, 2730, 1598, 1827, 2218, 1913, 2294, 2709, 1782, 1719, 1932, 2060, 2587, 3280, 1810, 1796, 2315, 2778, 3176, 2479, 2362, 2103, 1699, 2116, 2537, 3248, 1724, 1736, 964, 0, 0, 0, 0, 0, 0, 0, 0, 0], "source_labels": ["Booking Widget", "Walk In", "Google Reserve Integ", "Imported Reservation", "OT Guestcenter", "Gigante Host", "Drana Ulaj", "Gianna Bianco"], "source_vals": [15656, 6404, 4303, 3251, 3084, 2191, 2185, 1661], "shift_labels": ["DINNER", "BRUNCH", "LUNCH", "DAY", "LEGACY"], "shift_vals": [35060, 3863, 641, 59, 34], "ev_count": 398, "ev_guests": 25174, "ev_revenue": 1985009.0, "ev_avg_size": 63, "ev_monthly_labels": [], "ev_monthly_vals": [], "room_labels": ["G Room", "Private Dining Room ", "Upper Dining Area (3", "Left Dining Area (10", "Right Dining Area (6", "Buy Out (entire rest", "Lower Dining Area (1", "Right Curved Dining "], "room_vals": [110, 91, 41, 34, 23, 23, 16, 11], "tf_total": 1416, "tf_pos": 1397, "tf_neg": 19, "tf_neu": 0, "fb_hour_labels": ["0:00", "1:00", "2:00", "7:00", "8:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"], "fb_hour_total": [113, 23, 2, 1, 1, 1, 8, 11, 11, 4, 10, 26, 91, 153, 219, 346, 402], "fb_hour_neg": [2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 4, 1, 1, 2, 7], "fb_dow_labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], "fb_dow_total": [0, 0, 0, 0, 0, 0, 0], "fb_dow_neg": [0, 0, 0, 0, 0, 0, 0], "rating_dist_labels": ["1", "2", "3", "4", "5"], "rating_dist_vals": [134, 112, 218, 500, 4131], "rev_monthly_labels": ["2018-02", "2018-03", "2018-04", "2018-05", "2018-06", "2018-07", "2018-08", "2018-09", "2018-10", "2018-11", "2018-12", "2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03"], "rev_monthly_count": [1, 1, 0, 5, 42, 14, 22, 9, 20, 59, 33, 42, 86, 92, 49, 58, 61, 69, 64, 33, 32, 84, 67, 77, 71, 17, 2, 1, 112, 90, 106, 79, 72, 73, 33, 77, 55, 46, 72, 101, 77, 51, 85, 47, 66, 68, 56, 62, 67, 51, 60, 55, 70, 76, 67, 49, 47, 33, 50, 56, 37, 42, 51, 34, 55, 57, 54, 32, 47, 37, 59, 44, 50, 50, 51, 59, 54, 44, 45, 40, 46, 47, 58, 44, 58, 64, 73, 61, 75, 42, 48, 30, 57, 61, 46, 35, 55, 35], "rev_monthly_avg": [5.0, 5.0, 0, 5.0, 4.62, 4.5, 4.36, 4.67, 4.4, 4.36, 4.12, 4.12, 4.57, 4.51, 4.88, 4.67, 4.8, 4.68, 4.52, 4.67, 4.75, 4.5, 4.66, 4.77, 4.7, 4.94, 4.0, 5.0, 4.83, 4.88, 4.76, 4.77, 4.65, 4.82, 4.55, 4.82, 4.67, 4.93, 4.78, 4.75, 4.58, 4.29, 4.42, 4.77, 4.59, 4.56, 4.59, 4.5, 4.25, 4.63, 4.88, 4.56, 4.27, 4.47, 4.58, 4.71, 4.87, 4.85, 4.68, 4.66, 4.54, 4.45, 4.53, 4.59, 4.82, 4.49, 4.61, 4.69, 4.87, 4.86, 4.64, 4.82, 4.66, 4.82, 4.71, 4.63, 4.48, 4.8, 4.71, 4.72, 4.91, 4.79, 4.6, 4.55, 4.34, 4.34, 4.67, 4.77, 4.79, 4.79, 4.65, 4.5, 4.84, 4.77, 4.67, 4.49, 4.33, 4.8], "insights": [{"type": "neg", "text": "No-show rate 4.5% exceeds 3-4% benchmark. <strong>Goal: Under 3% with CC holds</strong>"}, {"type": "warn", "text": "Cancel rate 18.4% above 12-15% benchmark. <strong>Goal: Under 15%</strong>"}, {"type": "pos", "text": "Completion rate 76.9% is strong."}]}}, "strategy": {"insights": [{"category": "GUEST RETENTION", "impact": "HIGH", "effort": "LOW", "title": "78.9% of guests never return", "detail": "Of 21,792 unique guests, 17,204 visited once and never came back.", "action": "Launch post-visit SMS sequence: thank-you + return offer within 48 hours. Target 10% conversion = incremental revenue.", "benchmark": "Industry retention benchmark: 30-40% return rate for upscale-casual (NRA). Goal: 35%+"}, {"category": "REVENUE RECOVERY", "impact": "HIGH", "effort": "LOW", "title": "No-show rate at 4.5% costing revenue", "detail": "2317 no-shows in this period.", "action": "Implement CC holds for Fri/Sat prime-time + auto-confirm SMS 4 hours before reservation.", "benchmark": "Upscale-casual benchmark: 3-4% (NRA). Goal: Under 3%"}, {"category": "MARKETING", "impact": "HIGH", "effort": "LOW", "title": "SMS generating $21,609 - highest ROI channel", "detail": "29 campaigns, $745/campaign avg.", "action": "Double SMS frequency. Add automated triggers: post-visit, birthday, lapsed guest (30+ days).", "benchmark": "Restaurant SMS benchmark: 15-25% click rate. Your rate: 10.2%"}, {"category": "DATABASE GROWTH", "impact": "MEDIUM", "effort": "LOW", "title": "Only 15.4% marketing opt-in", "detail": "6,109 opted in out of 39,716 guests.", "action": "Add opt-in prompt to SevenRooms checkout flow + QR code on printed check.", "benchmark": "Restaurant marketing opt-in benchmark: 20-30%. Goal: 25%+"}, {"category": "OPERATIONS", "impact": "MEDIUM", "effort": "LOW", "title": "Cancel rate at 18.4%", "detail": "9498 cancellations.", "action": "Enable waitlist auto-fill in SevenRooms. Send SMS to waitlist when cancellation opens slot.", "benchmark": "Upscale-casual benchmark: 12-15%. Goal: Under 15%"}, {"category": "REVENUE", "impact": "MEDIUM", "effort": "MEDIUM", "title": "398 events - Mulino's cross-sell opportunity", "detail": "Avg 63 guests/event.", "action": "Auto-route 50+ guest inquiries to Mulino's. Create combined Gigante dinner + Mulino's event package.", "benchmark": "Private events are 15-25% of upscale restaurant revenue. Maximize with cross-venue upsell."}]}, "audience": {"geo": {"Westchester County": 55.3, "NYC": 30.0, "Hudson Valley": 3.4, "Fairfield County, CT": 1.9, "Other (111)": 1.8, "Nassau County, LI": 1.3, "Northern NJ": 1.0, "Suffolk County, LI": 0.5, "Other (702)": 0.3}, "frequency": {"first_timers": 17204, "returned_once": 2686, "regulars_3_5": 1460, "loyalists_6_10": 315, "vips_11_plus": 127, "total_unique": 21792}, "spend": {"avg_check": 243.0, "median_check": 183.0, "pct_under_100": 15.5, "pct_100_200": 39.6, "pct_200_350": 25.2, "pct_350_500": 9.9, "pct_500_plus": 9.9}, "party_size": {"couples_pct": 40.6, "small_3_4_pct": 29.2, "medium_5_8_pct": 17.6, "large_9_plus_pct": 11.7, "avg": 5.0, "median": 3}, "booking": {"online_pct": 33.6, "walk_in_pct": 15.9, "host_phone_pct": 37.9}, "shift": {"dinner": 88.3, "brunch": 9.7}, "optin_pct": 15.4, "repeat_rate": 21.1, "seating": {"Main Dining": 63.6, "G Room": 8.6, "Patio 1": 4.2, "Poolside Outdoor Dining": 3.9, "Poolside Dining": 3.2, "PDR": 2.5}, "total_res": 39716, "unique_guests": 21792, "toast_ltv": {"$100-250": 1498, "$250-500": 849, "$50-100": 841, "$0-50": 828, "$500-1K": 462, "$1K-2.5K": 265, "$2.5K-5K": 53, "$5K+": 20}, "toast_spend_tier": {"$200-500": 1105, "$25-50": 816, "$100-150": 601, "$50-75": 532, "$150-200": 525, "$500+": 482, "$75-100": 405, "$0-25": 350}}};
+let currentWindow='30d',currentTab='pulse';
+const charts={};
+const C={gold:'#D4A843',blue:'#3b82f6',green:'#22c55e',red:'#ef4444',purple:'#8b5cf6',cyan:'#06b6d4',amber:'#f59e0b',pink:'#ec4899',palette:['#D4A843','#3b82f6','#22c55e','#ef4444','#8b5cf6','#06b6d4','#f59e0b','#ec4899']};
+Chart.defaults.color='#999';Chart.defaults.borderColor='#222';Chart.defaults.font.family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif";Chart.defaults.font.size=11;Chart.defaults.plugins.legend.labels.usePointStyle=true;Chart.defaults.animation=false;
+
+function fmt(v,t){if(v==null)return'—';switch(t){case'$':return v>=1e6?'$'+(v/1e6).toFixed(1)+'M':v>=1e3?'$'+Math.round(v/1e3)+'K':'$'+Math.round(v).toLocaleString();case'$f':return'$'+Math.round(v).toLocaleString();case'%':return v.toFixed(1)+'%';case'n':return v>=1e6?(v/1e6).toFixed(1)+'M':v>=1e3?(v/1e3).toFixed(1)+'K':v.toLocaleString();default:return v.toLocaleString();}}
+function mkK(l,v,s,sc){return`<div class="k"><div class="lb">${l}</div><div class="vl">${v}</div>${s?`<div class="sm ${sc||''}">${s}</div>`:''}</div>`;}
+function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
+function makeChart(id,cfg){destroyChart(id);const ctx=document.getElementById(id);if(!ctx)return null;charts[id]=new Chart(ctx,cfg);return charts[id];}
+
+function barCfg(labels,data,color,label,horiz){
+  return{type:'bar',data:{labels,datasets:[{label:label||'',data,backgroundColor:color+'CC',borderColor:color,borderWidth:1,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:horiz?'y':'x',plugins:{legend:{display:false}},scales:{x:{grid:{display:horiz},beginAtZero:true},y:{grid:{display:!horiz},beginAtZero:!horiz}}}};
+}
+function lineCfg(labels,datasets){
+  return{type:'line',data:{labels,datasets:datasets.map((ds,i)=>({label:ds.label,data:ds.data,borderColor:ds.color||C.palette[i%8],backgroundColor:(ds.color||C.palette[i%8])+'20',borderWidth:2,fill:ds.fill||false,tension:0.3,pointRadius:2,pointHoverRadius:5,yAxisID:ds.yAxis||'y'}))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top'}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,position:'left'},...(datasets.some(d=>d.yAxis==='y1')?{y1:{beginAtZero:true,position:'right',grid:{display:false}}}:{})}}};
+}
+function doughCfg(labels,data,colors){
+  return{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:(colors||C.palette).map(c=>c+'CC'),borderColor:'#141414',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'right',labels:{padding:8,font:{size:11}}}}}};
+}
+function makeTable(cid,headers,rows,sortable){
+  const el=document.getElementById(cid);if(!el)return;
+  let sc=null,sd='desc';
+  function render(data){
+    let h='<table><thead><tr>'+headers.map((hdr,i)=>{const arrow=sc===i?(sd==='asc'?' &#9650;':' &#9660;'):'';return`<th data-col="${i}">${hdr}${arrow}</th>`;}).join('')+'</tr></thead><tbody>';
+    data.forEach(row=>{h+='<tr>'+row.map(c=>`<td>${c}</td>`).join('')+'</tr>';});
+    h+='</tbody></table>';el.innerHTML=h;
+    if(sortable){el.querySelectorAll('th').forEach(th=>{th.addEventListener('click',()=>{const ci=parseInt(th.dataset.col);if(sc===ci){sd=sd==='asc'?'desc':'asc';}else{sc=ci;sd='desc';}const sorted=[...data].sort((a,b)=>{let av=a[ci],bv=b[ci];const an=parseFloat(String(av).replace(/[$,%K]/g,'')),bn=parseFloat(String(bv).replace(/[$,%K]/g,''));if(!isNaN(an)&&!isNaN(bn)){av=an;bv=bn;}const cmp=av<bv?-1:av>bv?1:0;return sd==='asc'?cmp:-cmp;});render(sorted);});});}
+  }
+  render(rows);
+}
+function renderInsights(containerId,insights){
+  const el=document.getElementById(containerId);if(!el||!insights)return;
+  const icons={pos:'&#10003;',neg:'&#9888;',warn:'&#9888;',info:'&#128161;'};
+  el.innerHTML=insights.map(i=>`<div class="insight ${i.type}"><span class="ico">${icons[i.type]||'&#128161;'}</span><span>${i.text}</span></div>`).join('');
+}
+
+function showTab(tab){
+  currentTab=tab;
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.querySelectorAll('.tabs button').forEach((b,i)=>{if(['pulse','guests','marketing','operations','strategy'][i]===tab)b.classList.add('active');});
+  renderTab(tab);
+}
+function setWindow(w){
+  currentWindow=w;
+  document.querySelectorAll('.time-toggle button').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.time-toggle button').forEach(b=>{if((w==='30d'&&b.textContent.includes('30'))||(w==='ytd'&&b.textContent.includes('YTD'))||(w==='all'&&b.textContent.includes('All')))b.classList.add('active');});
+  renderTab(currentTab);
+}
+function renderTab(tab){
+  switch(tab){case'pulse':renderPulse();break;case'guests':renderGuests();break;case'marketing':renderMarketing();break;case'operations':renderOperations();break;case'strategy':renderStrategy();break;}
+}
+
+function renderPulse(){
+  const p=D.pulse[currentWindow];if(!p)return;
+  document.getElementById('pulse-kpis').innerHTML=[
+    mkK('Avg Rating',p.avg_rating.toFixed(1)+' &#11088;',`Food ${p.food_rating} | Drink ${p.drink_rating} | Service ${p.service_rating} | Ambience ${p.ambience_rating}`),
+    mkK('Reviews',fmt(p.total_reviews,'n'),'across all platforms'),
+    mkK('Reservations',fmt(p.total_res,'n'),fmt(p.total_covers,'n')+' covers'),
+    mkK('Avg Check','$'+Math.round(p.avg_spend),'Median $'+Math.round(p.median_spend)),
+    mkK('No-Show Rate',p.noshow_rate+'%',fmt(p.noshow,'n')+' total',p.noshow_rate>5?'neg':'pos'),
+    mkK('Cancel Rate',p.cancel_rate+'%',fmt(p.canceled,'n')+' total',p.cancel_rate>20?'neg':''),
+    mkK('Toast Feedback',fmt(p.tf_total,'n'),p.tf_pos_rate+'% positive',p.tf_pos_rate>=70?'pos':'neg'),
+    mkK('Recommend',p.rec_rate+'%','Would recommend to friend',p.rec_rate>=80?'pos':''),
+    mkK('SMS Revenue',fmt(p.sms_revenue,'$f'),fmt(p.sms_recipients,'n')+' recipients'),
+    mkK('IG Reach',fmt(p.ig_reach,'n'),fmt(p.ig_follows,'n')+' new follows'),
+    mkK('Events',fmt(p.events_count,'n'),fmt(p.events_guests,'n')+' guests (ref only)'),
+  ].join('');
+  renderInsights('pulse-insights',p.insights);
+  makeChart('c-rating-trend',lineCfg(p.rating_trend_labels,[{label:'Avg Rating',data:p.rating_trend_vals,color:C.gold}]));
+  makeChart('c-dow-covers',barCfg(p.dow_labels,p.dow_vals,C.gold,'Covers'));
+  makeChart('c-review-spark',{type:'bar',data:{labels:p.spark_reviews.map((_,i)=>i+1),datasets:[{data:p.spark_reviews,backgroundColor:C.blue+'99',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{beginAtZero:true}}}});
+  makeChart('c-cover-spark',{type:'bar',data:{labels:p.spark_covers.map((_,i)=>i+1),datasets:[{data:p.spark_covers,backgroundColor:C.gold+'99',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{beginAtZero:true}}}});
+}
+
+function renderGuests(){
+  const g=D.guests[currentWindow];if(!g)return;
+  document.getElementById('guests-kpis').innerHTML=[
+    mkK('Unique Guests',fmt(g.total_unique_guests,'n'),g.one_visit_pct+'% one-visit',g.one_visit_pct>70?'neg':''),
+    mkK('Avg Visits/Guest',g.avg_visits,''),
+    mkK('One & Done',fmt(g.one_visit,'n'),'Never returned','neg'),
+    mkK('2-3 Visits',fmt(g.two_three,'n'),'Developing'),
+    mkK('4+ Visits',fmt(g.four_plus,'n'),'Core regulars','pos'),
+    mkK('Pareto Effect',g.pareto_pct+'%','of visits from top 20%'),
+    mkK('Mkt Opt-In',fmt(g.optin_yes,'n'),fmt(g.optin_no,'n')+' opted out'),
+    mkK('Toast Guests',fmt(g.toast_guests,'n'),'POS database'),
+  ].join('');
+  renderInsights('guests-insights',g.insights);
+  makeChart('c-visit-dist',barCfg(g.visit_dist_labels,g.visit_dist_vals,C.gold,'Guests'));
+  if(g.rec_labels.length>0)makeChart('c-recency',barCfg(g.rec_labels,g.rec_vals,C.blue,'Guests'));
+  if(g.neg_reason_labels.length>0)makeChart('c-neg-reasons',barCfg(g.neg_reason_labels,g.neg_reason_vals,C.red,'Count',true));
+  if(g.pos_reason_labels.length>0)makeChart('c-pos-reasons',barCfg(g.pos_reason_labels,g.pos_reason_vals,C.green,'Count',true));
+  if(g.plat_labels.length>0)makeChart('c-platforms',doughCfg(g.plat_labels,g.plat_vals));
+  if(g.loyalty_labels.length>0)makeChart('c-loyalty',doughCfg(g.loyalty_labels,g.loyalty_vals));
+  
+// Unified server table - SR Food/Drink/Service/Ambience + Toast
+  if(g.server_unified&&g.server_unified.length>0){
+    makeTable('server-table',['Server','SR #','Overall','Food','Drink','Service','Ambience','Toast #','Toast +%','Toast -','Score'],
+      g.server_unified.map(r=>[r.name,r.sr_reviews||'-',r.sr_overall?r.sr_overall.toFixed(2):'-',r.sr_food?r.sr_food.toFixed(2):'-',r.sr_drink?r.sr_drink.toFixed(2):'-',r.sr_service?r.sr_service.toFixed(2):'-',r.sr_ambience?r.sr_ambience.toFixed(2):'-',r.toast_total||'-',r.toast_pos_rate?r.toast_pos_rate+'%':'-',r.toast_neg||'-',r.combined_score+'%']),true);
+  }
+  
+  if(g.top_guests.length>0){
+    makeTable('guests-table',['Guest','Visits','Covers','First Visit','Last Visit'],
+      g.top_guests.map(r=>[r.name,r.visits,r.covers,r.first,r.last]),true);
+  }
+}
+
+function renderMarketing(){
+  const m=D.marketing[currentWindow];if(!m)return;
+  renderInsights('mkt-insights',m.insights);
+  document.getElementById('sms-kpis').innerHTML=[
+    mkK('Campaigns',m.sms_count,''),
+    mkK('Revenue',fmt(m.sms_revenue,'$f'),fmt(m.sms_rev_per_camp,'$f')+'/campaign'),
+    mkK('Recipients',fmt(m.sms_recipients,'n'),m.sms_click_rate+'% click rate'),
+    mkK('Reservations',fmt(m.sms_res,'n'),fmt(m.sms_covers,'n')+' covers driven'),
+  ].join('');
+  if(m.sms_dow_labels.length>0)makeChart('c-sms-dow',barCfg(m.sms_dow_labels,m.sms_dow_vals,C.gold,'Revenue'));
+  if(m.sms_campaigns.length>0){
+    makeTable('sms-table',['Campaign','Date','Recipients','Clicks','Click%','Revenue','Res','Covers'],
+      m.sms_campaigns.map(r=>[r.name,r.date,fmt(r.recipients,'n'),r.clicks,r.click_rate+'%',fmt(r.revenue,'$f'),r.reservations,r.covers]),true);
+  }
+  document.getElementById('mc-kpis').innerHTML=[
+    mkK('Campaigns',m.mc_count,''),mkK('Total Sent',fmt(m.mc_sent,'n'),''),
+    mkK('Open Rate',m.mc_open_rate+'%',fmt(m.mc_opens,'n')+' opens'),
+    mkK('Click Rate',m.mc_click_rate+'%',fmt(m.mc_clicks,'n')+' clicks'),
+  ].join('');
+  if(m.mc_campaigns.length>0){
+    makeTable('mc-table',['Title','Date','Sent','Opens','Open%','Clicks','Click%'],
+      m.mc_campaigns.map(r=>[r.title,r.date,fmt(r.recipients,'n'),r.opens,(r.open_rate*100).toFixed(1)+'%',r.clicks,(r.click_rate*100).toFixed(1)+'%']),true);
+  }
+  document.getElementById('ig-kpis').innerHTML=[
+    mkK('Total Reach',fmt(m.ig_reach,'n'),m.ig_days+' days tracked'),
+    mkK('Avg Daily Reach',fmt(m.ig_avg_reach,'n'),''),
+    mkK('New Follows',fmt(m.ig_follows,'n'),''),
+    mkK('Engagement',m.ig_avg_eng+'%',fmt(m.ig_interactions,'n')+' interactions'),
+    mkK('Profile Visits',fmt(m.ig_profile,'n'),''),
+    mkK('Link Clicks',fmt(m.ig_link,'n'),''),
+  ].join('');
+  if(m.ig_trend_labels.length>0){
+    makeChart('c-ig-trend',lineCfg(m.ig_trend_labels.map(d=>d.substring(5)),[{label:'Reach',data:m.ig_trend_reach,color:C.blue},{label:'Follows',data:m.ig_trend_follows,color:C.gold,yAxis:'y1'}]));
+  }
+  if(m.ig_dow_labels.length>0)makeChart('c-ig-dow',barCfg(m.ig_dow_labels,m.ig_dow_vals,C.purple,'Avg Reach'));
+  if(m.ig_posts.length>0){
+    makeTable('ig-posts-table',['Date','Type','Reach','Likes','Saves','Eng%'],
+      m.ig_posts.map(r=>[r.date,r.type,fmt(r.reach,'n'),r.likes,r.saves,r.eng_rate+'%']),true);
+  }
+  const gbp=m.gbp_kpis||{};
+  document.getElementById('gbp-kpis').innerHTML=[
+    mkK('Impressions',fmt(gbp.total_impressions||0,'n'),(gbp.avg_daily_impressions||0)+' avg/day'),
+    mkK('Direction Requests',fmt(gbp.total_directions||0,'n'),''),
+    mkK('Website Clicks',fmt(gbp.total_clicks||0,'n'),''),
+    mkK('Conversion',fmt(gbp.conversion_rate||0)+'%',gbp.trend_direction||''),
+  ].join('');
+  if(m.channels.length>0){
+    makeTable('channel-table',['Channel','Campaigns','Reach','Engagement','Revenue','Notes'],
+      m.channels.map(r=>[r.channel,r.campaigns||'—',fmt(r.reach,'n'),r.engagement,r.revenue?fmt(r.revenue,'$f'):'—',r.note]),true);
+  }
+}
+
+function renderOperations(){
+  const o=D.operations[currentWindow];if(!o)return;
+  renderInsights('ops-insights',o.insights);
+  document.getElementById('ops-res-kpis').innerHTML=[
+    mkK('Reservations',fmt(o.total_res,'n'),fmt(o.total_covers,'n')+' covers'),
+    mkK('Avg Party',o.avg_party,'covers'),
+    mkK('Completion',o.completion_rate+'%',fmt(o.complete,'n'),o.completion_rate>=75?'pos':'neg'),
+    mkK('No-Shows',o.noshow_rate+'%',fmt(o.noshow,'n'),o.noshow_rate>5?'neg':'pos'),
+    mkK('Cancellations',o.cancel_rate+'%',fmt(o.canceled,'n'),o.cancel_rate>20?'neg':''),
+  ].join('');
+  makeChart('c-ops-dow',barCfg(o.dow_labels,o.dow_cover_vals,C.gold,'Covers'));
+  if(o.time_labels.length>0)makeChart('c-ops-time',barCfg(o.time_labels,o.time_vals,C.blue,'Reservations'));
+  if(o.monthly_labels.length>0)makeChart('c-ops-monthly',lineCfg(o.monthly_labels,[{label:'Reservations',data:o.monthly_res,color:C.blue},{label:'Covers',data:o.monthly_covers,color:C.gold,yAxis:'y1'}]));
+  makeChart('c-noshow-dow',barCfg(o.dow_labels,o.noshow_dow_pct,C.red,'No-Show %'));
+  if(o.source_labels.length>0)makeChart('c-source',barCfg(o.source_labels,o.source_vals,C.purple,'Bookings',true));
+  if(o.shift_labels.length>0)makeChart('c-shift',doughCfg(o.shift_labels,o.shift_vals));
+  document.getElementById('ops-ev-kpis').innerHTML=[
+    mkK('Events',fmt(o.ev_count,'n'),''),
+    mkK('Total Guests',fmt(o.ev_guests,'n'),'Avg '+o.ev_avg_size+'/event'),
+    mkK('Booked Revenue',fmt(o.ev_revenue,'$f'),'Reference only'),
+  ].join('');
+  if(o.ev_monthly_labels.length>0)makeChart('c-ev-monthly',barCfg(o.ev_monthly_labels,o.ev_monthly_vals,C.gold,'Events'));
+  if(o.room_labels.length>0)makeChart('c-ev-rooms',barCfg(o.room_labels,o.room_vals,C.purple,'Events',true));
+  const posRate=o.tf_total>0?((o.tf_pos/o.tf_total)*100).toFixed(1):0;
+  document.getElementById('ops-tf-kpis').innerHTML=[
+    mkK('Feedback',fmt(o.tf_total,'n'),''),
+    mkK('Positive',fmt(o.tf_pos,'n'),posRate+'%','pos'),
+    mkK('Negative',fmt(o.tf_neg,'n'),'','neg'),
+    mkK('Neutral',fmt(o.tf_neu,'n'),''),
+  ].join('');
+  if(o.fb_hour_labels.length>0)makeChart('c-fb-hour',{type:'bar',data:{labels:o.fb_hour_labels,datasets:[{label:'Total',data:o.fb_hour_total,backgroundColor:C.blue+'99',borderRadius:3},{label:'Negative',data:o.fb_hour_neg,backgroundColor:C.red+'99',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{x:{grid:{display:false}},y:{beginAtZero:true}}}});
+  if(o.fb_dow_labels.length>0)makeChart('c-fb-dow',{type:'bar',data:{labels:o.fb_dow_labels,datasets:[{label:'Total',data:o.fb_dow_total,backgroundColor:C.blue+'99',borderRadius:3},{label:'Negative',data:o.fb_dow_neg,backgroundColor:C.red+'99',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{x:{grid:{display:false}},y:{beginAtZero:true}}}});
+  if(o.rating_dist_labels.length>0)makeChart('c-rating-dist',barCfg(o.rating_dist_labels.map(l=>l+' Star'),o.rating_dist_vals,C.gold,'Reviews'));
+  if(o.rev_monthly_labels.length>0)makeChart('c-rev-monthly',lineCfg(o.rev_monthly_labels,[{label:'Reviews',data:o.rev_monthly_count,color:C.blue},{label:'Avg Rating',data:o.rev_monthly_avg,color:C.gold,yAxis:'y1'}]));
+}
+
+function renderStrategy(){
+  const s=D.strategy;if(!s||!s.insights)return;
+  document.getElementById('strategy-cards').innerHTML=s.insights.map((ins,i)=>`
+    <div class="strat-card">
+      <div class="strat-head">
+        <div class="strat-num">${i+1}</div>
+        <div style="flex:1">
+          <div class="strat-cat">${ins.category}</div>
+          <div class="strat-title">${ins.title}</div>
+        </div>
+        <span class="badge ${ins.impact==='HIGH'?'high':ins.impact==='MEDIUM'?'med':'low'}">${ins.impact} Impact</span>
+        <span class="badge ${ins.effort==='LOW'?'low':ins.effort==='MEDIUM'?'med':'high'}">${ins.effort} Effort</span>
+      </div>
+      <div class="strat-detail">${ins.detail}</div>
+      <div class="strat-action"><strong>Action:</strong> ${ins.action}</div>
+      ${ins.benchmark?'<div style="margin-top:8px;padding:6px 10px;background:#1a1a2a;border-radius:4px;border-left:3px solid #3b82f6;font-size:11px;color:#93c5fd"><strong>Benchmark:</strong> '+ins.benchmark+'</div>':''}
+    </div>
+  `).join('');
+}
+
+// === AI CHAT ===
+function toggleChat(){document.getElementById('chatPanel').classList.toggle('open');if(document.getElementById('chatPanel').classList.contains('open'))document.getElementById('chatInput').focus();}
+document.getElementById('chatToggle').addEventListener('click',toggleChat);
+function sendChat(){const input=document.getElementById('chatInput');const q=input.value.trim();if(!q)return;input.value='';addMsg('user',q);setTimeout(()=>addMsg('ai',processQ(q)),300);}
+function addMsg(type,text){const el=document.getElementById('chatMessages');const div=document.createElement('div');div.className='chat-msg '+type;div.innerHTML='<span>'+text+'</span>';el.appendChild(div);el.scrollTop=el.scrollHeight;}
+
+function processQ(q){
+  const ql=q.toLowerCase(),w=currentWindow;
+  const p=D.pulse[w],g=D.guests[w],m=D.marketing[w],o=D.operations[w],aud=D.audience||{};
+
+  // AUDIENCE & DEMOGRAPHICS
+  if(ql.includes('audience')||ql.includes('demographic')||ql.includes('who are our')||ql.includes('customer profile')||ql.includes('who comes')||ql.includes('guest profile')||ql.includes('who dines')){
+    const geo=aud.geo||{},sp=aud.spend||{},ps=aud.party_size||{},bk=aud.booking||{},fr=aud.frequency||{};
+    return`<strong>Audience & Demographic Profile</strong><br><br>`+
+      `<strong>Geography (by phone area code):</strong><br>`+
+      Object.entries(geo).map(([k,v])=>`&bull; ${k}: ${v}%`).join('<br>')+
+      `<br><br><strong>Guest Segments:</strong><br>`+
+      `&bull; <strong>The Connector (Primary, 28-45):</strong> NYC transplants to Westchester, $150-250K HHI. Discover via Instagram, book online (${bk.online_pct||0}% book digitally). Come for dinner that turns into a night. FOMO-driven, post Stories, return in 2-4 weeks.<br>`+
+      `&bull; <strong>The VIP (Secondary, 35-55):</strong> Entrepreneurs, public figures, $300K+. Book private dining, expect name recognition. High spend per visit ($350-500+ range = ${sp.pct_350_500||0}% + ${sp.pct_500_plus||0}% = ${((sp.pct_350_500||0)+(sp.pct_500_plus||0)).toFixed(1)}% of checks).<br>`+
+      `&bull; <strong>The Regular (Tertiary, 40-65):</strong> Eastchester/Tuckahoe locals. Dine Tue-Thu or Sunday brunch (${aud.shift?.brunch||0}% brunch). Walk-in (${bk.walk_in_pct||0}%) or phone. Loyal, consistent.<br><br>`+
+      `<strong>Data-Backed Profile:</strong><br>`+
+      `&bull; ${fr.total_unique||0} unique guests | ${aud.repeat_rate||0}% repeat rate<br>`+
+      `&bull; Avg check: <strong>$${sp.avg_check||0}</strong> (median $${sp.median_check||0})<br>`+
+      `&bull; ${ps.couples_pct||0}% couples (2-top) | ${ps.small_3_4_pct||0}% small groups (3-4) | ${ps.medium_5_8_pct||0}% medium (5-8) | ${ps.large_9_plus_pct||0}% large (9+)<br>`+
+      `&bull; ${aud.shift?.dinner||0}% dinner | ${aud.shift?.brunch||0}% brunch<br>`+
+      `&bull; Marketing opt-in: ${aud.optin_pct||0}%<br>`+
+      `&bull; 55% Westchester + 30% NYC = 85% within 30-min radius`;
+  }
+
+  // BRAND VOICE & POSITIONING
+  if(ql.includes('brand')||ql.includes('positioning')||ql.includes('what is gigante')||ql.includes('who are we')||ql.includes('identity')){
+    return`<strong>Gigante Brand Positioning</strong><br><br>`+
+      `<strong>Category:</strong> Luxury social dining in Westchester<br>`+
+      `<strong>Consumer Line:</strong> "Dinner with a scene"<br>`+
+      `<strong>Support:</strong> A stylish dinner destination with energy that builds into the night<br><br>`+
+      `<strong>Brand Pillars:</strong><br>`+
+      `1. Italian Roots, Modern Expression<br>2. Energy That Builds (dinner -> nightlife progression)<br>3. The Room Is the Product<br>4. Celebration-Ready, Always<br><br>`+
+      `<strong>Internal Truth:</strong> Food builds credibility. The room builds desire. The crowd builds momentum.<br><br>`+
+      `<strong>Data Proof Points:</strong><br>`+
+      `&bull; ${p.avg_rating}/5 avg rating from ${p.total_reviews} reviews validates food credibility<br>`+
+      `&bull; ${p.rec_rate}% recommend rate = strong word-of-mouth<br>`+
+      `&bull; $${Math.round(p.avg_spend)} avg check = premium positioning confirmed<br>`+
+      `&bull; ${aud.geo?.['Westchester County']||55}% Westchester + ${aud.geo?.NYC||30}% NYC draw — not just local`;
+  }
+
+  // MARKETING COPY & CREATIVE GUIDANCE
+  if(ql.includes('copy')||ql.includes('caption')||ql.includes('marketing idea')||ql.includes('creative')||ql.includes('tagline')||ql.includes('messaging')||ql.includes('what should we post')||ql.includes('content idea')){
+    const topDay=o.dow_labels[o.dow_cover_vals.indexOf(Math.max(...o.dow_cover_vals))];
+    return`<strong>Marketing & Creative Guidance (Data-Informed)</strong><br><br>`+
+      `<strong>Voice Rules:</strong> Confident, understated, Apple-level brevity. No "gourmet/luxurious/indulge/delectable/curated/bespoke." Dinner-led always — nightlife supports, never leads.<br><br>`+
+      `<strong>Top Performing Angles (by data):</strong><br>`+
+      `&bull; <strong>Saturday energy:</strong> ${topDay} is your biggest day — lean into "Saturdays at Gigante" content<br>`+
+      `&bull; <strong>Food credibility:</strong> ${p.food_rating}/5 food rating — showcase dishes, not just vibes<br>`+
+      `&bull; <strong>Couples:</strong> ${aud.party_size?.couples_pct||40}% are 2-tops — date night content converts<br>`+
+      `&bull; <strong>NYC draw:</strong> ${aud.geo?.NYC||30}% from NYC — "The night Manhattan travels for" angle<br><br>`+
+      `<strong>Approved Caption Templates:</strong><br>`+
+      `&bull; "Your table is waiting"<br>`+
+      `&bull; "Thursday night. You know where"<br>`+
+      `&bull; "The kind of night you do not plan - it just happens"<br>`+
+      `&bull; "Come for dinner. Forget to leave."<br>`+
+      `&bull; "Somewhere between dinner and downtown"<br><br>`+
+      `<strong>Channel Strategy:</strong><br>`+
+      `&bull; SMS: ${m.sms_count} campaigns = $${Math.round(m.sms_revenue)} rev — highest ROI, double down<br>`+
+      `&bull; IG: ${fmt(m.ig_reach,'n')} reach, ${m.ig_avg_eng}% eng — Reels > static, Sat content peaks<br>`+
+      `&bull; Email: ${m.mc_open_rate}% open rate — subject lines: "This weekend" / "Your table"`;
+  }
+
+  // EVENT MARKETING
+  if(ql.includes('event copy')||ql.includes('event marketing')||ql.includes('promote event')||ql.includes('event announcement')){
+    return`<strong>Event Marketing Templates</strong><br><br>`+
+      `<strong>Format:</strong><br>[EVENT NAME] - ALL CAPS<br>[Day], [Date] | Doors at [Time]<br>[One sentence - energy, not logistics]<br>Reservations: [link]<br><br>`+
+      `<strong>Example — Weekly:</strong><br>SATURDAYS AT GIGANTE<br>Every Saturday, dinner turns into the night. Live DJ. Full bar. The energy you\\'ve been looking for - without leaving Westchester.<br><br>`+
+      `<strong>Example — Special:</strong><br>GIGANTE WHITE PARTY<br>[Date] | Doors at 8PM<br>One night. All white. The event of the summer.<br>Limited availability - reserve now.<br><br>`+
+      `<strong>Data context:</strong> ${o.ev_count} events this period, avg ${o.ev_avg_size} guests. Groups 50+ auto-route to Mulino's at Lake Isle (up to 500 guests, 20K sq ft).`;
+  }
+
+  // SEATING & VENUE
+  if(ql.includes('seating')||ql.includes('table')||ql.includes('section')||ql.includes('patio')||ql.includes('pdr')||ql.includes('where do')){
+    const seat=aud.seating||{};
+    return`<strong>Seating Preferences</strong><br><br>`+
+      Object.entries(seat).map(([k,v])=>`&bull; ${k}: ${v}%`).join('<br>')+
+      `<br><br>Main Dining dominates, but G Room (8.6%) and Patios (~8%) show strong demand for semi-private and outdoor.<br>PDR at 2.5% — underutilized asset for VIP/private dining upsell.`;
+  }
+
+  // BOOKING CHANNELS
+  if(ql.includes('booking')||ql.includes('how do people book')||ql.includes('reservation channel')||ql.includes('walk-in')||ql.includes('google reserve')){
+    const bk=aud.booking||{};
+    return`<strong>Booking Channels</strong><br><br>`+
+      `&bull; Online (Widget + Google): <strong>${bk.online_pct||0}%</strong><br>`+
+      `&bull; Host/Staff/Phone: <strong>${bk.host_phone_pct||0}%</strong><br>`+
+      `&bull; Walk-ins: <strong>${bk.walk_in_pct||0}%</strong><br><br>`+
+      `${bk.online_pct>30?"Online booking is strong - optimize SevenRooms widget placement and Google Reserve integration.":"Push digital booking harder - it reduces staff phone time and captures guest data for remarketing."}`;
+  }
+
+  // COLORS & VISUAL BRAND
+  if(ql.includes('color')||ql.includes('font')||ql.includes('visual')||ql.includes('design')||ql.includes('palette')){
+    return`<strong>Gigante Visual Identity</strong><br><br>`+
+      `<strong>Primary Palette:</strong><br>`+
+      `&bull; Deep Black: #0A0A0A (backgrounds)<br>`+
+      `&bull; Warm Gold: #D4A843 / #C9A84C (accent, headlines)<br>`+
+      `&bull; Cream: #E8DCC8 / #D4C5A0 (text on dark)<br><br>`+
+      `<strong>Nightlife Accents:</strong><br>`+
+      `&bull; Purple: #4A0E78 / #7B2FBE<br>`+
+      `&bull; Hot Pink: #FF1493<br><br>`+
+      `<strong>Typography:</strong> Montserrat (headings) + clean sans-serif body<br>`+
+      `<strong>Pairings:</strong> Standard = #0A0A0A bg + #D4A843 + #E8DCC8 text | Nightlife = add #FF1493 + #7B2FBE`;
+  }
+
+  // ORIGINAL QUERIES (kept intact)
+  if(ql.includes('rating')||ql.includes('review score')||ql.includes('stars')||ql.includes('satisfaction')){
+    return`<strong>Guest Satisfaction (${w})</strong><br>Overall: <strong>${p.avg_rating}/5</strong> from ${fmt(p.total_reviews,'n')} reviews<br>Food: ${p.food_rating} | Drink: ${p.drink_rating} | Service: ${p.service_rating} | Ambience: ${p.ambience_rating}<br>Recommend rate: ${p.rec_rate}%<br>Toast: ${p.tf_pos_rate}% positive sentiment<br><br>${p.service_rating<p.food_rating?"<strong>Key finding:</strong> Service trails food by "+(p.food_rating-p.service_rating).toFixed(1)+" pts across "+p.total_reviews+" reviews. This is your #1 coachable gap.":"Service and food quality are aligned - strong consistency."}`;
+  }
+  if(ql.includes('cover')||ql.includes('busiest')||ql.includes('most covers')){
+    const mx=Math.max(...o.dow_cover_vals),mn=Math.min(...o.dow_cover_vals.filter(v=>v>0));
+    return`<strong>Cover Analysis (${w})</strong><br>Total: <strong>${fmt(o.total_covers,'n')}</strong> covers, ${fmt(o.total_res,'n')} reservations<br>Busiest: <strong>${o.dow_labels[o.dow_cover_vals.indexOf(mx)]}</strong> (${fmt(mx,'n')})<br>Slowest: <strong>${o.dow_labels[o.dow_cover_vals.indexOf(mn)]}</strong> (${fmt(mn,'n')})<br>Avg party: ${o.avg_party}<br>Avg check: $${Math.round(p.avg_spend)}<br><br>Gap between peak and trough is ${(mx/mn).toFixed(1)}x - targeted promos on slow days could smooth revenue.`;
+  }
+  if(ql.includes('no-show')||ql.includes('no show')||ql.includes('noshow')){
+    const cost=Math.round(o.noshow*2.5*p.avg_spend);
+    return`<strong>No-Show Intelligence (${w})</strong><br>Rate: <strong>${o.noshow_rate}%</strong> (${fmt(o.noshow,'n')} of ${fmt(o.total_res,'n')})<br>Est. lost revenue: <strong>$${cost.toLocaleString()}</strong><br>Worst day: ${o.dow_labels[o.noshow_dow_pct.indexOf(Math.max(...o.noshow_dow_pct))]} (${Math.max(...o.noshow_dow_pct)}%)<br><br>Industry avg: 3-4%. ${o.noshow_rate>4?"You are above - CC holds for prime-time would recover 40-60%.":"You are in range but every no-show costs ~$"+Math.round(2.5*p.avg_spend)+"."}`;
+  }
+  if(ql.includes('retention')||ql.includes('return')||ql.includes('one visit')||ql.includes('repeat')||ql.includes('loyal')){
+    return`<strong>Retention Analysis (${w})</strong><br>Unique guests: <strong>${fmt(g.total_unique_guests,'n')}</strong><br>One-visit: <strong>${g.one_visit_pct}%</strong> (${fmt(g.one_visit,'n')})<br>2-3 visits: ${fmt(g.two_three,'n')} | 4+: ${fmt(g.four_plus,'n')}<br>Top 20% drive ${g.pareto_pct}% of visits<br><br>${g.one_visit_pct>70?"<strong>Critical:</strong> Converting 10% of one-timers = ~$"+(g.one_visit*0.1*p.avg_spend/1000).toFixed(0)+"K incremental. Post-visit SMS is the move.":"Retention looks solid."}`;
+  }
+  if(ql.includes('server')||ql.includes('staff')||ql.includes('performance')){
+    if(g.server_unified&&g.server_unified.length>0){
+      const b=g.server_unified[0],w2=g.server_unified[g.server_unified.length-1];
+      let detail=`<strong>Server Performance (${w})</strong><br>Data: SevenRooms (food/drink/service/ambience out of 5) + Toast feedback combined<br><br>`;
+      detail+=`<strong>Top:</strong> ${b.name} - Overall ${b.sr_overall}/5`;
+      if(b.sr_food)detail+=` | Food ${b.sr_food}`;
+      if(b.sr_service)detail+=` | Service ${b.sr_service}`;
+      detail+=` | Toast ${b.toast_pos_rate}% pos (${b.toast_total})<br>`;
+      detail+=`<strong>Needs coaching:</strong> ${w2.name} - Overall ${w2.sr_overall}/5`;
+      if(w2.sr_food)detail+=` | Food ${w2.sr_food}`;
+      if(w2.sr_service)detail+=` | Service ${w2.sr_service}`;
+      detail+=` | Toast ${w2.toast_pos_rate}% pos (${w2.toast_total})<br><br>`;
+      detail+=`Shadow program: pair ${w2.name} with ${b.name} during Fri/Sat peak. See full table below for per-server SR food/drink/service/ambience breakdown.`;
+      return detail;}
+    return'No server data for this period.';
+  }
+  if(ql.includes('sms')||ql.includes('text message')){
+    return`<strong>SMS Performance (${w})</strong><br>Campaigns: ${m.sms_count} | Revenue: <strong>${fmt(m.sms_revenue,'$f')}</strong><br>Recipients: ${fmt(m.sms_recipients,'n')} | Click rate: ${m.sms_click_rate}%<br>Reservations: ${fmt(m.sms_res,'n')} (${fmt(m.sms_covers,'n')} covers)<br>Rev/campaign: ${fmt(m.sms_rev_per_camp,'$f')}<br><br>SMS is your highest-ROI channel. Double frequency and add automated triggers.`;
+  }
+  if(ql.includes('instagram')||ql.includes('ig ')||ql.includes('social')){
+    return`<strong>Instagram (${w})</strong><br>Reach: <strong>${fmt(m.ig_reach,'n')}</strong> | Daily avg: ${fmt(m.ig_avg_reach,'n')}<br>New follows: ${fmt(m.ig_follows,'n')} | Engagement: ${m.ig_avg_eng}%<br>Profile visits: ${fmt(m.ig_profile,'n')} | Link clicks: ${fmt(m.ig_link,'n')}<br><br>Focus on Reels - they drive 3-5x the reach of static posts. Collaborate with Westchester micro-influencers.`;
+  }
+  if(ql.includes('email')||ql.includes('mailchimp')){
+    return`<strong>Email Marketing (${w})</strong><br>Campaigns: ${m.mc_count} | Open rate: ${m.mc_open_rate}% | Click rate: ${m.mc_click_rate}%<br>Total sent: ${fmt(m.mc_sent,'n')} | Opens: ${fmt(m.mc_opens,'n')} | Clicks: ${fmt(m.mc_clicks,'n')}<br><br><strong>Best subject lines:</strong> "This weekend" / "Your table" / "Thursday is calling"<br>Restaurant avg open rate: 18-22%. ${m.mc_open_rate>22?"You are above - keep it up.":"Room to improve - A/B test subject lines with urgency."}`;
+  }
+  if(ql.includes('opportunity')||ql.includes('revenue')||ql.includes('biggest')||ql.includes('most important')){
+    return`<strong>Top 3 Revenue Opportunities</strong><br><br>1. <strong>Guest Retention</strong> - ${g.one_visit_pct}% never return. 10% conversion = ~$${Math.round(g.one_visit*0.1*p.avg_spend/1000)}K<br>2. <strong>No-Show Recovery</strong> - ${o.noshow_rate}% rate costs ~$${Math.round(o.noshow*2.5*p.avg_spend/1000)}K in lost revenue<br>3. <strong>SMS Scaling</strong> - ${fmt(m.sms_revenue,'$f')} from ${m.sms_count} campaigns. Double frequency = double revenue.<br><br>All three are HIGH impact, LOW effort. Start with the post-visit SMS sequence.`;
+  }
+  if(ql.includes('event')||ql.includes('private')||ql.includes('tripleseat')){
+    return`<strong>Private Events (${w})</strong><br>Events: <strong>${fmt(o.ev_count,'n')}</strong> | Guests: ${fmt(o.ev_guests,'n')} (avg ${o.ev_avg_size})<br>Booked revenue: ${fmt(o.ev_revenue,'$f')}<br><br><em>Note: Already in Toast/SR - not double-counted.</em><br>50+ guest events should auto-trigger Mulino's upsell.`;
+  }
+  if(ql.includes('spend')||ql.includes('check')||ql.includes('average')){
+    const sp=aud.spend||{};
+    return`<strong>Spend Analysis (${w})</strong><br>Avg check: <strong>$${Math.round(p.avg_spend)}</strong> | Median: $${Math.round(p.median_spend)}<br><br><strong>Spend Distribution:</strong><br>&bull; Under $100: ${sp.pct_under_100||0}%<br>&bull; $100-200: ${sp.pct_100_200||0}%<br>&bull; $200-350: ${sp.pct_200_350||0}%<br>&bull; $350-500: ${sp.pct_350_500||0}%<br>&bull; $500+: ${sp.pct_500_plus||0}%<br><br>The median ($${sp.median_check||0}) being lower than mean ($${sp.avg_check||0}) = high-spending outliers from private dining and bottle service. Target the $200-350 segment for upsell to $350+.`;
+  }
+  if(ql.includes('target')||ql.includes('persona')||ql.includes('segment')){
+    return`<strong>Target Audience Personas</strong><br><br>`+
+      `<strong>1. The Connector (Primary, 30-42)</strong><br>$150-250K HHI. Scarsdale/Bronxville/Pelham. Ex-NYC, misses city energy. Discovers on IG, books online. Comes for dinner that becomes a night. FOMO-driven.<br>Hook: Atmosphere-first content, Saturday night as an event<br><br>`+
+      `<strong>2. The VIP (Secondary, 38-52)</strong><br>$300K+. Entrepreneur or public figure. Books private dining, expects recognition. High spend, moderate frequency.<br>Hook: "Your room is ready," VIP without velvet-rope performance<br><br>`+
+      `<strong>3. The Regular (Tertiary, 40-62)</strong><br>$120-200K. Eastchester/Tuckahoe locals. Tue-Thu dinner or Sunday brunch. Phone/walk-in. Steady biweekly cadence.<br>Hook: Food quality, seasonal specials, "Your neighborhood spot - elevated"`;
+  }
+  if(ql.includes('mulino')||ql.includes('catering')||ql.includes('wedding')){
+    return`<strong>Mulino's at Lake Isle</strong><br><br>20,000 sq ft Gatsby-inspired event space. 50-500 guests. Weddings, corporate, celebrations.<br>"Best Wedding Venue" - Westchester Mag 2019-2021.<br><br>Groups 50+ at Gigante auto-route here. Separate ownership, shared branding under Gigante Hospitality umbrella.`;
+  }
+  if(ql.includes('snack shack')||ql.includes('pool')||ql.includes('seasonal')){
+    return`<strong>Snack Shack</strong><br><br>Seasonal quick-serve at Lake Isle. Two windows: pool-side (6K+ members) + golf-turn (public + members).<br>Toast POS. Peak summer operation.<br><br>Cross-sell opportunity: Snack Shack members -> Gigante dinner reservations via QR codes on receipts.`;
+  }
+  return`I can analyze: <strong>audience/demographics, brand positioning, marketing copy, ratings, covers, no-shows, retention, servers, SMS, Instagram, email, events, spend, revenue opportunities, booking channels, seating, target personas, colors/design, event marketing, Mulino\\'s, and Snack Shack.</strong><br><br>Try:<br>&bull; "What is our audience and demographic?"<br>&bull; "Give me creative/marketing ideas"<br>&bull; "What's our brand positioning?"<br>&bull; "What's our biggest revenue opportunity?"<br>&bull; "Compare server performance"<br>&bull; "How do people book?"<br>&bull; "What are our brand colors?"`;
+}
+
+// Init
+renderPulse();
+</script>
+</body>
+</html>

@@ -163,6 +163,7 @@ tr:hover td{background:#1a1a1a}
   <button onclick="showTab('marketing')">&#128226; Marketing</button>
   <button onclick="showTab('operations')">&#9881; Operations</button>
   <button onclick="showTab('strategy')">&#127919; Strategy</button>
+  <button onclick="showTab('gbp')">&#128200; GBP</button>
 </div>
 
 <div class="tab-panel active" id="tab-pulse">
@@ -193,7 +194,7 @@ tr:hover td{background:#1a1a1a}
     <div class="chart-box"><h3>Review Platforms</h3><canvas id="c-platforms"></canvas></div>
     <div class="chart-box"><h3>Loyalty Tiers</h3><canvas id="c-loyalty"></canvas></div>
   </div>
-  <div class="tbl-wrap"><h3>&#11088; Unified Server Performance — SevenRooms Reviews + Toast Feedback Combined</h3><div id="server-table"></div></div>
+  <div class="tbl-wrap"><h3>&#11088; Unified Server Performance — Bayesian Weighted (SevenRooms + Toast, Identity-Merged)</h3><div id="server-table"></div></div>
   <div class="tbl-wrap"><h3>Top Guests by Visits</h3><div id="guests-table"></div></div>
 </div>
 
@@ -263,6 +264,24 @@ tr:hover td{background:#1a1a1a}
   <div class="sec-hdr"><span class="ico">&#127919;</span> Prioritized Actions — Ranked by Revenue Impact</div>
   <div id="strategy-cards"></div>
 </div>
+
+<div class="tab-panel" id="tab-gbp">
+  <div class="sec-hdr"><span class="ico">&#128200;</span> Google Business Profile — Search + Maps Performance</div>
+  <div class="kpi-row" id="gbp-kpis"></div>
+  <div class="insight-row" id="gbp-insights"></div>
+  <div class="chart-grid">
+    <div class="chart-box chart-full"><h3>Daily Impressions <span>Search + Maps</span></h3><canvas id="c-gbp-impressions"></canvas></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Direction Requests <span>Daily</span></h3><canvas id="c-gbp-directions"></canvas></div>
+    <div class="chart-box"><h3>Website Clicks <span>Daily</span></h3><canvas id="c-gbp-clicks"></canvas></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-box"><h3>Avg by Day of Week</h3><canvas id="c-gbp-dow"></canvas></div>
+    <div class="chart-box"><h3>Monthly Totals</h3><canvas id="c-gbp-monthly"></canvas></div>
+  </div>
+  <div class="tbl-wrap"><h3>Daily Detail</h3><div id="gbp-table"></div></div>
+</div>
 </div>
 
 <button class="chat-toggle" id="chatToggle" title="Ask about your data">&#9889;</button>
@@ -320,7 +339,7 @@ function showTab(tab){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
-  document.querySelectorAll('.tabs button').forEach((b,i)=>{if(['pulse','guests','marketing','operations','strategy'][i]===tab)b.classList.add('active');});
+  document.querySelectorAll('.tabs button').forEach((b,i)=>{if(['pulse','guests','marketing','operations','strategy','gbp'][i]===tab)b.classList.add('active');});
   renderTab(tab);
 }
 function setWindow(w){
@@ -330,7 +349,7 @@ function setWindow(w){
   renderTab(currentTab);
 }
 function renderTab(tab){
-  switch(tab){case'pulse':renderPulse();break;case'guests':renderGuests();break;case'marketing':renderMarketing();break;case'operations':renderOperations();break;case'strategy':renderStrategy();break;}
+  switch(tab){case'pulse':renderPulse();break;case'guests':renderGuests();break;case'marketing':renderMarketing();break;case'operations':renderOperations();break;case'strategy':renderStrategy();break;case'gbp':renderGBP();break;}
 }
 
 function renderPulse(){
@@ -377,8 +396,40 @@ function renderGuests(){
   
 // Unified server table - SR Food/Drink/Service/Ambience + Toast
   if(g.server_unified&&g.server_unified.length>0){
-    makeTable('server-table',['Server','SR #','Overall','Food','Drink','Service','Ambience','Toast #','Toast +%','Toast -','Score'],
-      g.server_unified.map(r=>[r.name,r.sr_reviews||'-',r.sr_overall?r.sr_overall.toFixed(2):'-',r.sr_food?r.sr_food.toFixed(2):'-',r.sr_drink?r.sr_drink.toFixed(2):'-',r.sr_service?r.sr_service.toFixed(2):'-',r.sr_ambience?r.sr_ambience.toFixed(2):'-',r.toast_total||'-',r.toast_pos_rate?r.toast_pos_rate+'%':'-',r.toast_neg||'-',r.combined_score+'%']),true);
+    // Identity merges (confirmed by Lou)
+    const mergeMap={'Errol':['Errol','Errol Fernandes'],'Angela':['Angela','Angela Marasevic'],'Fab':['Fab','Fabrisio Hernandez'],'Kelvin':['Kelvin','Kelvin Bardhi'],'Juan Daniel':['Daniel','Juan Daniel Fuentes'],'Danny O':['Danny O','Daniel Otto']};
+    const used=new Set();
+    const merged=[];
+    for(const[canonical,aliases]of Object.entries(mergeMap)){
+      let sr=null,toast=null;
+      for(const s of g.server_unified){
+        if(aliases.includes(s.name)){
+          used.add(s.name);
+          if(s.sr_reviews>0&&(!sr||s.sr_reviews>sr.sr_reviews))sr=s;
+          if(s.toast_total>0&&(!toast||s.toast_total>toast.toast_total))toast=s;
+        }
+      }
+      if(sr||toast){
+        merged.push({name:canonical+(sr&&toast?' ★':''),sr_reviews:sr?sr.sr_reviews:0,sr_overall:sr?sr.sr_overall:0,sr_food:sr?sr.sr_food:null,sr_drink:sr?sr.sr_drink:null,sr_service:sr?sr.sr_service:null,sr_ambience:sr?sr.sr_ambience:null,toast_total:toast?toast.toast_total:0,toast_pos_rate:toast?toast.toast_pos_rate:0,toast_neg:toast?toast.toast_neg:0});
+      }
+    }
+    for(const s of g.server_unified){if(!used.has(s.name))merged.push({...s});}
+    // Bayesian weighted scoring
+    const SRC=5,SRP=4.0,TC=10,TP=0.92;
+    merged.forEach(s=>{
+      const sn=s.sr_reviews,tn=s.toast_total,tot=sn+tn;
+      const srS=sn>0&&s.sr_service?((sn*s.sr_service+SRC*SRP)/(sn+SRC))/5*100:null;
+      const tS=tn>0?((s.toast_pos_rate/100*tn+TC*TP)/(tn+TC))*100:null;
+      const blend=srS!==null&&tS!==null?(srS*sn+tS*tn)/tot:srS!==null?srS:tS!==null?tS:50;
+      const conf=1-Math.exp(-tot/30);
+      s.final_score=Math.round(blend*(0.6+0.4*conf)*10)/10;
+      s.total_n=tot;s.conf=conf;
+    });
+    merged.sort((a,b)=>b.final_score-a.final_score);
+    // Tier badges
+    function tierBadge(sc){return sc>=95?'<span style="color:#22c55e;font-weight:700">★ Elite</span>':sc>=85?'<span style="color:#3b82f6;font-weight:600">Strong</span>':sc>=70?'<span style="color:#f59e0b">Developing</span>':'<span style="color:#999">Low Data</span>';}
+    makeTable('server-table',['#','Server','SR #','Svc ★','Food','Drink','Ambience','Toast #','Toast +%','Toast -','Total','Conf','Score','Tier'],
+      merged.map((r,i)=>[(i+1),r.name,r.sr_reviews||'-',r.sr_service?r.sr_service.toFixed(2):'-',r.sr_food?r.sr_food.toFixed(2):'-',r.sr_drink?r.sr_drink.toFixed(2):'-',r.sr_ambience?r.sr_ambience.toFixed(2):'-',r.toast_total||'-',r.toast_pos_rate?r.toast_pos_rate+'%':'-',r.toast_neg!=null?r.toast_neg:'-',r.total_n,Math.round(r.conf*100)+'%',r.final_score,tierBadge(r.final_score)]),true);
   }
   
   if(g.top_guests.length>0){
@@ -620,18 +671,14 @@ function processQ(q){
   }
   if(ql.includes('server')||ql.includes('staff')||ql.includes('performance')){
     if(g.server_unified&&g.server_unified.length>0){
-      const b=g.server_unified[0],w2=g.server_unified[g.server_unified.length-1];
-      let detail=`<strong>Server Performance (${w})</strong><br>Data: SevenRooms (food/drink/service/ambience out of 5) + Toast feedback combined<br><br>`;
-      detail+=`<strong>Top:</strong> ${b.name} - Overall ${b.sr_overall}/5`;
-      if(b.sr_food)detail+=` | Food ${b.sr_food}`;
-      if(b.sr_service)detail+=` | Service ${b.sr_service}`;
-      detail+=` | Toast ${b.toast_pos_rate}% pos (${b.toast_total})<br>`;
-      detail+=`<strong>Needs coaching:</strong> ${w2.name} - Overall ${w2.sr_overall}/5`;
-      if(w2.sr_food)detail+=` | Food ${w2.sr_food}`;
-      if(w2.sr_service)detail+=` | Service ${w2.sr_service}`;
-      detail+=` | Toast ${w2.toast_pos_rate}% pos (${w2.toast_total})<br><br>`;
-      detail+=`Shadow program: pair ${w2.name} with ${b.name} during Fri/Sat peak. See full table below for per-server SR food/drink/service/ambience breakdown.`;
-      return detail;}
+      return`<strong>Server Performance (${w}) — Bayesian Weighted Model</strong><br><br>`+
+        `This model uses Bayesian smoothing to prevent small-sample inflation, volume confidence weighting, and cross-platform identity merging (6 confirmed pairs).<br><br>`+
+        `<strong>Tier 1 (Elite 95+):</strong> High-volume, consistently excellent. Your floor captains for Fri/Sat peak.<br>`+
+        `<strong>Tier 2 (Strong 85-94):</strong> Reliable. Monitor for advancement.<br>`+
+        `<strong>Tier 3 (Developing 70-84):</strong> Solid but lower volume. Pair with Tier 1 during peaks.<br>`+
+        `<strong>Tier 4 (Low Data &lt;70):</strong> Scores suppressed by low review volume, not bad performance. Increase Toast feedback capture.<br><br>`+
+        `★ = Data merged from both SevenRooms + Toast<br>See full table in Guests tab for ranked breakdown.`;
+    }
     return'No server data for this period.';
   }
   if(ql.includes('sms')||ql.includes('text message')){
@@ -666,6 +713,71 @@ function processQ(q){
     return`<strong>Snack Shack</strong><br><br>Seasonal quick-serve at Lake Isle. Two windows: pool-side (6K+ members) + golf-turn (public + members).<br>Toast POS. Peak summer operation.<br><br>Cross-sell opportunity: Snack Shack members -> Gigante dinner reservations via QR codes on receipts.`;
   }
   return`I can analyze: <strong>audience/demographics, brand positioning, marketing copy, ratings, covers, no-shows, retention, servers, SMS, Instagram, email, events, spend, revenue opportunities, booking channels, seating, target personas, colors/design, event marketing, Mulino\\'s, and Snack Shack.</strong><br><br>Try:<br>&bull; "What is our audience and demographic?"<br>&bull; "Give me creative/marketing ideas"<br>&bull; "What's our brand positioning?"<br>&bull; "What's our biggest revenue opportunity?"<br>&bull; "Compare server performance"<br>&bull; "How do people book?"<br>&bull; "What are our brand colors?"`;
+}
+
+// === GBP DATA ===
+const GBP_DATA = [{"date":"2025-09-01","impressions":840,"direction_requests":6,"website_clicks":30},{"date":"2025-09-02","impressions":643,"direction_requests":12,"website_clicks":32},{"date":"2025-09-03","impressions":630,"direction_requests":7,"website_clicks":31},{"date":"2025-09-04","impressions":711,"direction_requests":15,"website_clicks":26},{"date":"2025-09-05","impressions":1013,"direction_requests":28,"website_clicks":51},{"date":"2025-09-06","impressions":1161,"direction_requests":48,"website_clicks":43},{"date":"2025-09-07","impressions":866,"direction_requests":21,"website_clicks":46},{"date":"2025-09-08","impressions":563,"direction_requests":9,"website_clicks":23},{"date":"2025-09-09","impressions":590,"direction_requests":11,"website_clicks":38},{"date":"2025-09-10","impressions":586,"direction_requests":18,"website_clicks":39},{"date":"2025-09-11","impressions":678,"direction_requests":14,"website_clicks":27},{"date":"2025-09-12","impressions":939,"direction_requests":34,"website_clicks":53},{"date":"2025-09-13","impressions":1139,"direction_requests":66,"website_clicks":74},{"date":"2025-09-14","impressions":877,"direction_requests":26,"website_clicks":34},{"date":"2025-09-15","impressions":557,"direction_requests":14,"website_clicks":35},{"date":"2025-09-16","impressions":623,"direction_requests":8,"website_clicks":57},{"date":"2025-09-17","impressions":663,"direction_requests":15,"website_clicks":57},{"date":"2025-09-18","impressions":696,"direction_requests":18,"website_clicks":24},{"date":"2025-09-19","impressions":967,"direction_requests":52,"website_clicks":69},{"date":"2025-09-20","impressions":1190,"direction_requests":49,"website_clicks":58},{"date":"2025-09-21","impressions":940,"direction_requests":28,"website_clicks":42},{"date":"2025-09-22","impressions":565,"direction_requests":3,"website_clicks":38},{"date":"2025-09-23","impressions":684,"direction_requests":10,"website_clicks":36},{"date":"2025-09-24","impressions":699,"direction_requests":11,"website_clicks":35},{"date":"2025-09-25","impressions":714,"direction_requests":16,"website_clicks":36},{"date":"2025-09-26","impressions":1095,"direction_requests":27,"website_clicks":59},{"date":"2025-09-27","impressions":1285,"direction_requests":59,"website_clicks":65},{"date":"2025-09-28","impressions":997,"direction_requests":19,"website_clicks":32},{"date":"2025-09-29","impressions":588,"direction_requests":10,"website_clicks":30},{"date":"2025-09-30","impressions":601,"direction_requests":28,"website_clicks":36},{"date":"2025-10-01","impressions":660,"direction_requests":16,"website_clicks":40},{"date":"2025-10-02","impressions":819,"direction_requests":15,"website_clicks":43},{"date":"2025-10-03","impressions":1027,"direction_requests":38,"website_clicks":42},{"date":"2025-10-04","impressions":1269,"direction_requests":51,"website_clicks":68},{"date":"2025-10-05","impressions":944,"direction_requests":23,"website_clicks":36},{"date":"2025-10-06","impressions":622,"direction_requests":6,"website_clicks":32},{"date":"2025-10-07","impressions":667,"direction_requests":10,"website_clicks":51},{"date":"2025-10-08","impressions":665,"direction_requests":15,"website_clicks":37},{"date":"2025-10-09","impressions":763,"direction_requests":19,"website_clicks":51},{"date":"2025-10-10","impressions":970,"direction_requests":43,"website_clicks":61},{"date":"2025-10-11","impressions":1366,"direction_requests":88,"website_clicks":86},{"date":"2025-10-12","impressions":997,"direction_requests":23,"website_clicks":46},{"date":"2025-10-13","impressions":730,"direction_requests":8,"website_clicks":56},{"date":"2025-10-14","impressions":634,"direction_requests":15,"website_clicks":45},{"date":"2025-10-15","impressions":733,"direction_requests":19,"website_clicks":46},{"date":"2025-10-16","impressions":816,"direction_requests":26,"website_clicks":44},{"date":"2025-10-17","impressions":1096,"direction_requests":47,"website_clicks":47},{"date":"2025-10-18","impressions":1392,"direction_requests":50,"website_clicks":78},{"date":"2025-10-19","impressions":1162,"direction_requests":39,"website_clicks":52},{"date":"2025-10-20","impressions":724,"direction_requests":0,"website_clicks":42},{"date":"2025-10-21","impressions":715,"direction_requests":3,"website_clicks":45},{"date":"2025-10-22","impressions":688,"direction_requests":14,"website_clicks":58},{"date":"2025-10-23","impressions":822,"direction_requests":15,"website_clicks":56},{"date":"2025-10-24","impressions":1127,"direction_requests":37,"website_clicks":56},{"date":"2025-10-25","impressions":1370,"direction_requests":69,"website_clicks":78},{"date":"2025-10-26","impressions":1068,"direction_requests":17,"website_clicks":49},{"date":"2025-10-27","impressions":655,"direction_requests":22,"website_clicks":47},{"date":"2025-10-28","impressions":665,"direction_requests":16,"website_clicks":60},{"date":"2025-10-29","impressions":694,"direction_requests":22,"website_clicks":70},{"date":"2025-10-30","impressions":725,"direction_requests":34,"website_clicks":73},{"date":"2025-10-31","impressions":940,"direction_requests":43,"website_clicks":69},{"date":"2025-11-01","impressions":1338,"direction_requests":81,"website_clicks":94},{"date":"2025-11-02","impressions":1059,"direction_requests":29,"website_clicks":49},{"date":"2025-11-03","impressions":631,"direction_requests":10,"website_clicks":41},{"date":"2025-11-04","impressions":678,"direction_requests":7,"website_clicks":33},{"date":"2025-11-05","impressions":695,"direction_requests":14,"website_clicks":45},{"date":"2025-11-06","impressions":853,"direction_requests":37,"website_clicks":45},{"date":"2025-11-07","impressions":1042,"direction_requests":36,"website_clicks":55},{"date":"2025-11-08","impressions":1371,"direction_requests":88,"website_clicks":72},{"date":"2025-11-09","impressions":947,"direction_requests":23,"website_clicks":50},{"date":"2025-11-10","impressions":653,"direction_requests":15,"website_clicks":40},{"date":"2025-11-11","impressions":755,"direction_requests":20,"website_clicks":45},{"date":"2025-11-12","impressions":681,"direction_requests":27,"website_clicks":37},{"date":"2025-11-13","impressions":790,"direction_requests":29,"website_clicks":64},{"date":"2025-11-14","impressions":1041,"direction_requests":62,"website_clicks":54},{"date":"2025-11-15","impressions":1191,"direction_requests":63,"website_clicks":57},{"date":"2025-11-16","impressions":775,"direction_requests":12,"website_clicks":39},{"date":"2025-11-17","impressions":566,"direction_requests":6,"website_clicks":43},{"date":"2025-11-18","impressions":614,"direction_requests":26,"website_clicks":59},{"date":"2025-11-19","impressions":598,"direction_requests":13,"website_clicks":47},{"date":"2025-11-20","impressions":735,"direction_requests":22,"website_clicks":48},{"date":"2025-11-21","impressions":938,"direction_requests":34,"website_clicks":81},{"date":"2025-11-22","impressions":1097,"direction_requests":68,"website_clicks":52},{"date":"2025-11-23","impressions":714,"direction_requests":39,"website_clicks":45},{"date":"2025-11-24","impressions":580,"direction_requests":12,"website_clicks":44},{"date":"2025-11-25","impressions":639,"direction_requests":13,"website_clicks":44},{"date":"2025-11-26","impressions":679,"direction_requests":42,"website_clicks":48},{"date":"2025-11-27","impressions":501,"direction_requests":26,"website_clicks":27},{"date":"2025-11-28","impressions":758,"direction_requests":12,"website_clicks":38},{"date":"2025-11-29","impressions":1016,"direction_requests":59,"website_clicks":67},{"date":"2025-11-30","impressions":687,"direction_requests":38,"website_clicks":41},{"date":"2025-12-01","impressions":464,"direction_requests":16,"website_clicks":35},{"date":"2025-12-02","impressions":516,"direction_requests":51,"website_clicks":39},{"date":"2025-12-03","impressions":522,"direction_requests":22,"website_clicks":55},{"date":"2025-12-04","impressions":701,"direction_requests":30,"website_clicks":59},{"date":"2025-12-05","impressions":824,"direction_requests":59,"website_clicks":49},{"date":"2025-12-06","impressions":1000,"direction_requests":53,"website_clicks":72},{"date":"2025-12-07","impressions":735,"direction_requests":38,"website_clicks":49},{"date":"2025-12-08","impressions":538,"direction_requests":10,"website_clicks":57},{"date":"2025-12-09","impressions":535,"direction_requests":22,"website_clicks":44},{"date":"2025-12-10","impressions":541,"direction_requests":43,"website_clicks":48},{"date":"2025-12-11","impressions":718,"direction_requests":115,"website_clicks":51},{"date":"2025-12-12","impressions":685,"direction_requests":53,"website_clicks":67},{"date":"2025-12-13","impressions":811,"direction_requests":81,"website_clicks":52},{"date":"2025-12-14","impressions":485,"direction_requests":13,"website_clicks":50},{"date":"2025-12-15","impressions":480,"direction_requests":31,"website_clicks":43},{"date":"2025-12-16","impressions":540,"direction_requests":17,"website_clicks":46},{"date":"2025-12-17","impressions":569,"direction_requests":34,"website_clicks":39},{"date":"2025-12-18","impressions":619,"direction_requests":76,"website_clicks":76},{"date":"2025-12-19","impressions":782,"direction_requests":64,"website_clicks":73},{"date":"2025-12-20","impressions":904,"direction_requests":60,"website_clicks":67},{"date":"2025-12-21","impressions":673,"direction_requests":23,"website_clicks":25},{"date":"2025-12-22","impressions":503,"direction_requests":5,"website_clicks":41},{"date":"2025-12-23","impressions":555,"direction_requests":18,"website_clicks":43},{"date":"2025-12-24","impressions":458,"direction_requests":28,"website_clicks":26},{"date":"2025-12-25","impressions":447,"direction_requests":9,"website_clicks":30},{"date":"2025-12-26","impressions":421,"direction_requests":19,"website_clicks":47},{"date":"2025-12-27","impressions":757,"direction_requests":64,"website_clicks":68},{"date":"2025-12-28","impressions":639,"direction_requests":19,"website_clicks":74},{"date":"2025-12-29","impressions":685,"direction_requests":10,"website_clicks":72},{"date":"2025-12-30","impressions":730,"direction_requests":25,"website_clicks":100},{"date":"2025-12-31","impressions":680,"direction_requests":43,"website_clicks":74},{"date":"2026-01-01","impressions":738,"direction_requests":14,"website_clicks":47},{"date":"2026-01-02","impressions":711,"direction_requests":31,"website_clicks":51},{"date":"2026-01-03","impressions":853,"direction_requests":29,"website_clicks":46},{"date":"2026-01-04","impressions":570,"direction_requests":18,"website_clicks":43},{"date":"2026-01-05","impressions":389,"direction_requests":12,"website_clicks":31},{"date":"2026-01-06","impressions":460,"direction_requests":23,"website_clicks":34},{"date":"2026-01-07","impressions":448,"direction_requests":20,"website_clicks":35},{"date":"2026-01-08","impressions":587,"direction_requests":13,"website_clicks":44},{"date":"2026-01-09","impressions":722,"direction_requests":28,"website_clicks":31},{"date":"2026-01-10","impressions":852,"direction_requests":64,"website_clicks":64},{"date":"2026-01-11","impressions":661,"direction_requests":20,"website_clicks":51},{"date":"2026-01-12","impressions":476,"direction_requests":15,"website_clicks":46},{"date":"2026-01-13","impressions":454,"direction_requests":14,"website_clicks":35},{"date":"2026-01-14","impressions":442,"direction_requests":21,"website_clicks":53},{"date":"2026-01-15","impressions":570,"direction_requests":9,"website_clicks":45},{"date":"2026-01-16","impressions":706,"direction_requests":18,"website_clicks":62},{"date":"2026-01-17","impressions":713,"direction_requests":45,"website_clicks":57},{"date":"2026-01-18","impressions":536,"direction_requests":29,"website_clicks":39},{"date":"2026-01-19","impressions":522,"direction_requests":9,"website_clicks":46},{"date":"2026-01-20","impressions":421,"direction_requests":15,"website_clicks":30},{"date":"2026-01-21","impressions":404,"direction_requests":7,"website_clicks":45},{"date":"2026-01-22","impressions":455,"direction_requests":17,"website_clicks":40},{"date":"2026-01-23","impressions":566,"direction_requests":30,"website_clicks":34},{"date":"2026-01-24","impressions":609,"direction_requests":69,"website_clicks":40},{"date":"2026-01-25","impressions":203,"direction_requests":6,"website_clicks":32},{"date":"2026-01-26","impressions":255,"direction_requests":9,"website_clicks":25},{"date":"2026-01-27","impressions":330,"direction_requests":0,"website_clicks":24},{"date":"2026-01-28","impressions":366,"direction_requests":19,"website_clicks":49},{"date":"2026-01-29","impressions":415,"direction_requests":25,"website_clicks":66},{"date":"2026-01-30","impressions":598,"direction_requests":33,"website_clicks":45},{"date":"2026-01-31","impressions":697,"direction_requests":45,"website_clicks":65},{"date":"2026-02-01","impressions":535,"direction_requests":27,"website_clicks":51},{"date":"2026-02-02","impressions":336,"direction_requests":5,"website_clicks":40},{"date":"2026-02-03","impressions":404,"direction_requests":14,"website_clicks":48},{"date":"2026-02-04","impressions":407,"direction_requests":9,"website_clicks":35},{"date":"2026-02-05","impressions":462,"direction_requests":16,"website_clicks":55},{"date":"2026-02-06","impressions":579,"direction_requests":42,"website_clicks":45},{"date":"2026-02-07","impressions":590,"direction_requests":43,"website_clicks":57},{"date":"2026-02-08","impressions":378,"direction_requests":14,"website_clicks":50},{"date":"2026-02-09","impressions":343,"direction_requests":8,"website_clicks":41},{"date":"2026-02-10","impressions":477,"direction_requests":10,"website_clicks":61},{"date":"2026-02-11","impressions":452,"direction_requests":17,"website_clicks":52},{"date":"2026-02-12","impressions":620,"direction_requests":33,"website_clicks":47},{"date":"2026-02-13","impressions":742,"direction_requests":25,"website_clicks":80},{"date":"2026-02-14","impressions":1008,"direction_requests":62,"website_clicks":71},{"date":"2026-02-15","impressions":557,"direction_requests":14,"website_clicks":38},{"date":"2026-02-16","impressions":438,"direction_requests":7,"website_clicks":34},{"date":"2026-02-17","impressions":381,"direction_requests":12,"website_clicks":39},{"date":"2026-02-18","impressions":387,"direction_requests":8,"website_clicks":23},{"date":"2026-02-19","impressions":527,"direction_requests":8,"website_clicks":51},{"date":"2026-02-20","impressions":627,"direction_requests":38,"website_clicks":47},{"date":"2026-02-21","impressions":554,"direction_requests":36,"website_clicks":46},{"date":"2026-02-22","impressions":249,"direction_requests":11,"website_clicks":36},{"date":"2026-02-23","impressions":222,"direction_requests":9,"website_clicks":28},{"date":"2026-02-24","impressions":310,"direction_requests":10,"website_clicks":27},{"date":"2026-02-25","impressions":336,"direction_requests":14,"website_clicks":39},{"date":"2026-02-26","impressions":484,"direction_requests":24,"website_clicks":44},{"date":"2026-02-27","impressions":652,"direction_requests":28,"website_clicks":58},{"date":"2026-02-28","impressions":802,"direction_requests":53,"website_clicks":66}];
+const GBPDAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const GBPMONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+GBP_DATA.forEach(d=>{const dt=new Date(d.date+'T12:00:00');d.dow=dt.getDay();d.dayName=GBPDAYS[d.dow];d.month=d.date.substring(0,7);d.conv=d.impressions>0?((d.direction_requests+d.website_clicks)/d.impressions*100):0;});
+let gbpCharts={};
+function renderGBP(){
+  const data=GBP_DATA;
+  const totalImp=data.reduce((s,d)=>s+d.impressions,0);
+  const totalDir=data.reduce((s,d)=>s+d.direction_requests,0);
+  const totalClk=data.reduce((s,d)=>s+d.website_clicks,0);
+  const convRate=totalImp>0?(totalDir+totalClk)/totalImp*100:0;
+  const avgImp=Math.round(totalImp/data.length);
+  const avgDir=Math.round(totalDir/data.length);
+  const avgClk=Math.round(totalClk/data.length);
+  // KPIs
+  document.getElementById('gbp-kpis').innerHTML=[
+    mkK('Total Impressions',fmt(totalImp,'n'),avgImp.toLocaleString()+' avg/day'),
+    mkK('Direction Requests',fmt(totalDir,'n'),avgDir.toLocaleString()+' avg/day'),
+    mkK('Website Clicks',fmt(totalClk,'n'),avgClk.toLocaleString()+' avg/day'),
+    mkK('Conversion Rate',convRate.toFixed(1)+'%','Clicks + Directions / Impressions'),
+  ].join('');
+  // Insights
+  const peakDay=data.reduce((max,d)=>d.impressions>max.impressions?d:max,data[0]);
+  const friSat=data.filter(d=>d.dow===5||d.dow===6);
+  const weekday=data.filter(d=>d.dow>=1&&d.dow<=4);
+  const fsDirAvg=friSat.reduce((s,d)=>s+d.direction_requests,0)/friSat.length;
+  const wdDirAvg=weekday.reduce((s,d)=>s+d.direction_requests,0)/weekday.length;
+  const months=[...new Set(data.map(d=>d.month))].sort();
+  const lastM=data.filter(d=>d.month===months[months.length-1]);
+  const prevM=months.length>=2?data.filter(d=>d.month===months[months.length-2]):[];
+  let impTrend='';
+  if(prevM.length){
+    const change=((lastM.reduce((s,d)=>s+d.impressions,0)-prevM.reduce((s,d)=>s+d.impressions,0))/prevM.reduce((s,d)=>s+d.impressions,0)*100);
+    impTrend=change<0?'neg':'pos';
+  }
+  const insights=[];
+  insights.push({type:'info',text:`Peak day: ${new Date(peakDay.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})} with ${peakDay.impressions.toLocaleString()} impressions — ${peakDay.dayName}`});
+  insights.push({type:'pos',text:`Fri-Sat direction requests avg ${Math.round(fsDirAvg)}/day vs ${Math.round(wdDirAvg)}/day weekday — ${((fsDirAvg/wdDirAvg-1)*100).toFixed(0)}% higher weekend conversion`});
+  if(impTrend==='neg')insights.push({type:'neg',text:`Impressions trending down month-over-month. Consider GBP post frequency, photo updates, and review response velocity.`});
+  else if(impTrend==='pos')insights.push({type:'pos',text:`Impressions trending up month-over-month — GBP visibility improving.`});
+  insights.push({type:'info',text:`Overall conversion rate ${convRate.toFixed(1)}% — ${totalDir.toLocaleString()} direction requests + ${totalClk.toLocaleString()} website clicks from ${totalImp.toLocaleString()} impressions`});
+  renderInsights('gbp-insights',insights);
+  // Charts
+  const gold='#D4A843',pink='#E91E8A',bronze='#8B6F47',cream='#D4C5A0';
+  const chartOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a1a1a',titleColor:gold,bodyColor:'#e8e8e8',borderColor:'#333',borderWidth:1}},scales:{x:{ticks:{color:'#666',font:{size:10},maxRotation:0,autoSkip:true,maxTicksLimit:15},grid:{color:'rgba(255,255,255,0.03)'}},y:{ticks:{color:'#666',font:{size:10}},grid:{color:'rgba(255,255,255,0.05)'}}}};
+  const labels=data.map(d=>{const dt=new Date(d.date+'T12:00:00');return dt.getDate()+' '+GBPMONTHS[dt.getMonth()];});
+  ['gbpImp','gbpDir','gbpClk','gbpDow','gbpMon'].forEach(k=>{if(gbpCharts[k])gbpCharts[k].destroy();});
+  gbpCharts.gbpImp=new Chart(document.getElementById('c-gbp-impressions'),{type:'line',data:{labels,datasets:[{data:data.map(d=>d.impressions),borderColor:gold,backgroundColor:'rgba(212,168,67,0.15)',fill:true,tension:0.3,pointRadius:0,pointHitRadius:10,borderWidth:2}]},options:chartOpts});
+  gbpCharts.gbpDir=new Chart(document.getElementById('c-gbp-directions'),{type:'bar',data:{labels,datasets:[{data:data.map(d=>d.direction_requests),backgroundColor:data.map(d=>d.dow===5||d.dow===6?pink:bronze),borderRadius:3}]},options:{...chartOpts,scales:{...chartOpts.scales,x:{...chartOpts.scales.x,display:false}}}});
+  gbpCharts.gbpClk=new Chart(document.getElementById('c-gbp-clicks'),{type:'bar',data:{labels,datasets:[{data:data.map(d=>d.website_clicks),backgroundColor:data.map(d=>d.dow===5||d.dow===6?gold:cream+'66'),borderRadius:3}]},options:{...chartOpts,scales:{...chartOpts.scales,x:{...chartOpts.scales.x,display:false}}}});
+  // Day of week
+  const dowAvg=GBPDAYS.map((name,i)=>{const rows=data.filter(d=>d.dow===i);const n=rows.length||1;return{day:name,imp:rows.reduce((s,d)=>s+d.impressions,0)/n,dir:rows.reduce((s,d)=>s+d.direction_requests,0)/n,clk:rows.reduce((s,d)=>s+d.website_clicks,0)/n};});
+  const reordered=[...dowAvg.slice(1),dowAvg[0]];
+  gbpCharts.gbpDow=new Chart(document.getElementById('c-gbp-dow'),{type:'bar',data:{labels:reordered.map(d=>d.day),datasets:[{label:'Impressions',data:reordered.map(d=>d.imp),backgroundColor:gold,borderRadius:3},{label:'Directions',data:reordered.map(d=>d.dir),backgroundColor:pink,borderRadius:3},{label:'Clicks',data:reordered.map(d=>d.clk),backgroundColor:cream+'88',borderRadius:3}]},options:{...chartOpts,plugins:{...chartOpts.plugins,legend:{display:true,position:'top',labels:{color:'#666',font:{size:10},boxWidth:12,padding:16}}}}});
+  // Monthly
+  const monthData={};
+  data.forEach(d=>{if(!monthData[d.month])monthData[d.month]={imp:0,dir:0,clk:0};monthData[d.month].imp+=d.impressions;monthData[d.month].dir+=d.direction_requests;monthData[d.month].clk+=d.website_clicks;});
+  const mKeys=Object.keys(monthData).sort();
+  gbpCharts.gbpMon=new Chart(document.getElementById('c-gbp-monthly'),{type:'bar',data:{labels:mKeys.map(m=>{const[y,mo]=m.split('-');return GBPMONTHS[parseInt(mo)-1]+' '+y.slice(2);}),datasets:[{label:'Impressions',data:mKeys.map(m=>monthData[m].imp),backgroundColor:gold,borderRadius:4},{label:'Directions',data:mKeys.map(m=>monthData[m].dir),backgroundColor:pink,borderRadius:4},{label:'Clicks',data:mKeys.map(m=>monthData[m].clk),backgroundColor:cream+'88',borderRadius:4}]},options:{...chartOpts,plugins:{...chartOpts.plugins,legend:{display:true,position:'top',labels:{color:'#666',font:{size:10},boxWidth:12,padding:16}}}}});
+  // Table
+  const maxImp=Math.max(...data.map(d=>d.impressions));
+  makeTable('gbp-table',['Date','Day','Impressions','Directions','Clicks','Conv %'],data.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(d=>{const dt=new Date(d.date+'T12:00:00');return[dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),d.dayName,d.impressions.toLocaleString(),d.direction_requests.toLocaleString(),d.website_clicks.toLocaleString(),d.conv.toFixed(1)+'%'];}),true);
 }
 
 // Init

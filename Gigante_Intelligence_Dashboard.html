@@ -194,7 +194,7 @@ tr:hover td{background:#1a1a1a}
     <div class="chart-box"><h3>Review Platforms</h3><canvas id="c-platforms"></canvas></div>
     <div class="chart-box"><h3>Loyalty Tiers</h3><canvas id="c-loyalty"></canvas></div>
   </div>
-  <div class="tbl-wrap"><h3>&#11088; Unified Server Performance — SevenRooms Reviews + Toast Feedback Combined</h3><div id="server-table"></div></div>
+  <div class="tbl-wrap"><h3>&#11088; Unified Server Performance — Bayesian Weighted (SevenRooms + Toast, Identity-Merged)</h3><div id="server-table"></div></div>
   <div class="tbl-wrap"><h3>Top Guests by Visits</h3><div id="guests-table"></div></div>
 </div>
 
@@ -396,8 +396,40 @@ function renderGuests(){
   
 // Unified server table - SR Food/Drink/Service/Ambience + Toast
   if(g.server_unified&&g.server_unified.length>0){
-    makeTable('server-table',['Server','SR #','Overall','Food','Drink','Service','Ambience','Toast #','Toast +%','Toast -','Score'],
-      g.server_unified.map(r=>[r.name,r.sr_reviews||'-',r.sr_overall?r.sr_overall.toFixed(2):'-',r.sr_food?r.sr_food.toFixed(2):'-',r.sr_drink?r.sr_drink.toFixed(2):'-',r.sr_service?r.sr_service.toFixed(2):'-',r.sr_ambience?r.sr_ambience.toFixed(2):'-',r.toast_total||'-',r.toast_pos_rate?r.toast_pos_rate+'%':'-',r.toast_neg||'-',r.combined_score+'%']),true);
+    // Identity merges (confirmed by Lou)
+    const mergeMap={'Errol':['Errol','Errol Fernandes'],'Angela':['Angela','Angela Marasevic'],'Fab':['Fab','Fabrisio Hernandez'],'Kelvin':['Kelvin','Kelvin Bardhi'],'Juan Daniel':['Daniel','Juan Daniel Fuentes'],'Danny O':['Danny O','Daniel Otto']};
+    const used=new Set();
+    const merged=[];
+    for(const[canonical,aliases]of Object.entries(mergeMap)){
+      let sr=null,toast=null;
+      for(const s of g.server_unified){
+        if(aliases.includes(s.name)){
+          used.add(s.name);
+          if(s.sr_reviews>0&&(!sr||s.sr_reviews>sr.sr_reviews))sr=s;
+          if(s.toast_total>0&&(!toast||s.toast_total>toast.toast_total))toast=s;
+        }
+      }
+      if(sr||toast){
+        merged.push({name:canonical+(sr&&toast?' ★':''),sr_reviews:sr?sr.sr_reviews:0,sr_overall:sr?sr.sr_overall:0,sr_food:sr?sr.sr_food:null,sr_drink:sr?sr.sr_drink:null,sr_service:sr?sr.sr_service:null,sr_ambience:sr?sr.sr_ambience:null,toast_total:toast?toast.toast_total:0,toast_pos_rate:toast?toast.toast_pos_rate:0,toast_neg:toast?toast.toast_neg:0});
+      }
+    }
+    for(const s of g.server_unified){if(!used.has(s.name))merged.push({...s});}
+    // Bayesian weighted scoring
+    const SRC=5,SRP=4.0,TC=10,TP=0.92;
+    merged.forEach(s=>{
+      const sn=s.sr_reviews,tn=s.toast_total,tot=sn+tn;
+      const srS=sn>0&&s.sr_service?((sn*s.sr_service+SRC*SRP)/(sn+SRC))/5*100:null;
+      const tS=tn>0?((s.toast_pos_rate/100*tn+TC*TP)/(tn+TC))*100:null;
+      const blend=srS!==null&&tS!==null?(srS*sn+tS*tn)/tot:srS!==null?srS:tS!==null?tS:50;
+      const conf=1-Math.exp(-tot/30);
+      s.final_score=Math.round(blend*(0.6+0.4*conf)*10)/10;
+      s.total_n=tot;s.conf=conf;
+    });
+    merged.sort((a,b)=>b.final_score-a.final_score);
+    // Tier badges
+    function tierBadge(sc){return sc>=95?'<span style="color:#22c55e;font-weight:700">★ Elite</span>':sc>=85?'<span style="color:#3b82f6;font-weight:600">Strong</span>':sc>=70?'<span style="color:#f59e0b">Developing</span>':'<span style="color:#999">Low Data</span>';}
+    makeTable('server-table',['#','Server','SR #','Svc ★','Food','Drink','Ambience','Toast #','Toast +%','Toast -','Total','Conf','Score','Tier'],
+      merged.map((r,i)=>[(i+1),r.name,r.sr_reviews||'-',r.sr_service?r.sr_service.toFixed(2):'-',r.sr_food?r.sr_food.toFixed(2):'-',r.sr_drink?r.sr_drink.toFixed(2):'-',r.sr_ambience?r.sr_ambience.toFixed(2):'-',r.toast_total||'-',r.toast_pos_rate?r.toast_pos_rate+'%':'-',r.toast_neg!=null?r.toast_neg:'-',r.total_n,Math.round(r.conf*100)+'%',r.final_score,tierBadge(r.final_score)]),true);
   }
   
   if(g.top_guests.length>0){
@@ -639,18 +671,14 @@ function processQ(q){
   }
   if(ql.includes('server')||ql.includes('staff')||ql.includes('performance')){
     if(g.server_unified&&g.server_unified.length>0){
-      const b=g.server_unified[0],w2=g.server_unified[g.server_unified.length-1];
-      let detail=`<strong>Server Performance (${w})</strong><br>Data: SevenRooms (food/drink/service/ambience out of 5) + Toast feedback combined<br><br>`;
-      detail+=`<strong>Top:</strong> ${b.name} - Overall ${b.sr_overall}/5`;
-      if(b.sr_food)detail+=` | Food ${b.sr_food}`;
-      if(b.sr_service)detail+=` | Service ${b.sr_service}`;
-      detail+=` | Toast ${b.toast_pos_rate}% pos (${b.toast_total})<br>`;
-      detail+=`<strong>Needs coaching:</strong> ${w2.name} - Overall ${w2.sr_overall}/5`;
-      if(w2.sr_food)detail+=` | Food ${w2.sr_food}`;
-      if(w2.sr_service)detail+=` | Service ${w2.sr_service}`;
-      detail+=` | Toast ${w2.toast_pos_rate}% pos (${w2.toast_total})<br><br>`;
-      detail+=`Shadow program: pair ${w2.name} with ${b.name} during Fri/Sat peak. See full table below for per-server SR food/drink/service/ambience breakdown.`;
-      return detail;}
+      return`<strong>Server Performance (${w}) — Bayesian Weighted Model</strong><br><br>`+
+        `This model uses Bayesian smoothing to prevent small-sample inflation, volume confidence weighting, and cross-platform identity merging (6 confirmed pairs).<br><br>`+
+        `<strong>Tier 1 (Elite 95+):</strong> High-volume, consistently excellent. Your floor captains for Fri/Sat peak.<br>`+
+        `<strong>Tier 2 (Strong 85-94):</strong> Reliable. Monitor for advancement.<br>`+
+        `<strong>Tier 3 (Developing 70-84):</strong> Solid but lower volume. Pair with Tier 1 during peaks.<br>`+
+        `<strong>Tier 4 (Low Data &lt;70):</strong> Scores suppressed by low review volume, not bad performance. Increase Toast feedback capture.<br><br>`+
+        `★ = Data merged from both SevenRooms + Toast<br>See full table in Guests tab for ranked breakdown.`;
+    }
     return'No server data for this period.';
   }
   if(ql.includes('sms')||ql.includes('text message')){

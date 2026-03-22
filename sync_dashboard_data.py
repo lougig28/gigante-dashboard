@@ -281,42 +281,30 @@ class SevenRoomsAPIClient:
             start_date = (datetime.now() - timedelta(days=days_back)).strftime('%Y-%m-%d')
             end_date = datetime.now().strftime('%Y-%m-%d')
 
-            # Fetch by venue_group_id, then filter to Gigante venue only
+            # /reservations/export returns all results in one shot — no pagination
             params = {
                 'venue_group_id': self.venue_group_id,
                 'from_date': start_date,
                 'to_date': end_date,
                 'limit': 400,
-                'page': 1
             }
 
             logger.info(f"SevenRooms: Fetching reservations from {start_date} to {end_date}...")
 
-            while params['page'] <= 30:  # Max 30 pages
-                response = requests.get(
-                    url,
-                    headers=self._get_headers(),
-                    params=params,
-                    timeout=10
-                )
-                response.raise_for_status()
-                data = response.json()
+            response = requests.get(
+                url,
+                headers=self._get_headers(),
+                params=params,
+                timeout=30
+            )
+            response.raise_for_status()
+            data = response.json()
 
-                results = data.get('data', {}).get('results', data.get('reservations', []))
-                if not results:
-                    break
+            results = data.get('data', {}).get('results', data.get('reservations', []))
 
-                # Filter to Gigante venue only
-                batch = [r for r in results if r.get('venue_id') == self.venue_id]
-                reservations.extend(batch)
-                logger.info(f"SevenRooms: Fetched {len(results)} reservations, {len(batch)} for Gigante (page {params['page']})")
-
-                # Check if there are more pages
-                if len(results) < params['limit']:
-                    break
-
-                params['page'] += 1
-                time.sleep(0.5)  # Rate limiting
+            # Filter to Gigante venue only
+            reservations = [r for r in results if r.get('venue_id') == self.venue_id]
+            logger.info(f"SevenRooms: Fetched {len(results)} total reservations, {len(reservations)} for Gigante")
 
             logger.info(f"SevenRooms: Total Gigante reservations fetched: {len(reservations)}")
             return reservations

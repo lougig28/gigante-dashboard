@@ -694,12 +694,12 @@ class DashboardDataPipeline:
 
     def _init_sevenrooms(self) -> Optional[SevenRoomsAPIClient]:
         """Initialize SevenRooms API client."""
-        venue_id = os.getenv('SEVENROOMS_VENUE_ID')
+        venue_id = os.getenv('SEVENROOMS_GIGANTE_VENUE_ID') or os.getenv('SEVENROOMS_VENUE_ID')
         client_secret = os.getenv('SEVENROOMS_CLIENT_SECRET')
 
         if not all([venue_id, client_secret]):
             logger.warning("SevenRooms: Missing required environment variables, skipping")
-            self.data['errors'].append("SevenRooms: Missing SEVENROOMS_VENUE_ID or SEVENROOMS_CLIENT_SECRET")
+            self.data['errors'].append("SevenRooms: Missing SEVENROOMS_GIGANTE_VENUE_ID or SEVENROOMS_CLIENT_SECRET")
             return None
 
         return SevenRoomsAPIClient(venue_id, client_secret, self.dry_run)

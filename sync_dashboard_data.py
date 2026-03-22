@@ -287,13 +287,12 @@ class SevenRoomsAPIClient:
                 'from_date': start_date,
                 'to_date': end_date,
                 'limit': 400,
-                'offset': 0
+                'page': 1
             }
 
             logger.info(f"SevenRooms: Fetching reservations from {start_date} to {end_date}...")
 
-            page = 0
-            while page < 30:  # Max 30 pages
+            while params['page'] <= 30:  # Max 30 pages
                 response = requests.get(
                     url,
                     headers=self._get_headers(),
@@ -310,14 +309,13 @@ class SevenRoomsAPIClient:
                 # Filter to Gigante venue only
                 batch = [r for r in results if r.get('venue_id') == self.venue_id]
                 reservations.extend(batch)
-                logger.info(f"SevenRooms: Fetched {len(results)} reservations, {len(batch)} for Gigante (page {page+1})")
+                logger.info(f"SevenRooms: Fetched {len(results)} reservations, {len(batch)} for Gigante (page {params['page']})")
 
                 # Check if there are more pages
                 if len(results) < params['limit']:
                     break
 
-                params['offset'] += params['limit']
-                page += 1
+                params['page'] += 1
                 time.sleep(0.5)  # Rate limiting
 
             logger.info(f"SevenRooms: Total Gigante reservations fetched: {len(reservations)}")

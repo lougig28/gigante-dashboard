@@ -306,6 +306,16 @@ class SevenRoomsAPIClient:
             reservations = [r for r in results if r.get('venue_id') == self.venue_id]
             logger.info(f"SevenRooms: Fetched {len(results)} total reservations, {len(reservations)} for Gigante")
 
+            # Log all available fields from first reservation for data discovery
+            if reservations:
+                sample = reservations[0]
+                logger.info(f"SevenRooms: FIELD DUMP — Available fields ({len(sample.keys())} total): {sorted(sample.keys())}")
+                # Log a few key field values to understand data shape
+                for key in sorted(sample.keys()):
+                    val = sample[key]
+                    val_str = str(val)[:100] if val is not None else 'None'
+                    logger.info(f"SevenRooms: FIELD [{key}] = {val_str}")
+
             logger.info(f"SevenRooms: Total Gigante reservations fetched: {len(reservations)}")
             return reservations
 

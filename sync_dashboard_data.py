@@ -233,15 +233,18 @@ class SevenRoomsAPIClient:
         try:
             response = requests.post(
                 self.auth_url,
-                json={
+                data={
                     'client_id': self.venue_id,
                     'client_secret': self.client_secret
                 },
+                headers={'Content-Type': 'application/x-www-form-urlencoded'},
                 timeout=10
             )
+            if not response.ok:
+                logger.error(f"SevenRooms: Auth response {response.status_code}: {response.text[:500]}")
             response.raise_for_status()
             data = response.json()
-            self.access_token = data.get('token') or data.get('access_token')
+            self.access_token = data.get('token') or data.get('access_token') or data.get('data', {}).get('token')
             logger.info("SevenRooms: Successfully authenticated")
             return True
         except requests.exceptions.RequestException as e:

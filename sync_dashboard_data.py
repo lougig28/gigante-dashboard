@@ -219,8 +219,8 @@ class SevenRoomsAPIClient:
         self.client_secret = client_secret
         self.dry_run = dry_run
         self.access_token = None
-        self.auth_url = "https://api.sevenrooms.com/2_4/auth/authenticate"
-        self.api_base = "https://api.sevenrooms.com/2_4"
+        self.auth_url = "https://api.sevenrooms.com/2_2/auth"
+        self.api_base = "https://api.sevenrooms.com/2_2"
 
     def authenticate(self) -> bool:
         """Authenticate with SevenRooms API."""

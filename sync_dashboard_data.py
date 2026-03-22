@@ -8,7 +8,8 @@ for the Gigante Intelligence Dashboard. Designed to run in GitHub Actions.
 Environment Variables Required:
 - TOAST_CLIENT_ID, TOAST_CLIENT_SECRET, TOAST_RESTAURANT_GUID
 - SEVENROOMS_VENUE_ID, SEVENROOMS_CLIENT_SECRET
-- TRIPLESEAT_API_TOKEN, TRIPLESEAT_CONSUMER_KEY, TRIPLESEAT_CONSUMER_SECRET
+- TRIPLESEAT_CLIENT_ID, TRIPLESEAT_CLIENT_SECRET (OAuth 2.0 - migrated from OAuth 1.0)
+- ANTHROPIC_API_KEY (optional, for AI chat feature)
 - FIRECRAWL_API_KEY (optional, for future use)
 """
 
@@ -21,9 +22,6 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional
 import requests
 from urllib.parse import urlencode
-import hashlib
-import hmac
-import base64
 import time
 
 # Configure logging
@@ -475,67 +473,56 @@ class SevenRoomsAPIClient:
 
 
 class TripleseatAPIClient:
-    """Client for Tripleseat API integration (OAuth 1.0a)."""
+    """Client for Tripleseat API integration (OAuth 2.0).
 
-    def __init__(self, api_token: str, consumer_key: str, consumer_secret: str, dry_run: bool = False):
-        self.api_token = api_token
-        self.consumer_key = consumer_key
-        self.consumer_secret = consumer_secret
+    Migrated from OAuth 1.0a to OAuth 2.0 (client credentials grant).
+    OAuth 1.0 is deprecated by Tripleseat as of Jan 2026 and shuts down July 1, 2026.
+    """
+
+    def __init__(self, client_id: str, client_secret: str, dry_run: bool = False):
+        self.client_id = client_id
+        self.client_secret = client_secret
         self.dry_run = dry_run
+        self.access_token = None
+        self.token_url = "https://api.tripleseat.com/oauth2/token"
         self.api_base = "https://api.tripleseat.com/v1"
 
-    def _sign_request(self, method: str, url: str, params: Dict[str, str]) -> str:
-        """
-        Generate OAuth 1.0a signature for Tripleseat API.
+    def authenticate(self) -> bool:
+        """Authenticate with Tripleseat API using OAuth 2.0 client credentials."""
+        if self.dry_run:
+            logger.info("[DRY RUN] Tripleseat: Would authenticate with OAuth 2.0 client credentials")
+            self.access_token = "dry_run_token"
+            return True
 
-        Returns the Authorization header value.
-        """
-        import random
-        import string
+        logger.info("Tripleseat: Authenticating with OAuth 2.0 client credentials...")
+        try:
+            response = requests.post(
+                self.token_url,
+                data={
+                    'client_id': self.client_id,
+                    'client_secret': self.client_secret,
+                    'grant_type': 'client_credentials'
+                },
+                timeout=10
+            )
+            response.raise_for_status()
+            data = response.json()
+            self.access_token = data.get('access_token')
+            if not self.access_token:
+                logger.error(f"Tripleseat: No access_token in response: {data}")
+                return False
+            logger.info("Tripleseat: Successfully authenticated with OAuth 2.0")
+            return True
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Tripleseat: Authentication failed: {e}")
+            return False
 
-        # OAuth parameters
-        nonce = ''.join(random.choices(string.ascii_letters + string.digits, k=32))
-        timestamp = str(int(time.time()))
-
-        oauth_params = {
-            'oauth_consumer_key': self.consumer_key,
-            'oauth_nonce': nonce,
-            'oauth_signature_method': 'HMAC-SHA1',
-            'oauth_timestamp': timestamp,
-            'oauth_version': '1.0'
+    def _get_headers(self) -> Dict[str, str]:
+        """Get headers for Tripleseat API requests."""
+        return {
+            'Authorization': f'Bearer {self.access_token}',
+            'Content-Type': 'application/json'
         }
-
-        # Combine all params for signature base string
-        all_params = {**oauth_params, **params}
-        param_string = '&'.join(
-            f"{k}={requests.utils.quote(str(v), safe='')}"
-            for k, v in sorted(all_params.items())
-        )
-
-        # Create signature base string
-        base_string = f"{method}&{requests.utils.quote(url, safe='')}&{requests.utils.quote(param_string, safe='')}"
-
-        # Create signing key
-        signing_key = f"{requests.utils.quote(self.consumer_secret, safe='')}&{requests.utils.quote(self.api_token, safe='')}"
-
-        # Generate signature
-        signature = base64.b64encode(
-            hmac.new(
-                signing_key.encode(),
-                base_string.encode(),
-                hashlib.sha1
-            ).digest()
-        ).decode()
-
-        oauth_params['oauth_signature'] = signature
-
-        # Build Authorization header
-        auth_header = 'OAuth ' + ', '.join(
-            f'{k}="{requests.utils.quote(str(v), safe="")}"'
-            for k, v in sorted(oauth_params.items())
-        )
-
-        return auth_header
 
     def get_events(self, days_back: int = 30) -> List[Dict[str, Any]]:
         """
@@ -545,6 +532,10 @@ class TripleseatAPIClient:
         """
         if self.dry_run:
             logger.info(f"[DRY RUN] Tripleseat: Would fetch events from last {days_back} days")
+            return []
+
+        if not self.access_token:
+            logger.error("Tripleseat: Not authenticated, cannot fetch events")
             return []
 
         events = []
@@ -562,17 +553,9 @@ class TripleseatAPIClient:
             logger.info(f"Tripleseat: Fetching events from {start_date}...")
 
             while True:
-                # Generate OAuth signature
-                auth_header = self._sign_request('GET', url, params)
-
-                headers = {
-                    'Authorization': auth_header,
-                    'Content-Type': 'application/json'
-                }
-
                 response = requests.get(
                     url,
-                    headers=headers,
+                    headers=self._get_headers(),
                     params=params,
                     timeout=10
                 )
@@ -719,17 +702,16 @@ class DashboardDataPipeline:
         return SevenRoomsAPIClient(venue_id, client_secret, self.dry_run)
 
     def _init_tripleseat(self) -> Optional[TripleseatAPIClient]:
-        """Initialize Tripleseat API client."""
-        api_token = os.getenv('TRIPLESEAT_API_TOKEN')
-        consumer_key = os.getenv('TRIPLESEAT_CONSUMER_KEY')
-        consumer_secret = os.getenv('TRIPLESEAT_CONSUMER_SECRET')
+        """Initialize Tripleseat API client (OAuth 2.0)."""
+        client_id = os.getenv('TRIPLESEAT_CLIENT_ID')
+        client_secret = os.getenv('TRIPLESEAT_CLIENT_SECRET')
 
-        if not all([api_token, consumer_key, consumer_secret]):
+        if not all([client_id, client_secret]):
             logger.warning("Tripleseat: Missing required environment variables, skipping")
-            self.data['errors'].append("Tripleseat: Missing TRIPLESEAT_API_TOKEN, TRIPLESEAT_CONSUMER_KEY, or TRIPLESEAT_CONSUMER_SECRET")
+            self.data['errors'].append("Tripleseat: Missing TRIPLESEAT_CLIENT_ID or TRIPLESEAT_CLIENT_SECRET")
             return None
 
-        return TripleseatAPIClient(api_token, consumer_key, consumer_secret, self.dry_run)
+        return TripleseatAPIClient(client_id, client_secret, self.dry_run)
 
     def _process_toast(self, client: ToastAPIClient):
         """Process Toast API data."""
@@ -780,6 +762,11 @@ class DashboardDataPipeline:
     def _process_tripleseat(self, client: TripleseatAPIClient):
         """Process Tripleseat API data."""
         try:
+            if not client.authenticate():
+                logger.error("Tripleseat: Authentication failed")
+                self.data['errors'].append("Tripleseat: Authentication failed")
+                return
+
             events = client.get_events(days_back=30)
             if events:
                 aggregated = client.aggregate_events(events)

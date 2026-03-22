@@ -54,9 +54,8 @@ jobs:
           TOAST_RESTAURANT_GUID: ${{ secrets.TOAST_RESTAURANT_GUID }}
           SEVENROOMS_VENUE_ID: ${{ secrets.SEVENROOMS_VENUE_ID }}
           SEVENROOMS_CLIENT_SECRET: ${{ secrets.SEVENROOMS_CLIENT_SECRET }}
-          TRIPLESEAT_API_TOKEN: ${{ secrets.TRIPLESEAT_API_TOKEN }}
-          TRIPLESEAT_CONSUMER_KEY: ${{ secrets.TRIPLESEAT_CONSUMER_KEY }}
-          TRIPLESEAT_CONSUMER_SECRET: ${{ secrets.TRIPLESEAT_CONSUMER_SECRET }}
+          TRIPLESEAT_CLIENT_ID: ${{ secrets.TRIPLESEAT_CLIENT_ID }}
+          TRIPLESEAT_CLIENT_SECRET: ${{ secrets.TRIPLESEAT_CLIENT_SECRET }}
           FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
         run: |
           if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then

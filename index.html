@@ -288,7 +288,7 @@ tr:hover td{background:#1a1a1a}
 <div class="chat-panel" id="chatPanel">
   <div class="chat-header"><h4>&#9889; Gigante Intelligence</h4><button onclick="toggleChat()">&#10005;</button></div>
   <div class="chat-messages" id="chatMessages">
-    <div class="chat-msg system">Ask me anything about your data across all 12 sources. Try: "What's our biggest revenue opportunity?" or "Compare server performance"</div>
+    <div class="chat-msg system">Powered by Claude AI. Ask anything about your data, strategy, or marketing. Try: "What's our biggest revenue opportunity?" or "Write me a Saturday night Instagram caption"</div>
   </div>
   <div class="chat-input">
     <input type="text" id="chatInput" placeholder="Ask about your data..." onkeypress="if(event.key==='Enter')sendChat()">
@@ -546,11 +546,61 @@ function renderStrategy(){
   `).join('');
 }
 
-// === AI CHAT ===
+// === AI CHAT (Claude API + Local Fallback) ===
+// Set this to your Cloudflare Worker URL after deploying. Leave empty to use local-only mode.
+const AI_WORKER_URL = 'https://winter-heart-1a79gigante-ai.lou-604.workers.dev';
+
 function toggleChat(){document.getElementById('chatPanel').classList.toggle('open');if(document.getElementById('chatPanel').classList.contains('open'))document.getElementById('chatInput').focus();}
 document.getElementById('chatToggle').addEventListener('click',toggleChat);
-function sendChat(){const input=document.getElementById('chatInput');const q=input.value.trim();if(!q)return;input.value='';addMsg('user',q);setTimeout(()=>addMsg('ai',processQ(q)),300);}
-function addMsg(type,text){const el=document.getElementById('chatMessages');const div=document.createElement('div');div.className='chat-msg '+type;div.innerHTML='<span>'+text+'</span>';el.appendChild(div);el.scrollTop=el.scrollHeight;}
+
+function sendChat(){
+  const input=document.getElementById('chatInput');const q=input.value.trim();if(!q)return;input.value='';addMsg('user',q);
+  if(AI_WORKER_URL){
+    addMsg('ai','<em style="color:#999">Thinking...</em>');
+    askClaude(q).then(reply=>{
+      // Replace the "Thinking..." message
+      const msgs=document.getElementById('chatMessages');
+      const last=msgs.lastElementChild;
+      if(last)last.querySelector('span').innerHTML=reply;
+      msgs.scrollTop=msgs.scrollHeight;
+    }).catch(()=>{
+      const msgs=document.getElementById('chatMessages');
+      const last=msgs.lastElementChild;
+      if(last)last.querySelector('span').innerHTML=processQ(q)+'<br><br><em style="color:#666;font-size:10px">Local mode (AI unavailable)</em>';
+    });
+  } else {
+    setTimeout(()=>addMsg('ai',processQ(q)),300);
+  }
+}
+
+async function askClaude(question){
+  const w=currentWindow;
+  const p=D.pulse?.[w]||{};const g=D.guests?.[w]||{};const m=D.marketing?.[w]||{};const o=D.operations?.[w]||{};
+  // Send a compact context summary (not the full D blob)
+  const context={
+    window:w==='30d'?'Last 30 Days':w==='ytd'?'YTD 2026':'All Time',
+    pulse:{avg_rating:p.avg_rating,food:p.food_rating,drink:p.drink_rating,service:p.service_rating,ambience:p.ambience_rating,reviews:p.total_reviews,reservations:p.total_res,covers:p.total_covers,avg_spend:p.avg_spend,noshow_rate:p.noshow_rate,tf_pos_rate:p.tf_pos_rate,rec_rate:p.rec_rate,sms_revenue:p.sms_revenue,ig_reach:p.ig_reach,events:p.events_count},
+    guests:{unique:g.total_unique_guests,one_visit_pct:g.one_visit_pct,avg_visits:g.avg_visits,four_plus:g.four_plus,pareto:g.pareto_pct},
+    marketing:{sms_count:m.sms_count,sms_revenue:m.sms_revenue,sms_click_rate:m.sms_click_rate,ig_reach:m.ig_reach,ig_eng:m.ig_avg_eng,mc_open_rate:m.mc_open_rate,mc_click_rate:m.mc_click_rate},
+    operations:{total_res:o.total_res,total_covers:o.total_covers,noshow_rate:o.noshow_rate,cancel_rate:o.cancel_rate,events:o.ev_count,ev_revenue:o.ev_revenue}
+  };
+  const resp=await fetch(AI_WORKER_URL+'/chat',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({question,context})
+  });
+  if(!resp.ok)throw new Error('AI error');
+  const data=await resp.json();
+  // Convert markdown-style formatting to HTML
+  let reply=data.reply||'No response.';
+  reply=reply.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  reply=reply.replace(/\n- /g,'<br>&bull; ');
+  reply=reply.replace(/\n\n/g,'<br><br>');
+  reply=reply.replace(/\n/g,'<br>');
+  return reply;
+}
+
+function addMsg(type,text){const el=document.getElementById('chatMessages');const div=document.createElement('div');div.className='chat-msg '+type;div.innerHTML='<span>'+text+'</span>';el.scrollTop=el.scrollHeight;el.appendChild(div);el.scrollTop=el.scrollHeight;}
 
 function processQ(q){
   const ql=q.toLowerCase(),w=currentWindow;

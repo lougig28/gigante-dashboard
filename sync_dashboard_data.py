@@ -221,8 +221,8 @@ class SevenRoomsAPIClient:
         self.venue_group_id = venue_group_id
         self.dry_run = dry_run
         self.access_token = None
-        self.auth_url = "https://api.sevenrooms.com/2_2/auth"
-        self.api_base = "https://api.sevenrooms.com/2_2"
+        self.auth_url = "https://api.sevenrooms.com/2_4/auth"
+        self.api_base = "https://api.sevenrooms.com/2_4"
 
     def authenticate(self) -> bool:
         """Authenticate with SevenRooms API."""
@@ -256,7 +256,7 @@ class SevenRoomsAPIClient:
     def _get_headers(self) -> Dict[str, str]:
         """Get headers for SevenRooms API requests."""
         return {
-            'Authorization': f'Bearer {self.access_token}',
+            'Authorization': self.access_token,  # SevenRooms uses raw token, no "Bearer" prefix
             'Content-Type': 'application/json'
         }
 
@@ -276,7 +276,7 @@ class SevenRoomsAPIClient:
 
         reservations = []
         try:
-            url = f"{self.api_base}/reservations"
+            url = f"{self.api_base}/reservations/export"
 
             start_date = (datetime.now() - timedelta(days=days_back)).strftime('%Y-%m-%d')
             end_date = datetime.now().strftime('%Y-%m-%d')
@@ -284,15 +284,16 @@ class SevenRoomsAPIClient:
             # Fetch by venue_group_id, then filter to Gigante venue only
             params = {
                 'venue_group_id': self.venue_group_id,
-                'date_from': start_date,
-                'date_to': end_date,
-                'limit': 1000,
+                'from_date': start_date,
+                'to_date': end_date,
+                'limit': 400,
                 'offset': 0
             }
 
             logger.info(f"SevenRooms: Fetching reservations from {start_date} to {end_date}...")
 
-            while True:
+            page = 0
+            while page < 30:  # Max 30 pages
                 response = requests.get(
                     url,
                     headers=self._get_headers(),
@@ -302,19 +303,21 @@ class SevenRoomsAPIClient:
                 response.raise_for_status()
                 data = response.json()
 
-                if 'reservations' not in data or not data['reservations']:
+                results = data.get('data', {}).get('results', data.get('reservations', []))
+                if not results:
                     break
 
                 # Filter to Gigante venue only
-                batch = [r for r in data['reservations'] if r.get('venue_id') == self.venue_id]
+                batch = [r for r in results if r.get('venue_id') == self.venue_id]
                 reservations.extend(batch)
-                logger.info(f"SevenRooms: Fetched {len(data['reservations'])} reservations, {len(batch)} for Gigante (offset {params['offset']})")
+                logger.info(f"SevenRooms: Fetched {len(results)} reservations, {len(batch)} for Gigante (page {page+1})")
 
                 # Check if there are more pages
-                if len(data['reservations']) < params['limit']:
+                if len(results) < params['limit']:
                     break
 
                 params['offset'] += params['limit']
+                page += 1
                 time.sleep(0.5)  # Rate limiting
 
             logger.info(f"SevenRooms: Total Gigante reservations fetched: {len(reservations)}")

@@ -214,9 +214,11 @@ class ToastAPIClient:
 class SevenRoomsAPIClient:
     """Client for SevenRooms API integration."""
 
-    def __init__(self, venue_id: str, client_secret: str, dry_run: bool = False):
-        self.venue_id = venue_id
+    def __init__(self, client_id: str, client_secret: str, venue_id: str, venue_group_id: str = None, dry_run: bool = False):
+        self.client_id = client_id
         self.client_secret = client_secret
+        self.venue_id = venue_id
+        self.venue_group_id = venue_group_id
         self.dry_run = dry_run
         self.access_token = None
         self.auth_url = "https://api.sevenrooms.com/2_2/auth"
@@ -234,7 +236,7 @@ class SevenRoomsAPIClient:
             response = requests.post(
                 self.auth_url,
                 data={
-                    'client_id': self.venue_id,
+                    'client_id': self.client_id,
                     'client_secret': self.client_secret
                 },
                 headers={'Content-Type': 'application/x-www-form-urlencoded'},
@@ -694,15 +696,17 @@ class DashboardDataPipeline:
 
     def _init_sevenrooms(self) -> Optional[SevenRoomsAPIClient]:
         """Initialize SevenRooms API client."""
-        venue_id = os.getenv('SEVENROOMS_GIGANTE_VENUE_ID') or os.getenv('SEVENROOMS_VENUE_ID')
+        client_id = os.getenv('SEVENROOMS_CLIENT_ID')
         client_secret = os.getenv('SEVENROOMS_CLIENT_SECRET')
+        venue_id = os.getenv('SEVENROOMS_GIGANTE_VENUE_ID') or os.getenv('SEVENROOMS_VENUE_ID')
+        venue_group_id = os.getenv('SEVENROOMS_VENUE_GROUP_ID')
 
-        if not all([venue_id, client_secret]):
+        if not all([client_id, client_secret, venue_id]):
             logger.warning("SevenRooms: Missing required environment variables, skipping")
-            self.data['errors'].append("SevenRooms: Missing SEVENROOMS_GIGANTE_VENUE_ID or SEVENROOMS_CLIENT_SECRET")
+            self.data['errors'].append("SevenRooms: Missing SEVENROOMS_CLIENT_ID, SEVENROOMS_CLIENT_SECRET, or SEVENROOMS_GIGANTE_VENUE_ID")
             return None
 
-        return SevenRoomsAPIClient(venue_id, client_secret, self.dry_run)
+        return SevenRoomsAPIClient(client_id, client_secret, venue_id, venue_group_id, self.dry_run)
 
     def _init_tripleseat(self) -> Optional[TripleseatAPIClient]:
         """Initialize Tripleseat API client (OAuth 2.0)."""

@@ -288,6 +288,8 @@ class SevenRoomsAPIClient:
                 'limit': 1000,
                 'offset': 0
             }
+            if self.venue_group_id:
+                params['venue_group_id'] = self.venue_group_id
 
             logger.info(f"SevenRooms: Fetching reservations from {start_date} to {end_date}...")
 

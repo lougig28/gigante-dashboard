@@ -281,15 +281,14 @@ class SevenRoomsAPIClient:
             start_date = (datetime.now() - timedelta(days=days_back)).strftime('%Y-%m-%d')
             end_date = datetime.now().strftime('%Y-%m-%d')
 
+            # Fetch by venue_group_id, then filter to Gigante venue only
             params = {
-                'venue_id': self.venue_id,
+                'venue_group_id': self.venue_group_id,
                 'date_from': start_date,
                 'date_to': end_date,
                 'limit': 1000,
                 'offset': 0
             }
-            if self.venue_group_id:
-                params['venue_group_id'] = self.venue_group_id
 
             logger.info(f"SevenRooms: Fetching reservations from {start_date} to {end_date}...")
 
@@ -306,8 +305,10 @@ class SevenRoomsAPIClient:
                 if 'reservations' not in data or not data['reservations']:
                     break
 
-                reservations.extend(data['reservations'])
-                logger.info(f"SevenRooms: Fetched {len(data['reservations'])} reservations (offset {params['offset']})")
+                # Filter to Gigante venue only
+                batch = [r for r in data['reservations'] if r.get('venue_id') == self.venue_id]
+                reservations.extend(batch)
+                logger.info(f"SevenRooms: Fetched {len(data['reservations'])} reservations, {len(batch)} for Gigante (offset {params['offset']})")
 
                 # Check if there are more pages
                 if len(data['reservations']) < params['limit']:
@@ -316,7 +317,7 @@ class SevenRoomsAPIClient:
                 params['offset'] += params['limit']
                 time.sleep(0.5)  # Rate limiting
 
-            logger.info(f"SevenRooms: Total reservations fetched: {len(reservations)}")
+            logger.info(f"SevenRooms: Total Gigante reservations fetched: {len(reservations)}")
             return reservations
 
         except requests.exceptions.RequestException as e:

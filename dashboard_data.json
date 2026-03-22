@@ -1,7 +1,117 @@
 {
-  "timestamp": "2026-03-22T23:18:49.114548",
+  "timestamp": "2026-03-22T23:25:28.091813",
   "toast": {},
-  "sevenrooms": {},
+  "sevenrooms": {
+    "reservations": {
+      "total_reservations": 6270,
+      "total_covers": 0,
+      "no_shows": 300,
+      "cancellations": 960,
+      "by_server": {},
+      "by_day": {
+        "2026-02-21": {
+          "count": 600,
+          "covers": 0
+        },
+        "2026-03-18": {
+          "count": 90,
+          "covers": 0
+        },
+        "2026-03-14": {
+          "count": 510,
+          "covers": 0
+        },
+        "2026-03-07": {
+          "count": 630,
+          "covers": 0
+        },
+        "2026-03-15": {
+          "count": 210,
+          "covers": 0
+        },
+        "2026-02-20": {
+          "count": 360,
+          "covers": 0
+        },
+        "2026-02-27": {
+          "count": 300,
+          "covers": 0
+        },
+        "2026-03-21": {
+          "count": 480,
+          "covers": 0
+        },
+        "2026-03-06": {
+          "count": 300,
+          "covers": 0
+        },
+        "2026-03-22": {
+          "count": 270,
+          "covers": 0
+        },
+        "2026-02-28": {
+          "count": 720,
+          "covers": 0
+        },
+        "2026-03-08": {
+          "count": 210,
+          "covers": 0
+        },
+        "2026-03-04": {
+          "count": 90,
+          "covers": 0
+        },
+        "2026-03-11": {
+          "count": 30,
+          "covers": 0
+        },
+        "2026-02-22": {
+          "count": 180,
+          "covers": 0
+        },
+        "2026-03-01": {
+          "count": 60,
+          "covers": 0
+        },
+        "2026-03-12": {
+          "count": 90,
+          "covers": 0
+        },
+        "2026-03-20": {
+          "count": 390,
+          "covers": 0
+        },
+        "2026-03-13": {
+          "count": 420,
+          "covers": 0
+        },
+        "2026-02-25": {
+          "count": 30,
+          "covers": 0
+        },
+        "2026-03-10": {
+          "count": 30,
+          "covers": 0
+        },
+        "2026-03-05": {
+          "count": 180,
+          "covers": 0
+        },
+        "2026-03-19": {
+          "count": 30,
+          "covers": 0
+        },
+        "2026-03-17": {
+          "count": 30,
+          "covers": 0
+        },
+        "2026-02-26": {
+          "count": 30,
+          "covers": 0
+        }
+      }
+    }
+  },
   "tripleseat": {},
   "errors": [
     "Toast: Authentication failed"

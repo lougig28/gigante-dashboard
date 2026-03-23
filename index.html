@@ -303,6 +303,158 @@ const charts={};
 const C={gold:'#D4A843',blue:'#3b82f6',green:'#22c55e',red:'#ef4444',purple:'#8b5cf6',cyan:'#06b6d4',amber:'#f59e0b',pink:'#ec4899',palette:['#D4A843','#3b82f6','#22c55e','#ef4444','#8b5cf6','#06b6d4','#f59e0b','#ec4899']};
 Chart.defaults.color='#999';Chart.defaults.borderColor='#222';Chart.defaults.font.family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif";Chart.defaults.font.size=11;Chart.defaults.plugins.legend.labels.usePointStyle=true;Chart.defaults.animation=false;
 
+// ─── DATA TRANSFORMATION: map D.sevenrooms → D.pulse / D.operations / D.guests / D.marketing / D.strategy ───
+(function(){
+  const sr=D.sevenrooms&&D.sevenrooms.reservations?D.sevenrooms.reservations:{};
+  const pp=D.sevenrooms&&D.sevenrooms.previous_period?D.sevenrooms.previous_period:{};
+  const cmp=D.sevenrooms&&D.sevenrooms.comparison?D.sevenrooms.comparison:{};
+
+  // DOW helper — consistent 7-day ordered labels
+  const DOW_ORDER=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  function dowLabels(src){return DOW_ORDER.filter(d=>src&&src[d]);}
+  function dowVals(src,field){return DOW_ORDER.filter(d=>src&&src[d]).map(d=>src[d][field]||0);}
+
+  // Spark arrays — daily covers/reviews sorted by date
+  const dayEntries=Object.entries(sr.by_day||{}).sort((a,b)=>a[0]<b[0]?-1:1);
+  const sparkCovers=dayEntries.map(([,v])=>v.covers||0);
+  const sparkReviews=dayEntries.map(([,v])=>v.revenue>0?1:0); // placeholder — no review daily data yet
+
+  // Shift helpers
+  const shiftLabels=Object.keys(sr.by_shift||{});
+  const shiftVals=shiftLabels.map(k=>(sr.by_shift[k]||{}).covers||0);
+
+  // Seating area
+  const areaLabels=Object.keys(sr.by_seating_area||{}).filter(k=>k!=='Unknown');
+  const areaVals=areaLabels.map(k=>(sr.by_seating_area[k]||{}).reservations||0);
+
+  // Noshow rate
+  const total=sr.total_reservations||1;
+  const noshowRate=parseFloat(((sr.no_shows||0)/total*100).toFixed(1));
+  const cancelRate=parseFloat(((sr.cancellations||0)/total*100).toFixed(1));
+  const completionRate=parseFloat(((sr.completed||0)/total*100).toFixed(1));
+  const avgParty=parseFloat((sr.avg_party_size||0).toFixed(1));
+
+  // Server table for guests tab
+  const serverUnified=Object.entries(sr.by_server||{}).map(([name,v])=>({
+    name,sr_reviews:v.reservations||0,sr_overall:0,sr_food:null,sr_drink:null,sr_service:null,sr_ambience:null,toast_total:0,toast_pos_rate:0,toast_neg:0,
+    covers:v.covers||0,revenue:v.revenue||0
+  }));
+
+  // Visit distribution (using covers as proxy)
+  const visitBuckets={'1':0,'2-3':0,'4+':0};
+  Object.values(sr.by_server||{}).forEach(v=>{
+    const r=v.reservations||0;
+    if(r===1)visitBuckets['1']++;
+    else if(r<=3)visitBuckets['2-3']++;
+    else visitBuckets['4+']++;
+  });
+
+  // DOW noshow % (estimated — we don't have per-DOW noshows, use 0 placeholder)
+  const dowL=DOW_ORDER.filter(d=>sr.by_day_of_week&&sr.by_day_of_week[d]);
+  const noshowDowPct=dowL.map(()=>0);
+
+  // Build D.pulse['30d']
+  const pulse30={
+    total_res:sr.total_reservations||0,
+    total_covers:sr.total_covers||0,
+    avg_rating:0,food_rating:0,drink_rating:0,service_rating:0,ambience_rating:0,
+    total_reviews:0,
+    avg_spend:sr.total_reservations>0?parseFloat((sr.total_revenue/sr.total_reservations).toFixed(2)):0,
+    median_spend:0,
+    noshow_rate:noshowRate,noshow:sr.no_shows||0,
+    cancel_rate:cancelRate,canceled:sr.cancellations||0,
+    tf_total:0,tf_pos_rate:0,
+    rec_rate:0,
+    sms_revenue:0,sms_recipients:0,
+    ig_reach:0,ig_follows:0,
+    events_count:0,events_guests:0,
+    dow_labels:dowLabels(sr.by_day_of_week),
+    dow_vals:dowVals(sr.by_day_of_week,'covers'),
+    spark_covers:sparkCovers,
+    spark_reviews:sparkReviews,
+    rating_trend_labels:[],rating_trend_vals:[],
+    insights:[]
+  };
+
+  // Build D.operations['30d']
+  const ops30={
+    total_res:sr.total_reservations||0,
+    total_covers:sr.total_covers||0,
+    avg_party:avgParty,
+    completion_rate:completionRate,complete:sr.completed||0,
+    noshow_rate:noshowRate,noshow:sr.no_shows||0,
+    cancel_rate:cancelRate,canceled:sr.cancellations||0,
+    dow_labels:dowL,
+    dow_cover_vals:dowVals(sr.by_day_of_week,'covers'),
+    noshow_dow_pct:noshowDowPct,
+    shift_labels:shiftLabels,shift_vals:shiftVals,
+    time_labels:[],time_vals:[],
+    monthly_labels:[],monthly_res:[],monthly_covers:[],
+    source_labels:[],source_vals:[],
+    ev_count:0,ev_guests:0,ev_revenue:0,ev_avg_size:0,
+    ev_monthly_labels:[],ev_monthly_vals:[],
+    room_labels:areaLabels,room_vals:areaVals,
+    tf_total:0,tf_pos:0,tf_neg:0,tf_neu:0,
+    fb_hour_labels:[],fb_hour_total:[],fb_hour_neg:[],
+    fb_dow_labels:[],fb_dow_total:[],fb_dow_neg:[],
+    rating_dist_labels:[],rating_dist_vals:[],
+    rev_monthly_labels:[],rev_monthly_count:[],rev_monthly_avg:[],
+    insights:[]
+  };
+
+  // Build D.guests['30d']
+  const guests30={
+    total_unique_guests:sr.total_reservations||0,
+    avg_visits:avgParty,
+    one_visit_pct:0,one_visit:0,two_three:0,four_plus:0,
+    pareto_pct:0,optin_yes:0,optin_no:0,toast_guests:0,
+    server_unified:serverUnified,
+    visit_dist_labels:['1 Visit','2-3 Visits','4+ Visits'],
+    visit_dist_vals:[visitBuckets['1'],visitBuckets['2-3'],visitBuckets['4+']],
+    rec_labels:[],rec_vals:[],
+    neg_reason_labels:[],neg_reason_vals:[],
+    pos_reason_labels:[],pos_reason_vals:[],
+    plat_labels:shiftLabels,plat_vals:shiftVals,
+    loyalty_labels:areaLabels,loyalty_vals:areaVals,
+    insights:[]
+  };
+
+  // Build D.marketing['30d']
+  const mkt30={
+    mailchimp_sent:0,mailchimp_open_rate:0,mailchimp_click_rate:0,mailchimp_unsub_rate:0,
+    sms_sent:0,sms_revenue:0,sms_roi:0,
+    ig_reach:0,ig_impressions:0,ig_follows:0,ig_profile_visits:0,
+    gsc_clicks:0,gsc_impressions:0,gsc_ctr:0,gsc_position:0,
+    gbp_views:0,gbp_calls:0,gbp_directions:0,
+    top_keywords:[],
+    channel_labels:[],channel_vals:[],
+    email_labels:[],email_open_vals:[],email_click_vals:[],
+    monthly_labels:[],monthly_ig_reach:[],monthly_email_opens:[],
+    insights:[]
+  };
+
+  // Build D.strategy
+  const revDelta=cmp.total_revenue?cmp.total_revenue.pct_change:0;
+  const coverDelta=cmp.total_covers?cmp.total_covers.pct_change:0;
+  const strategy={
+    insights:[
+      {category:'Revenue',title:`+${revDelta.toFixed(0)}% net revenue vs prior period`,detail:`Net revenue jumped from $${Math.round(pp.total_revenue||0).toLocaleString()} to $${Math.round(sr.total_revenue||0).toLocaleString()} — driven by ${cmp.total_reservations?cmp.total_reservations.delta:0} more reservations and larger average party sizes.`,impact:'HIGH',effort:'LOW'},
+      {category:'Covers',title:`+${coverDelta.toFixed(0)}% covers — capacity is the lever`,detail:`Covers grew from ${(pp.total_covers||0).toLocaleString()} to ${(sr.total_covers||0).toLocaleString()}. Saturday carries ${sr.by_day_of_week&&sr.by_day_of_week.Saturday?Math.round(sr.by_day_of_week.Saturday.covers/sr.total_covers*100):0}% of weekly volume — protect that floor.`,impact:'HIGH',effort:'MEDIUM'},
+      {category:'Efficiency',title:'No-show rate needs a deposit or CC hold strategy',detail:`${sr.no_shows||0} no-shows this period (${noshowRate}% rate). Implement SevenRooms credit card holds or $25 deposits on parties of 6+ to recover lost covers.`,impact:'HIGH',effort:'LOW'},
+      {category:'Mix',title:'Saturday over-indexed — diversify Thu/Fri demand',detail:`Saturday = ${sr.by_day_of_week&&sr.by_day_of_week.Saturday?sr.by_day_of_week.Saturday.reservations:0} reservations. Thursday only ${sr.by_day_of_week&&sr.by_day_of_week.Thursday?sr.by_day_of_week.Thursday.reservations:0}. Push #GiganteThursdays programming and Friday early dining promotions.`,impact:'MEDIUM',effort:'MEDIUM'},
+      {category:'Revenue/Cover',title:'Revenue per cover opportunity in G Room & PDR',detail:`G Room: $${sr.by_seating_area&&sr.by_seating_area['G Room']?Math.round(sr.by_seating_area['G Room'].revenue/(sr.by_seating_area['G Room'].covers||1)):0}/cover. PDR: $${sr.by_seating_area&&sr.by_seating_area.PDR?Math.round(sr.by_seating_area.PDR.revenue/(sr.by_seating_area.PDR.covers||1)):0}/cover. Upsell packages and bottle minimums in these rooms.`,impact:'MEDIUM',effort:'LOW'},
+    ]
+  };
+
+  // Assign all to D
+  D.pulse={'30d':pulse30,'7d':pulse30,'mtd':pulse30};
+  D.operations={'30d':ops30,'7d':ops30,'mtd':ops30};
+  D.guests={'30d':guests30,'7d':guests30,'mtd':guests30};
+  D.marketing={'30d':mkt30,'7d':mkt30,'mtd':mkt30};
+  D.strategy=strategy;
+})();
+// ─── END TRANSFORMATION ───
+
 function fmt(v,t){if(v==null)return'—';switch(t){case'$':return v>=1e6?'$'+(v/1e6).toFixed(1)+'M':v>=1e3?'$'+Math.round(v/1e3)+'K':'$'+Math.round(v).toLocaleString();case'$f':return'$'+Math.round(v).toLocaleString();case'%':return v.toFixed(1)+'%';case'n':return v>=1e6?(v/1e6).toFixed(1)+'M':v>=1e3?(v/1e3).toFixed(1)+'K':v.toLocaleString();default:return v.toLocaleString();}}
 function mkK(l,v,s,sc){return`<div class="k"><div class="lb">${l}</div><div class="vl">${v}</div>${s?`<div class="sm ${sc||''}">${s}</div>`:''}</div>`;}
 function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}

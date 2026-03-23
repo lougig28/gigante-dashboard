@@ -306,16 +306,6 @@ class SevenRoomsAPIClient:
             reservations = [r for r in results if r.get('venue_id') == self.venue_id]
             logger.info(f"SevenRooms: Fetched {len(results)} total reservations, {len(reservations)} for Gigante")
 
-            # Log all available fields from first reservation for data discovery
-            if reservations:
-                sample = reservations[0]
-                logger.info(f"SevenRooms: FIELD DUMP — Available fields ({len(sample.keys())} total): {sorted(sample.keys())}")
-                # Log a few key field values to understand data shape
-                for key in sorted(sample.keys()):
-                    val = sample[key]
-                    val_str = str(val)[:100] if val is not None else 'None'
-                    logger.info(f"SevenRooms: FIELD [{key}] = {val_str}")
-
             logger.info(f"SevenRooms: Total Gigante reservations fetched: {len(reservations)}")
             return reservations
 
@@ -385,51 +375,188 @@ class SevenRoomsAPIClient:
             return reviews
 
     def aggregate_reservations(self, reservations: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Aggregate reservation data."""
+        """Aggregate reservation data from SevenRooms export fields."""
         aggregated = {
             'total_reservations': len(reservations),
             'total_covers': 0,
             'no_shows': 0,
             'cancellations': 0,
+            'completed': 0,
+            'vip_count': 0,
+            'total_revenue': 0.0,
+            'total_gross_revenue': 0.0,
+            'total_prepayment': 0.0,
+            'avg_party_size': 0.0,
+            'avg_duration_min': 0.0,
             'by_server': {},
-            'by_day': {}
+            'by_day': {},
+            'by_shift': {},
+            'by_seating_area': {},
+            'by_reservation_type': {},
+            'by_status': {},
+            'by_day_of_week': {},
+            'top_tables': {},
         }
 
-        for reservation in reservations:
-            # Count covers
-            party_size = reservation.get('party_size') or reservation.get('covers', 0)
+        durations = []
+
+        for r in reservations:
+            # Party size (max_guests is the booked party size)
+            party_size = r.get('max_guests') or 0
+            try:
+                party_size = int(party_size)
+            except (ValueError, TypeError):
+                party_size = 0
             aggregated['total_covers'] += party_size
 
-            # Check status
-            status = reservation.get('status', '').lower()
-            if 'no_show' in status or 'no-show' in status:
+            # Status tracking
+            status = (r.get('status') or '').upper()
+            status_simple = (r.get('status_simple') or '').lower()
+            aggregated['by_status'][status] = aggregated['by_status'].get(status, 0) + 1
+
+            if 'no' in status_simple and 'show' in status_simple:
                 aggregated['no_shows'] += 1
-            elif 'cancel' in status:
+            elif 'cancel' in status_simple:
                 aggregated['cancellations'] += 1
+            elif 'complete' in status_simple:
+                aggregated['completed'] += 1
 
-            # Group by server if available
-            server = reservation.get('server_name') or reservation.get('captain', '')
+            # VIP tracking
+            if r.get('is_vip'):
+                aggregated['vip_count'] += 1
+
+            # Revenue
+            try:
+                onsite = float(r.get('onsite_payment') or 0)
+                aggregated['total_revenue'] += onsite
+            except (ValueError, TypeError):
+                pass
+            try:
+                gross = float(r.get('total_gross_payment') or 0)
+                aggregated['total_gross_revenue'] += gross
+            except (ValueError, TypeError):
+                pass
+            try:
+                prepay = float(r.get('prepayment') or 0)
+                aggregated['total_prepayment'] += prepay
+            except (ValueError, TypeError):
+                pass
+
+            # Duration
+            try:
+                dur = int(r.get('duration') or 0)
+                if dur > 0:
+                    durations.append(dur)
+            except (ValueError, TypeError):
+                pass
+
+            # Server performance
+            server = r.get('served_by') or ''
             if server:
-                normalized_server = REVERSE_MERGE_MAP.get(server.lower(), server)
-                if normalized_server not in aggregated['by_server']:
-                    aggregated['by_server'][normalized_server] = {
-                        'count': 0,
-                        'covers': 0
+                if server not in aggregated['by_server']:
+                    aggregated['by_server'][server] = {
+                        'reservations': 0, 'covers': 0, 'revenue': 0.0
                     }
-                aggregated['by_server'][normalized_server]['count'] += 1
-                aggregated['by_server'][normalized_server]['covers'] += party_size
+                aggregated['by_server'][server]['reservations'] += 1
+                aggregated['by_server'][server]['covers'] += party_size
+                try:
+                    aggregated['by_server'][server]['revenue'] += float(r.get('onsite_payment') or 0)
+                except (ValueError, TypeError):
+                    pass
 
-            # Group by day
-            res_date = reservation.get('date') or reservation.get('reservation_date', '')
+            # By day
+            res_date = r.get('date') or ''
             if res_date:
                 day_str = res_date.split('T')[0] if 'T' in res_date else res_date
                 if day_str not in aggregated['by_day']:
                     aggregated['by_day'][day_str] = {
-                        'count': 0,
-                        'covers': 0
+                        'reservations': 0, 'covers': 0, 'revenue': 0.0
                     }
-                aggregated['by_day'][day_str]['count'] += 1
+                aggregated['by_day'][day_str]['reservations'] += 1
                 aggregated['by_day'][day_str]['covers'] += party_size
+                try:
+                    aggregated['by_day'][day_str]['revenue'] += float(r.get('onsite_payment') or 0)
+                except (ValueError, TypeError):
+                    pass
+
+                # Day of week
+                try:
+                    from datetime import datetime as dt
+                    dow = dt.strptime(day_str, '%Y-%m-%d').strftime('%A')
+                    if dow not in aggregated['by_day_of_week']:
+                        aggregated['by_day_of_week'][dow] = {
+                            'reservations': 0, 'covers': 0, 'revenue': 0.0
+                        }
+                    aggregated['by_day_of_week'][dow]['reservations'] += 1
+                    aggregated['by_day_of_week'][dow]['covers'] += party_size
+                    try:
+                        aggregated['by_day_of_week'][dow]['revenue'] += float(r.get('onsite_payment') or 0)
+                    except (ValueError, TypeError):
+                        pass
+                except Exception:
+                    pass
+
+            # Shift category (DINNER, BRUNCH, etc.)
+            shift = r.get('shift_category') or 'Unknown'
+            if shift not in aggregated['by_shift']:
+                aggregated['by_shift'][shift] = {'reservations': 0, 'covers': 0, 'revenue': 0.0}
+            aggregated['by_shift'][shift]['reservations'] += 1
+            aggregated['by_shift'][shift]['covers'] += party_size
+            try:
+                aggregated['by_shift'][shift]['revenue'] += float(r.get('onsite_payment') or 0)
+            except (ValueError, TypeError):
+                pass
+
+            # Seating area
+            area = r.get('venue_seating_area_name') or 'Unknown'
+            if area not in aggregated['by_seating_area']:
+                aggregated['by_seating_area'][area] = {'reservations': 0, 'covers': 0, 'revenue': 0.0}
+            aggregated['by_seating_area'][area]['reservations'] += 1
+            aggregated['by_seating_area'][area]['covers'] += party_size
+            try:
+                aggregated['by_seating_area'][area]['revenue'] += float(r.get('onsite_payment') or 0)
+            except (ValueError, TypeError):
+                pass
+
+            # Reservation type
+            res_type = r.get('reservation_type') or 'Standard'
+            if res_type not in aggregated['by_reservation_type']:
+                aggregated['by_reservation_type'][res_type] = {'reservations': 0, 'covers': 0, 'revenue': 0.0}
+            aggregated['by_reservation_type'][res_type]['reservations'] += 1
+            aggregated['by_reservation_type'][res_type]['covers'] += party_size
+            try:
+                aggregated['by_reservation_type'][res_type]['revenue'] += float(r.get('onsite_payment') or 0)
+            except (ValueError, TypeError):
+                pass
+
+            # Table tracking
+            tables = r.get('table_numbers') or []
+            for table in tables:
+                t = str(table)
+                if t not in aggregated['top_tables']:
+                    aggregated['top_tables'][t] = {'reservations': 0, 'covers': 0, 'revenue': 0.0}
+                aggregated['top_tables'][t]['reservations'] += 1
+                aggregated['top_tables'][t]['covers'] += party_size
+                try:
+                    aggregated['top_tables'][t]['revenue'] += float(r.get('onsite_payment') or 0)
+                except (ValueError, TypeError):
+                    pass
+
+        # Calculate averages
+        if aggregated['total_reservations'] > 0:
+            aggregated['avg_party_size'] = round(aggregated['total_covers'] / aggregated['total_reservations'], 1)
+        if durations:
+            aggregated['avg_duration_min'] = round(sum(durations) / len(durations), 0)
+
+        # Round revenue totals
+        aggregated['total_revenue'] = round(aggregated['total_revenue'], 2)
+        aggregated['total_gross_revenue'] = round(aggregated['total_gross_revenue'], 2)
+        aggregated['total_prepayment'] = round(aggregated['total_prepayment'], 2)
+
+        # Sort servers by revenue descending
+        aggregated['by_server'] = dict(
+            sorted(aggregated['by_server'].items(), key=lambda x: x[1]['revenue'], reverse=True)
+        )
 
         return aggregated
 

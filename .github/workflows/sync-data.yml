@@ -21,6 +21,11 @@ on:
         required: false
         default: 'false'
         type: boolean
+      days_back:
+        description: 'Days of history to pull (default: 30, max: 365)'
+        required: false
+        default: '30'
+        type: string
 
 # Only allow one sync at a time
 concurrency:
@@ -59,11 +64,12 @@ jobs:
           TRIPLESEAT_CLIENT_ID: ${{ secrets.TRIPLESEAT_CLIENT_ID }}
           TRIPLESEAT_CLIENT_SECRET: ${{ secrets.TRIPLESEAT_CLIENT_SECRET }}
           FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+          DAYS_BACK: ${{ github.event.inputs.days_back || '30' }}
         run: |
           if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
-            python sync_dashboard_data.py --dry-run
+            python sync_dashboard_data.py --dry-run --days-back $DAYS_BACK
           else
-            python sync_dashboard_data.py --output dashboard_data.json
+            python sync_dashboard_data.py --output dashboard_data.json --days-back $DAYS_BACK
           fi
 
       - name: Rebuild dashboard with fresh data

@@ -763,11 +763,17 @@ class TripleseatAPIClient:
 class DashboardDataPipeline:
     """Main pipeline orchestrator."""
 
-    def __init__(self, dry_run: bool = False, output_file: str = 'dashboard_data.json'):
+    def __init__(self, dry_run: bool = False, output_file: str = 'dashboard_data.json', days_back: int = 30):
         self.dry_run = dry_run
         self.output_file = output_file
+        self.days_back = days_back
         self.data = {
             'timestamp': datetime.now().isoformat(),
+            'date_range': {
+                'days_back': days_back,
+                'from_date': (datetime.now() - timedelta(days=days_back)).strftime('%Y-%m-%d'),
+                'to_date': datetime.now().strftime('%Y-%m-%d')
+            },
             'toast': {},
             'sevenrooms': {},
             'tripleseat': {},
@@ -857,7 +863,7 @@ class DashboardDataPipeline:
                 self.data['errors'].append("Toast: Authentication failed")
                 return
 
-            feedbacks = client.get_feedbacks(days_back=30)
+            feedbacks = client.get_feedbacks(days_back=self.days_back)
             if feedbacks:
                 aggregated = client.aggregate_feedback_by_server(feedbacks)
                 self.data['toast']['feedback'] = aggregated
@@ -877,7 +883,7 @@ class DashboardDataPipeline:
                 self.data['errors'].append("SevenRooms: Authentication failed")
                 return
 
-            reservations = client.get_reservations(days_back=30)
+            reservations = client.get_reservations(days_back=self.days_back)
             if reservations:
                 aggregated = client.aggregate_reservations(reservations)
                 self.data['sevenrooms']['reservations'] = aggregated
@@ -903,7 +909,7 @@ class DashboardDataPipeline:
                 self.data['errors'].append("Tripleseat: Authentication failed")
                 return
 
-            events = client.get_events(days_back=30)
+            events = client.get_events(days_back=self.days_back)
             if events:
                 aggregated = client.aggregate_events(events)
                 self.data['tripleseat']['events'] = aggregated
@@ -956,10 +962,20 @@ def main():
         default='dashboard_data.json',
         help='Output JSON file path (default: dashboard_data.json)'
     )
+    parser.add_argument(
+        '--days-back',
+        type=int,
+        default=None,
+        help='Number of days of history to pull (default: 30, or DAYS_BACK env var)'
+    )
 
     args = parser.parse_args()
 
-    pipeline = DashboardDataPipeline(dry_run=args.dry_run, output_file=args.output)
+    # Priority: CLI arg > env var > default (30)
+    days_back = args.days_back or int(os.getenv('DAYS_BACK', '30'))
+    logger.info(f"Date range: {days_back} days back from today")
+
+    pipeline = DashboardDataPipeline(dry_run=args.dry_run, output_file=args.output, days_back=days_back)
 
     try:
         success = pipeline.run()

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-23T14:56:41.645514",
+  "timestamp": "2026-03-23T16:03:36.932259",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-02-21",
@@ -10,10 +10,10 @@
   "toast": {},
   "sevenrooms": {
     "reservations": {
-      "total_reservations": 208,
-      "total_covers": 1345,
+      "total_reservations": 207,
+      "total_covers": 1339,
       "no_shows": 11,
-      "cancellations": 33,
+      "cancellations": 32,
       "completed": 164,
       "vip_count": 0,
       "total_revenue": 72386.52,
@@ -80,8 +80,8 @@
           "revenue": 5044.08
         },
         "2026-03-07": {
-          "reservations": 24,
-          "covers": 116,
+          "reservations": 23,
+          "covers": 110,
           "revenue": 7438.08
         },
         "2026-03-15": {
@@ -187,8 +187,8 @@
       },
       "by_shift": {
         "DINNER": {
-          "reservations": 176,
-          "covers": 1095,
+          "reservations": 175,
+          "covers": 1089,
           "revenue": 63586.95999999996
         },
         "BRUNCH": {
@@ -209,8 +209,8 @@
           "revenue": 20856.12
         },
         "Unknown": {
-          "reservations": 20,
-          "covers": 198,
+          "reservations": 19,
+          "covers": 192,
           "revenue": 6925.08
         },
         "Lounge": {
@@ -471,8 +471,8 @@
           "revenue": 2949.0
         },
         "Female birthday, Celebration Package (unpaid)": {
-          "reservations": 2,
-          "covers": 19,
+          "reservations": 1,
+          "covers": 13,
           "revenue": 245.52
         },
         "Female birthday, Birthday, Celebration Package (paid), Cake in fridge": {
@@ -499,15 +499,15 @@
       "by_status": {
         "PAID": 68,
         "COMPLETE": 67,
-        "CANCELED": 33,
+        "CANCELED": 32,
         "ARRIVED": 27,
         "NO_SHOW": 11,
         "ARRIVED_PARTIAL": 2
       },
       "by_day_of_week": {
         "Saturday": {
-          "reservations": 105,
-          "covers": 641,
+          "reservations": 104,
+          "covers": 635,
           "revenue": 40459.91999999999
         },
         "Wednesday": {
@@ -1474,18 +1474,18 @@
     "comparison": {
       "total_reservations": {
         "label": "Reservations",
-        "current": 208,
+        "current": 207,
         "previous": 112,
-        "delta": 96,
-        "pct_change": 85.7,
+        "delta": 95,
+        "pct_change": 84.8,
         "direction": "up"
       },
       "total_covers": {
         "label": "Covers",
-        "current": 1345,
+        "current": 1339,
         "previous": 576,
-        "delta": 769,
-        "pct_change": 133.5,
+        "delta": 763,
+        "pct_change": 132.5,
         "direction": "up"
       },
       "total_revenue": {
@@ -1514,10 +1514,10 @@
       },
       "cancellations": {
         "label": "Cancellations",
-        "current": 33,
+        "current": 32,
         "previous": 21,
-        "delta": 12,
-        "pct_change": 57.1,
+        "delta": 11,
+        "pct_change": 52.4,
         "direction": "up"
       },
       "completed": {
@@ -1679,7 +1679,7 @@
         "Saturday": {
           "current_revenue": 40459.92,
           "previous_revenue": 29006.45,
-          "current_covers": 641,
+          "current_covers": 635,
           "previous_covers": 337
         },
         "Sunday": {

@@ -260,14 +260,19 @@ class SevenRoomsAPIClient:
             'Content-Type': 'application/json'
         }
 
-    def get_reservations(self, days_back: int = 30) -> List[Dict[str, Any]]:
+    def get_reservations(self, days_back: int = 30, from_date: str = None, to_date: str = None) -> List[Dict[str, Any]]:
         """
         Pull reservation data from SevenRooms API.
+
+        Args:
+            days_back: Number of days back from today (used if from_date/to_date not set)
+            from_date: Explicit start date (YYYY-MM-DD)
+            to_date: Explicit end date (YYYY-MM-DD)
 
         Returns a list of reservations with guest counts, no-shows, cancellations.
         """
         if self.dry_run:
-            logger.info(f"[DRY RUN] SevenRooms: Would fetch reservations from last {days_back} days")
+            logger.info(f"[DRY RUN] SevenRooms: Would fetch reservations")
             return []
 
         if not self.access_token:
@@ -278,8 +283,8 @@ class SevenRoomsAPIClient:
         try:
             url = f"{self.api_base}/reservations/export"
 
-            start_date = (datetime.now() - timedelta(days=days_back)).strftime('%Y-%m-%d')
-            end_date = datetime.now().strftime('%Y-%m-%d')
+            start_date = from_date or (datetime.now() - timedelta(days=days_back)).strftime('%Y-%m-%d')
+            end_date = to_date or datetime.now().strftime('%Y-%m-%d')
 
             # /reservations/export returns all results in one shot — no pagination
             params = {
@@ -763,16 +768,29 @@ class TripleseatAPIClient:
 class DashboardDataPipeline:
     """Main pipeline orchestrator."""
 
-    def __init__(self, dry_run: bool = False, output_file: str = 'dashboard_data.json', days_back: int = 30):
+    def __init__(self, dry_run: bool = False, output_file: str = 'dashboard_data.json', days_back: int = 30,
+                 compare_from: str = None, compare_to: str = None,
+                 compare_from_prev: str = None, compare_to_prev: str = None):
         self.dry_run = dry_run
         self.output_file = output_file
         self.days_back = days_back
+        self.compare_from = compare_from
+        self.compare_to = compare_to
+        self.compare_from_prev = compare_from_prev
+        self.compare_to_prev = compare_to_prev
+
+        # Determine primary date range
+        primary_from = compare_from or (datetime.now() - timedelta(days=days_back)).strftime('%Y-%m-%d')
+        primary_to = compare_to or datetime.now().strftime('%Y-%m-%d')
+
         self.data = {
             'timestamp': datetime.now().isoformat(),
             'date_range': {
                 'days_back': days_back,
-                'from_date': (datetime.now() - timedelta(days=days_back)).strftime('%Y-%m-%d'),
-                'to_date': datetime.now().strftime('%Y-%m-%d')
+                'from_date': primary_from,
+                'to_date': primary_to,
+                'compare_from': compare_from_prev,
+                'compare_to': compare_to_prev,
             },
             'toast': {},
             'sevenrooms': {},
@@ -876,19 +894,47 @@ class DashboardDataPipeline:
             self.data['errors'].append(f"Toast: {str(e)}")
 
     def _process_sevenrooms(self, client: SevenRoomsAPIClient):
-        """Process SevenRooms API data."""
+        """Process SevenRooms API data with automatic period comparisons."""
         try:
             if not client.authenticate():
                 logger.error("SevenRooms: Authentication failed")
                 self.data['errors'].append("SevenRooms: Authentication failed")
                 return
 
-            reservations = client.get_reservations(days_back=self.days_back)
+            # --- Primary period ---
+            if self.compare_from and self.compare_to:
+                # Custom date range mode
+                reservations = client.get_reservations(from_date=self.compare_from, to_date=self.compare_to)
+            else:
+                reservations = client.get_reservations(days_back=self.days_back)
+
             if reservations:
                 aggregated = client.aggregate_reservations(reservations)
                 self.data['sevenrooms']['reservations'] = aggregated
                 logger.info(f"SevenRooms: Processed {aggregated['total_reservations']} reservations")
 
+            # --- Comparison period ---
+            if self.compare_from_prev and self.compare_to_prev:
+                # Custom comparison range
+                prev_reservations = client.get_reservations(from_date=self.compare_from_prev, to_date=self.compare_to_prev)
+            else:
+                # Auto rolling: pull the same-length period immediately before
+                prev_reservations = client.get_reservations(days_back=self.days_back * 2)
+                # Filter to only the previous period
+                cutoff = (datetime.now() - timedelta(days=self.days_back)).strftime('%Y-%m-%d')
+                prev_reservations = [r for r in prev_reservations if (r.get('date') or '') < cutoff]
+
+            if prev_reservations:
+                prev_aggregated = client.aggregate_reservations(prev_reservations)
+                self.data['sevenrooms']['previous_period'] = prev_aggregated
+                logger.info(f"SevenRooms: Comparison period — {prev_aggregated['total_reservations']} reservations")
+
+                # Calculate deltas
+                if aggregated and prev_aggregated:
+                    self.data['sevenrooms']['comparison'] = self._calculate_comparison(aggregated, prev_aggregated)
+                    logger.info("SevenRooms: Period comparison calculated")
+
+            # --- Reviews ---
             reviews = client.get_reviews()
             if reviews:
                 aggregated_reviews = client.aggregate_reviews(reviews)
@@ -920,6 +966,77 @@ class DashboardDataPipeline:
         except Exception as e:
             logger.error(f"Tripleseat: Unexpected error: {e}")
             self.data['errors'].append(f"Tripleseat: {str(e)}")
+
+    def _calculate_comparison(self, current: Dict, previous: Dict) -> Dict[str, Any]:
+        """Calculate period-over-period deltas and percentage changes."""
+        comparison = {}
+
+        # Key metrics to compare
+        metrics = [
+            ('total_reservations', 'Reservations'),
+            ('total_covers', 'Covers'),
+            ('total_revenue', 'Net Revenue'),
+            ('total_gross_revenue', 'Gross Revenue'),
+            ('no_shows', 'No Shows'),
+            ('cancellations', 'Cancellations'),
+            ('completed', 'Completed'),
+            ('vip_count', 'VIP Guests'),
+            ('avg_party_size', 'Avg Party Size'),
+            ('avg_duration_min', 'Avg Duration (min)'),
+        ]
+
+        for key, label in metrics:
+            curr_val = current.get(key, 0) or 0
+            prev_val = previous.get(key, 0) or 0
+            delta = curr_val - prev_val
+            pct_change = round((delta / prev_val * 100), 1) if prev_val != 0 else None
+
+            comparison[key] = {
+                'label': label,
+                'current': curr_val,
+                'previous': prev_val,
+                'delta': round(delta, 2),
+                'pct_change': pct_change,
+                'direction': 'up' if delta > 0 else 'down' if delta < 0 else 'flat'
+            }
+
+        # Server comparison — who improved, who declined
+        curr_servers = current.get('by_server', {})
+        prev_servers = previous.get('by_server', {})
+        all_servers = set(list(curr_servers.keys()) + list(prev_servers.keys()))
+        server_changes = {}
+        for server in all_servers:
+            c = curr_servers.get(server, {})
+            p = prev_servers.get(server, {})
+            c_rev = c.get('revenue', 0)
+            p_rev = p.get('revenue', 0)
+            server_changes[server] = {
+                'current_revenue': round(c_rev, 2),
+                'previous_revenue': round(p_rev, 2),
+                'delta': round(c_rev - p_rev, 2),
+                'current_covers': c.get('covers', 0),
+                'previous_covers': p.get('covers', 0),
+            }
+        comparison['server_changes'] = dict(
+            sorted(server_changes.items(), key=lambda x: x[1]['delta'], reverse=True)
+        )
+
+        # Day-of-week comparison
+        curr_dow = current.get('by_day_of_week', {})
+        prev_dow = previous.get('by_day_of_week', {})
+        dow_changes = {}
+        for day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']:
+            c = curr_dow.get(day, {})
+            p = prev_dow.get(day, {})
+            dow_changes[day] = {
+                'current_revenue': round(c.get('revenue', 0), 2),
+                'previous_revenue': round(p.get('revenue', 0), 2),
+                'current_covers': c.get('covers', 0),
+                'previous_covers': p.get('covers', 0),
+            }
+        comparison['day_of_week_changes'] = dow_changes
+
+        return comparison
 
     def _write_output(self):
         """Write aggregated data to JSON file."""
@@ -968,14 +1085,54 @@ def main():
         default=None,
         help='Number of days of history to pull (default: 30, or DAYS_BACK env var)'
     )
+    parser.add_argument(
+        '--compare-from',
+        default=None,
+        help='Primary period start date (YYYY-MM-DD) for custom comparison'
+    )
+    parser.add_argument(
+        '--compare-to',
+        default=None,
+        help='Primary period end date (YYYY-MM-DD) for custom comparison'
+    )
+    parser.add_argument(
+        '--compare-from-prev',
+        default=None,
+        help='Previous period start date (YYYY-MM-DD) for custom comparison'
+    )
+    parser.add_argument(
+        '--compare-to-prev',
+        default=None,
+        help='Previous period end date (YYYY-MM-DD) for custom comparison'
+    )
 
     args = parser.parse_args()
 
     # Priority: CLI arg > env var > default (30)
     days_back = args.days_back or int(os.getenv('DAYS_BACK', '30'))
-    logger.info(f"Date range: {days_back} days back from today")
 
-    pipeline = DashboardDataPipeline(dry_run=args.dry_run, output_file=args.output, days_back=days_back)
+    # Custom comparison dates from env vars or CLI
+    compare_from = args.compare_from or os.getenv('COMPARE_FROM') or None
+    compare_to = args.compare_to or os.getenv('COMPARE_TO') or None
+    compare_from_prev = args.compare_from_prev or os.getenv('COMPARE_FROM_PREV') or None
+    compare_to_prev = args.compare_to_prev or os.getenv('COMPARE_TO_PREV') or None
+
+    if compare_from and compare_to:
+        logger.info(f"Custom comparison: {compare_from} to {compare_to}")
+        if compare_from_prev and compare_to_prev:
+            logger.info(f"vs previous: {compare_from_prev} to {compare_to_prev}")
+    else:
+        logger.info(f"Date range: {days_back} days back (auto-comparison with prior period)")
+
+    pipeline = DashboardDataPipeline(
+        dry_run=args.dry_run,
+        output_file=args.output,
+        days_back=days_back,
+        compare_from=compare_from,
+        compare_to=compare_to,
+        compare_from_prev=compare_from_prev,
+        compare_to_prev=compare_to_prev,
+    )
 
     try:
         success = pipeline.run()

@@ -1,0 +1,71 @@
+{
+  "tripleseat": {
+    "synced_at": "2026-03-25T21:32:18.343Z",
+    "date_range": {
+      "from": "12/25/2025",
+      "to": "03/25/2026",
+      "days": 90
+    },
+    "events": {
+      "total": 0,
+      "total_revenue": 0,
+      "total_actual_amount": 0,
+      "total_guests": 0,
+      "total_guaranteed_guests": 0,
+      "avg_revenue_per_event": 0,
+      "avg_guests_per_event": 0,
+      "by_status": {
+        "definite": 0,
+        "tentative": 0,
+        "closed": 0,
+        "prospect": 0,
+        "lost": 0
+      },
+      "by_event_type": {},
+      "by_event_style": {},
+      "by_room": {},
+      "by_month": {},
+      "month_trend": [],
+      "by_lead_source": {},
+      "line_item_categories": {},
+      "payments": {
+        "total_paid": 0,
+        "total_due": 0,
+        "payment_count": 0
+      },
+      "recent_events": []
+    },
+    "bookings": {
+      "total": 0,
+      "total_grand_total": 0,
+      "total_actual_amount": 0,
+      "avg_booking_value": 0,
+      "by_status": {
+        "definite": 0,
+        "tentative": 0,
+        "closed": 0,
+        "prospect": 0,
+        "lost": 0
+      },
+      "by_market_segment": {},
+      "by_location": {},
+      "pipeline": []
+    },
+    "lost_analysis": {
+      "period_days": 365,
+      "total_lost_bookings": 0,
+      "total_lost_revenue": 0,
+      "by_lost_reason": {}
+    },
+    "contacts": {
+      "updated_last_90d": 0,
+      "email_opt_in": 0,
+      "email_opt_out": 0,
+      "by_contact_type": {}
+    },
+    "accounts": {
+      "updated_last_90d": 0,
+      "by_market_segment": {}
+    }
+  }
+}

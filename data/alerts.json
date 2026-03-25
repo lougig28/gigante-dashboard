@@ -1,0 +1,28 @@
+{
+  "alerts": [
+    {
+      "id": "alert_thu_covers",
+      "severity": "critical",
+      "headline": "Thursday covers down 23% vs prior period",
+      "explanation": "Thursday dropped from 60 to 46 covers. Weeknight volume has softened \u2014 monitor competitor activity.",
+      "action": "Launch counter-promo: '$12 Negroni + Bruschetta Board' Thu 5\u20137 PM via Instagram Stories + email to 10-mile radius list.",
+      "source": "SevenRooms"
+    },
+    {
+      "id": "alert_food_cost",
+      "severity": "warning",
+      "headline": "Food cost up 2.1 points to 34.6%",
+      "explanation": "Ribeye (cost +11%) and Halibut (cost +14%) are primary drivers. Both high-volume items are pushing food cost above the 32.5% target.",
+      "action": "Renegotiate Sysco protein pricing. Consider Branzino swap for Halibut (22% lower cost) and add a Ribeye supplement charge.",
+      "source": "Toast POS + Inventory"
+    },
+    {
+      "id": "alert_sat_vip",
+      "severity": "success",
+      "headline": "Strong Saturday confirmed \u2014 569 covers this period",
+      "explanation": "2 VIP guests tracked. Ensure top server coverage for peak night.",
+      "action": "Pre-assign top servers (Fab, Daniel) to VIP tables. Brief kitchen on timing. Confirm celebration packages are prepped.",
+      "source": "SevenRooms"
+    }
+  ]
+}

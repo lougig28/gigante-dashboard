@@ -1,0 +1,209 @@
+{
+  "forecast": [
+    {
+      "date": "Mon",
+      "booked": 9,
+      "walkin": 3
+    },
+    {
+      "date": "Mon+1",
+      "booked": 8,
+      "walkin": 2
+    },
+    {
+      "date": "Tue",
+      "booked": 9,
+      "walkin": 3
+    },
+    {
+      "date": "Tue+1",
+      "booked": 8,
+      "walkin": 2
+    },
+    {
+      "date": "Wed",
+      "booked": 10,
+      "walkin": 4
+    },
+    {
+      "date": "Wed+1",
+      "booked": 9,
+      "walkin": 3
+    },
+    {
+      "date": "Thu",
+      "booked": 8,
+      "walkin": 3
+    },
+    {
+      "date": "Thu+1",
+      "booked": 7,
+      "walkin": 2
+    },
+    {
+      "date": "Fri",
+      "booked": 61,
+      "walkin": 18
+    },
+    {
+      "date": "Fri+1",
+      "booked": 56,
+      "walkin": 16
+    },
+    {
+      "date": "Sat",
+      "booked": 110,
+      "walkin": 32
+    },
+    {
+      "date": "Sat+1",
+      "booked": 101,
+      "walkin": 29
+    },
+    {
+      "date": "Sun",
+      "booked": 54,
+      "walkin": 16
+    },
+    {
+      "date": "Sun+1",
+      "booked": 49,
+      "walkin": 14
+    }
+  ],
+  "shiftBreakdown": [
+    {
+      "name": "Dinner",
+      "value": 79,
+      "color": "hsl(160 60% 45%)"
+    },
+    {
+      "name": "Brunch",
+      "value": 21,
+      "color": "hsl(270 60% 55%)"
+    }
+  ],
+  "upcoming": [
+    {
+      "id": 1,
+      "guest": "Anthony Morello",
+      "party": 6,
+      "time": "7:30 PM",
+      "date": "Saturday",
+      "vip": true,
+      "lastVisit": "Mar 8",
+      "visits": 24,
+      "spend": 14200,
+      "notes": "Prefers booth 4. Anniversary dinner. Allergic to shellfish. Always orders the Barolo.",
+      "phone": "(914) 555-0142",
+      "email": "a.morello@gmail.com",
+      "recommendation": "Anniversary visit \u2014 prepare complimentary prosecco toast. Seat at booth 4. Alert sommelier for 2019 Barolo Riserva."
+    },
+    {
+      "id": 2,
+      "guest": "Patricia Chen",
+      "party": 4,
+      "time": "8:00 PM",
+      "date": "Saturday",
+      "vip": true,
+      "lastVisit": "Feb 22",
+      "visits": 18,
+      "spend": 9800,
+      "notes": "Local real estate developer. Brings clients. Gluten-free.",
+      "phone": "(914) 555-0287",
+      "email": "pchen@chenhomes.com",
+      "recommendation": "High-value client entertainer \u2014 assign top server. Prepare GF menu options. Follow up re: private event."
+    },
+    {
+      "id": 3,
+      "guest": "Michael DeLuca",
+      "party": 2,
+      "time": "6:30 PM",
+      "date": "Saturday",
+      "vip": false,
+      "lastVisit": "Mar 15",
+      "visits": 8,
+      "spend": 2400,
+      "notes": "Birthday on Saturday! Turning 40. Wife confirmed cake arranged.",
+      "phone": "(914) 555-0391",
+      "email": "mdeluca77@yahoo.com",
+      "recommendation": "\ud83c\udf82 Birthday dinner \u2014 coordinate surprise dessert + candle at 8:15 PM. Consider complimentary limoncello."
+    },
+    {
+      "id": 4,
+      "guest": "Sarah Goldstein",
+      "party": 3,
+      "time": "7:00 PM",
+      "date": "Friday",
+      "vip": false,
+      "lastVisit": "First visit",
+      "visits": 0,
+      "spend": 0,
+      "notes": "Referred by Patricia Chen. Vegetarian preferences noted.",
+      "phone": "(914) 555-0455",
+      "email": "sgold@outlook.com",
+      "recommendation": "First-time VIP referral \u2014 strong impression critical. Offer seasonal vegetarian tasting menu. Manager greet table."
+    },
+    {
+      "id": 5,
+      "guest": "Robert Marino",
+      "party": 8,
+      "time": "8:30 PM",
+      "date": "Saturday",
+      "vip": false,
+      "lastVisit": "Jan 12",
+      "visits": 5,
+      "spend": 3200,
+      "notes": "Returning after 2 months. Large party \u2014 likely a celebration.",
+      "phone": "(914) 555-0518",
+      "email": "rmarino@aol.com",
+      "recommendation": "Large party \u2014 suggest family-style. Pre-set for 8. Upsell Antipasto Grande as starter."
+    },
+    {
+      "id": 6,
+      "guest": "Jennifer Walsh",
+      "party": 2,
+      "time": "6:00 PM",
+      "date": "Friday",
+      "vip": false,
+      "lastVisit": "Mar 1",
+      "visits": 12,
+      "spend": 4100,
+      "notes": "Regular weeknight diner. Works at WP Hospital. Loves the pappardelle.",
+      "phone": "(914) 555-0622",
+      "email": "jwalsh.rn@gmail.com",
+      "recommendation": "Loyal regular \u2014 send thank-you note with check. Mention new spring pappardelle variation."
+    },
+    {
+      "id": 7,
+      "guest": "David Okafor",
+      "party": 4,
+      "time": "7:45 PM",
+      "date": "Saturday",
+      "vip": false,
+      "lastVisit": "Feb 14",
+      "visits": 3,
+      "spend": 1800,
+      "notes": "Wine enthusiast \u2014 asked about wine club. No dietary restrictions.",
+      "phone": "(914) 555-0734",
+      "email": "dokafor@techstart.io",
+      "recommendation": "Wine enthusiast \u2014 have sommelier present new Brunello. Mention wine dinner April 12."
+    },
+    {
+      "id": 8,
+      "guest": "Angela Ricci",
+      "party": 2,
+      "time": "5:30 PM",
+      "date": "Friday",
+      "vip": false,
+      "lastVisit": "Mar 10",
+      "visits": 15,
+      "spend": 5600,
+      "notes": "Scarsdale local. Bi-weekly Friday visitor. Husband is Tony.",
+      "phone": "(914) 555-0849",
+      "email": "angela.ricci@me.com",
+      "recommendation": "Approaching VIP threshold (15 visits) \u2014 recognize loyalty. Have Aperol Spritz ready at bar."
+    }
+  ],
+  "updated": "2026-03-24T23:03:12.477783"
+}

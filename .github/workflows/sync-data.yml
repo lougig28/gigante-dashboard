@@ -108,6 +108,11 @@ jobs:
         run: |
           python rebuild_dashboard.py
 
+      - name: Transform to GIQ Brain format
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          python transform_to_giq_brain.py
+
       - name: Commit and push updated dashboard
         if: ${{ github.event.inputs.dry_run != 'true' }}
         run: |
@@ -115,10 +120,10 @@ jobs:
           git config user.email "bot@gigantehospitality.com"
 
           # Check if there are actual changes
-          if git diff --quiet index.html dashboard_data.json 2>/dev/null; then
+          if git diff --quiet index.html dashboard_data.json data/ 2>/dev/null; then
             echo "No data changes detected, skipping commit"
           else
-            git add index.html dashboard_data.json
+            git add index.html dashboard_data.json data/
             git commit -m "Auto-sync: $(date -u '+%Y-%m-%d %H:%M UTC')"
             git push
             echo "Dashboard updated and pushed!"

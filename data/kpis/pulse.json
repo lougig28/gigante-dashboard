@@ -1,6 +1,11 @@
 {
   "period": "30d",
-  "updated": "2026-03-26T02:23:40.165989",
+  "updated": "2026-03-26T04:44:38.599100",
+  "dataSources": {
+    "sevenrooms": true,
+    "googleAnalytics": false,
+    "meta": false
+  },
   "metrics": [
     {
       "id": "total_covers",
@@ -114,6 +119,7 @@
       "value": 89400,
       "change": 18.2,
       "trend": "up",
+      "live": false,
       "sparkline": [
         62000,
         65000,

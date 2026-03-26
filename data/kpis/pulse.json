@@ -1,10 +1,12 @@
 {
   "period": "30d",
-  "updated": "2026-03-26T19:08:16.689734",
+  "updated": "2026-03-26T20:28:04.095257",
   "dataSources": {
     "sevenrooms": true,
     "googleAnalytics": false,
-    "meta": false
+    "meta": false,
+    "mailchimp": true,
+    "eventbrite": true
   },
   "metrics": [
     {
@@ -95,9 +97,10 @@
     {
       "id": "email_list",
       "label": "Email List Size",
-      "value": 12847,
+      "value": 38031,
       "change": 5.4,
       "trend": "up",
+      "live": true,
       "sparkline": [
         11800,
         11950,
@@ -110,7 +113,7 @@
         12650,
         12700,
         12780,
-        12847
+        38031
       ]
     },
     {

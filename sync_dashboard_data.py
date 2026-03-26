@@ -59,7 +59,7 @@ class ToastAPIClient:
         self.dry_run = dry_run
         self.access_token = None
         self.token_expires_at = None
-        self.auth_url = "https://authentication.toasttab.com/usermgmt/v1/oauth/token"
+        self.auth_url = "https://ws-api.toasttab.com/authentication/v1/authentication/login"
         self.api_base = "https://ws-api.toasttab.com"
 
     def authenticate(self) -> bool:
@@ -73,19 +73,18 @@ class ToastAPIClient:
         try:
             response = requests.post(
                 self.auth_url,
-                data={
-                    'client_id': self.client_id,
-                    'client_secret': self.client_secret,
-                    'grant_type': 'client_credentials'
+                json={
+                    'clientId': self.client_id,
+                    'clientSecret': self.client_secret,
+                    'userAccessType': 'TOAST_MACHINE_CLIENT'
                 },
                 timeout=10
             )
             response.raise_for_status()
             data = response.json()
-            self.access_token = data.get('access_token')
-            expires_in = data.get('expires_in', 3600)
-            self.token_expires_at = datetime.now() + timedelta(seconds=expires_in)
-            logger.info(f"Toast: Successfully authenticated. Token expires at {self.token_expires_at}")
+            token_obj = data.get('token', {})
+            self.access_token = token_obj.get('accessToken') or data.get('access_token')
+            logger.info('Toast: Successfully authenticated via machine client auth')
             return True
         except requests.exceptions.RequestException as e:
             logger.error(f"Toast: Authentication failed: {e}")
@@ -637,10 +636,10 @@ class TripleseatAPIClient:
         try:
             response = requests.post(
                 self.token_url,
-                data={
-                    'client_id': self.client_id,
-                    'client_secret': self.client_secret,
-                    'grant_type': 'client_credentials'
+                json={
+                    'clientId': self.client_id,
+                    'clientSecret': self.client_secret,
+                    'userAccessType': 'TOAST_MACHINE_CLIENT'
                 },
                 timeout=10
             )

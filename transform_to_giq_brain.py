@@ -9,6 +9,8 @@ Sources consumed:
   dashboard_data.json         — SevenRooms reservations/guests
   google_analytics_data.json  — GA4 traffic + Search Console (optional)
   meta_social_data.json       — Instagram + Facebook insights (optional)
+  mailchimp_data.json         — Mailchimp campaigns + list size (optional)
+  eventbrite_data.json        — Eventbrite events + ticket sales (optional)
 
 Output files:
   data/kpis/pulse.json
@@ -21,9 +23,10 @@ Output files:
   data/marketing/email_metrics.json
   data/marketing/social_metrics.json    ← updated from Meta live data when available
   data/marketing/campaigns.json
-  data/marketing/google_analytics.json  ← NEW: GA4 traffic + devices + conversions
-  data/marketing/search_console.json    ← NEW: GSC keywords + pages
-  data/marketing/meta_social.json       ← NEW: full Meta/IG breakdown
+  data/marketing/google_analytics.json  ← GA4 traffic + devices + conversions
+  data/marketing/search_console.json    ← GSC keywords + pages
+  data/marketing/meta_social.json       ← full Meta/IG breakdown
+  data/events/eventbrite.json           ← NEW: Eventbrite events + ticket sales
 """
 
 import json, os, sys
@@ -59,9 +62,11 @@ def safe_float(v, default=0.0):
 
 
 # ── Load source data ──────────────────────────────────────────────────────────
-src  = load_json("dashboard_data.json")
-ga   = load_json("google_analytics_data.json")
-meta = load_json("meta_social_data.json")
+src   = load_json("dashboard_data.json")
+ga    = load_json("google_analytics_data.json")
+meta  = load_json("meta_social_data.json")
+mc    = load_json("mailchimp_data.json")
+eb    = load_json("eventbrite_data.json")
 
 sr   = src.get("sevenrooms", {})
 res  = sr.get("reservations", {})
@@ -71,11 +76,15 @@ ts   = src.get("timestamp", datetime.now(timezone.utc).isoformat())
 
 ga_has_data   = bool(ga and ga.get("traffic"))
 meta_has_data = bool(meta and (meta.get("ig_account") or meta.get("ig_media")))
+mc_has_data   = bool(mc and mc.get("total_members"))
+eb_has_data   = bool(eb and eb.get("last_updated"))
 
 print(f"\n🔄  Transforming data → GIQ Brain files")
 print(f"    SevenRooms:  {'LIVE' if res else 'empty'}")
 print(f"    GA4 / GSC:   {'LIVE' if ga_has_data else 'not connected'}")
 print(f"    Meta/IG:     {'LIVE' if meta_has_data else 'not connected'}")
+print(f"    Mailchimp:   {'LIVE' if mc_has_data else 'not connected'}")
+print(f"    Eventbrite:  {'LIVE' if eb_has_data else 'not connected'}")
 print(f"    Timestamp:   {ts}\n")
 
 
@@ -140,7 +149,9 @@ pulse = {
     "dataSources": {
         "sevenrooms": bool(res),
         "googleAnalytics": ga_has_data,
-        "meta": meta_has_data
+        "meta": meta_has_data,
+        "mailchimp": mc_has_data,
+        "eventbrite": eb_has_data
     },
     "metrics": [
         {"id": "total_covers",          "label": "Total Covers",
@@ -157,8 +168,11 @@ pulse = {
          "value": 4.7,                  "change": 0.1,         "trend": "up",
          "sparkline": [4.5,4.5,4.6,4.6,4.6,4.7,4.6,4.7,4.7,4.7,4.7,4.7]},
         {"id": "email_list",            "label": "Email List Size",
-         "value": 12847,                "change": 5.4,         "trend": "up",
-         "sparkline": [11800,11950,12050,12200,12300,12400,12500,12550,12650,12700,12780,12847]},
+         "value": mc.get("total_members", 12847) if mc_has_data else 12847,
+         "change": 5.4,                "trend": "up",
+         "live": mc_has_data,
+         "sparkline": [11800,11950,12050,12200,12300,12400,12500,12550,12650,12700,12780,
+                       mc.get("total_members", 12847) if mc_has_data else 12847]},
         {"id": "social_reach",          "label": "Social Reach",
          "value": social_reach,         "change": social_reach_chg, "trend": social_reach_trend,
          "live": meta_has_data,
@@ -419,16 +433,36 @@ write_json("data/staff/performance.json", staff)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 8. data/marketing/email_metrics.json  — Mailchimp (mock until connected)
+# 8. data/marketing/email_metrics.json  — Mailchimp live or fallback
 # ══════════════════════════════════════════════════════════════════════════════
-write_json("data/marketing/email_metrics.json", {
-    "openRate":  {"value": 21.4, "change": -2.8, "trend": "down",
-                  "sparkline": [24,23,22.5,23,22,21.8,22.1,21.5,21.2,21.4]},
-    "clickRate": {"value": 3.8,  "change":  0.5, "trend": "up",
-                  "sparkline": [3,3.1,3.2,3.4,3.3,3.5,3.6,3.5,3.7,3.8]},
-    "unsubRate": {"value": 0.12, "change": -0.03,"trend": "down",
-                  "sparkline": [0.18,0.16,0.15,0.14,0.15,0.14,0.13,0.13,0.12,0.12]}
-})
+if mc_has_data:
+    mc_agg = mc.get("aggregate", {})
+    mc_campaigns = mc.get("recent_campaigns", [])
+    avg_open  = round(safe_float(mc_agg.get("avg_open_rate", 0)) * 100, 1)
+    avg_click = round(safe_float(mc_agg.get("avg_click_rate", 0)) * 100, 1)
+    # Per-campaign open rates for sparkline
+    open_spark  = [round(safe_float(c.get("open_rate", 0)) * 100, 1) for c in mc_campaigns[-10:]] or [avg_open] * 10
+    click_spark = [round(safe_float(c.get("click_rate", 0)) * 100, 1) for c in mc_campaigns[-10:]] or [avg_click] * 10
+    write_json("data/marketing/email_metrics.json", {
+        "live": True,
+        "totalMembers": mc.get("total_members", 0),
+        "openRate":  {"value": avg_open,  "change": 0, "trend": "flat", "sparkline": open_spark},
+        "clickRate": {"value": avg_click, "change": 0, "trend": "flat", "sparkline": click_spark},
+        "unsubRate": {"value": 0.12, "change": -0.03, "trend": "down",
+                      "sparkline": [0.18,0.16,0.15,0.14,0.15,0.14,0.13,0.13,0.12,0.12]}
+    })
+    print(f"      Mailchimp: {mc.get('total_members', 0):,} members, {len(mc_campaigns)} campaigns (LIVE)")
+else:
+    write_json("data/marketing/email_metrics.json", {
+        "live": False,
+        "totalMembers": 12847,
+        "openRate":  {"value": 21.4, "change": -2.8, "trend": "down",
+                      "sparkline": [24,23,22.5,23,22,21.8,22.1,21.5,21.2,21.4]},
+        "clickRate": {"value": 3.8,  "change":  0.5, "trend": "up",
+                      "sparkline": [3,3.1,3.2,3.4,3.3,3.5,3.6,3.5,3.7,3.8]},
+        "unsubRate": {"value": 0.12, "change": -0.03,"trend": "down",
+                      "sparkline": [0.18,0.16,0.15,0.14,0.15,0.14,0.13,0.13,0.12,0.12]}
+    })
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -488,16 +522,44 @@ else:
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 10. data/marketing/campaigns.json  — mock until Mailchimp connected
+# 10. data/marketing/campaigns.json  — Mailchimp live or fallback mock
 # ══════════════════════════════════════════════════════════════════════════════
-write_json("data/marketing/campaigns.json", [
-    {"name":"Spring Menu Launch",  "type":"Email",          "date":"Mar 15","openRate":28.4,"clickRate":5.2,"revenue":12400,"benchmark":True},
-    {"name":"St. Patrick's Event", "type":"Email + Social", "date":"Mar 14","openRate":32.1,"clickRate":6.8,"revenue":18700,"benchmark":True},
-    {"name":"Wine Wednesday",      "type":"Email",          "date":"Mar 12","openRate":16.2,"clickRate":2.1,"revenue":3200, "benchmark":False},
-    {"name":"Weekend Brunch Promo","type":"Instagram",      "date":"Mar 9", "openRate":None, "clickRate":4.5,"revenue":8900, "benchmark":True},
-    {"name":"Valentine's Recap",   "type":"Email",          "date":"Feb 20","openRate":24.5,"clickRate":3.9,"revenue":6100, "benchmark":True},
-    {"name":"Super Bowl Special",  "type":"Email + Social", "date":"Feb 9", "openRate":19.8,"clickRate":2.8,"revenue":4500, "benchmark":False},
-])
+if mc_has_data:
+    mc_campaigns = mc.get("recent_campaigns", [])
+    campaigns_out = []
+    for c in mc_campaigns[:10]:
+        send_time = c.get("send_time", "") or c.get("create_time", "")
+        try:
+            dt = datetime.strptime(send_time[:10], "%Y-%m-%d")
+            date_label = dt.strftime("%b %-d")
+        except Exception:
+            date_label = send_time[:10] if send_time else "—"
+        open_rate  = round(safe_float(c.get("open_rate", 0)) * 100, 1)
+        click_rate = round(safe_float(c.get("click_rate", 0)) * 100, 1)
+        # Benchmark: open rate > 20% and click rate > 3% is above industry avg
+        above_benchmark = (open_rate > 20) and (click_rate > 3)
+        campaigns_out.append({
+            "name":       c.get("subject_line", c.get("title", "Campaign"))[:60],
+            "type":       "Email",
+            "date":       date_label,
+            "openRate":   open_rate,
+            "clickRate":  click_rate,
+            "revenue":    None,       # Mailchimp doesn't expose revenue attribution directly
+            "benchmark":  above_benchmark,
+            "emails_sent": safe_int(c.get("emails_sent", 0)),
+            "live":        True,
+        })
+    write_json("data/marketing/campaigns.json", campaigns_out)
+    print(f"      Campaigns: {len(campaigns_out)} live Mailchimp campaigns")
+else:
+    write_json("data/marketing/campaigns.json", [
+        {"name":"Spring Menu Launch",  "type":"Email",          "date":"Mar 15","openRate":28.4,"clickRate":5.2,"revenue":12400,"benchmark":True},
+        {"name":"St. Patrick's Event", "type":"Email + Social", "date":"Mar 14","openRate":32.1,"clickRate":6.8,"revenue":18700,"benchmark":True},
+        {"name":"Wine Wednesday",      "type":"Email",          "date":"Mar 12","openRate":16.2,"clickRate":2.1,"revenue":3200, "benchmark":False},
+        {"name":"Weekend Brunch Promo","type":"Instagram",      "date":"Mar 9", "openRate":None, "clickRate":4.5,"revenue":8900, "benchmark":True},
+        {"name":"Valentine's Recap",   "type":"Email",          "date":"Feb 20","openRate":24.5,"clickRate":3.9,"revenue":6100, "benchmark":True},
+        {"name":"Super Bowl Special",  "type":"Email + Social", "date":"Feb 9", "openRate":19.8,"clickRate":2.8,"revenue":4500, "benchmark":False},
+    ])
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -703,10 +765,78 @@ else:
     print(f"      Meta: not connected — placeholder written")
 
 
+# ══════════════════════════════════════════════════════════════════════════════
+# 13. NEW: data/events/eventbrite.json  — Eventbrite events + ticket sales
+# ══════════════════════════════════════════════════════════════════════════════
+if eb_has_data:
+    upcoming_events = eb.get("upcoming_events", [])
+    past_events     = eb.get("past_events", [])
+    stats           = eb.get("stats", {})
+
+    def format_eb_event(e):
+        """Normalize an Eventbrite event object for the frontend."""
+        start = e.get("start", {})
+        start_local = start.get("local", "") if isinstance(start, dict) else str(start)
+        try:
+            dt = datetime.strptime(start_local[:16], "%Y-%m-%dT%H:%M")
+            date_label = dt.strftime("%b %-d, %Y")
+            time_label = dt.strftime("%-I:%M %p")
+        except Exception:
+            date_label = start_local[:10]
+            time_label = ""
+        capacity   = safe_int(e.get("capacity", 0))
+        sold       = safe_int(e.get("tickets_sold", e.get("quantity_sold", 0)))
+        revenue    = safe_float(e.get("gross_revenue", e.get("revenue", 0)))
+        return {
+            "id":           e.get("id", ""),
+            "name":         (e.get("name", {}).get("text", "") or e.get("name", ""))[:80],
+            "date":         date_label,
+            "time":         time_label,
+            "status":       e.get("status", ""),
+            "capacity":     capacity,
+            "ticketsSold":  sold,
+            "ticketsAvail": max(capacity - sold, 0) if capacity else None,
+            "fillRate":     round(sold / capacity * 100, 1) if capacity else None,
+            "grossRevenue": round(revenue, 2),
+            "url":          e.get("url", ""),
+            "isFree":       e.get("is_free", False),
+        }
+
+    upcoming_out = [format_eb_event(e) for e in upcoming_events[:10]]
+    past_out     = [format_eb_event(e) for e in past_events[:10]]
+
+    eventbrite_out = {
+        "updated":        eb.get("last_updated", ts),
+        "live":           True,
+        "organizerId":    eb.get("organizer_id", ""),
+        "summary": {
+            "totalUpcoming":   safe_int(stats.get("total_upcoming", len(upcoming_events))),
+            "totalPast30d":    safe_int(stats.get("total_past_30d", len(past_events))),
+            "totalTicketsSold": safe_int(stats.get("total_tickets_sold", 0)),
+            "totalGrossRevenue": safe_float(stats.get("total_gross_revenue", 0)),
+        },
+        "upcomingEvents": upcoming_out,
+        "pastEvents":     past_out,
+    }
+    write_json("data/events/eventbrite.json", eventbrite_out)
+    print(f"      Eventbrite: {len(upcoming_out)} upcoming, {len(past_out)} past events (LIVE)")
+else:
+    write_json("data/events/eventbrite.json", {
+        "updated":  ts,
+        "live":     False,
+        "summary": {"totalUpcoming": 0, "totalPast30d": 0, "totalTicketsSold": 0, "totalGrossRevenue": 0},
+        "upcomingEvents": [],
+        "pastEvents":     [],
+        "_note": "Eventbrite not yet connected or no events found."
+    })
+    print(f"      Eventbrite: not connected — placeholder written")
+
+
 # ── Summary ───────────────────────────────────────────────────────────────────
-print(f"\n✅  GIQ Brain — 12 data files generated")
-print(f"    SevenRooms: {'LIVE' if res else 'no data'} (covers={covers_cur}, revenue=${rev_cur:,.0f})")
+file_count = 13  # updated from 12 (added data/events/eventbrite.json)
+print(f"\n✅  GIQ Brain — {file_count} data files generated")
+print(f"    SevenRooms:       {'LIVE' if res else 'no data'} (covers={covers_cur}, revenue=${rev_cur:,.0f})")
 print(f"    Google Analytics: {'LIVE' if ga_has_data else 'not connected (OAuth needed)'}")
 print(f"    Meta / Instagram: {'LIVE' if meta_has_data else 'not connected (token needed)'}")
-print(f"    Toast:    pending (connect Toast API)")
-print(f"    Mailchimp: pending (connect Mailchimp)\n")
+print(f"    Mailchimp:        {'LIVE' if mc_has_data else 'not connected'}")
+print(f"    Eventbrite:       {'LIVE' if eb_has_data else 'not connected'}\n")

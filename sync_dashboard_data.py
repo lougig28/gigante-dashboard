@@ -157,6 +157,58 @@ class ToastAPIClient:
             logger.error(f"Toast: Failed to fetch feedbacks: {e}")
             return feedbacks
 
+
+    def get_orders(self, days_back: int = 30) -> dict:
+        """Fetch order totals from Toast bulk orders endpoint."""
+        if self.dry_run:
+            return {'total_revenue': 0.0, 'order_count': 0}
+        if not self.access_token:
+            logger.error('Toast: Not authenticated, cannot fetch orders')
+            return {}
+        from urllib.parse import quote
+        import datetime as dt
+        end_dt = dt.datetime.utcnow()
+        start_dt = end_dt - dt.timedelta(days=days_back)
+        def fmt(d):
+            return quote(d.strftime('%Y-%m-%dT%H:%M:%S.000+0000'))
+        base_url = (
+            f"{self.api_base}/orders/v2/ordersBulk"
+            f"?startDate={fmt(start_dt)}&endDate={fmt(end_dt)}&pageSize=100"
+        )
+        headers = {
+            'Authorization': f'Bearer {self.access_token}',
+            'Toast-Restaurant-External-ID': self.restaurant_guid,
+            'Content-Type': 'application/json'
+        }
+        total_revenue = 0.0
+        order_count = 0
+        page = 1
+        while True:
+            try:
+                url = base_url + f'&page={page}'
+                logger.info(f'Toast: Fetching orders page {page}...')
+                resp = requests.get(url, headers=headers, timeout=30)
+                resp.raise_for_status()
+                orders = resp.json()
+                if not orders:
+                    break
+                for order in orders:
+                    checks = order.get('checks', [])
+                    for check in checks:
+                        amt = check.get('totalAmount', 0) or 0
+                        total_revenue += float(amt)
+                    order_count += 1
+                if len(orders) < 100:
+                    break
+                page += 1
+            except Exception as e:
+                logger.error(f'Toast: Failed to fetch orders page {page}: {e}')
+                break
+        # Toast amounts are in cents
+        total_revenue = round(total_revenue / 100.0, 2)
+        logger.info(f'Toast: Fetched {order_count} orders, total revenue: ${total_revenue}')
+        return {'total_revenue': total_revenue, 'order_count': order_count}
+
     def aggregate_feedback_by_server(self, feedbacks: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
         """Aggregate feedback data by server."""
         aggregated = {}
@@ -880,6 +932,13 @@ class DashboardDataPipeline:
                 self.data['errors'].append("Toast: Authentication failed")
                 return
 
+            # Fetch orders (primary revenue data)
+            orders_data = client.get_orders(days_back=self.days_back)
+            if orders_data:
+                self.data['toast'].update(orders_data)
+                logger.info(f"Toast: revenue ${orders_data.get('total_revenue',0)}, orders {orders_data.get('order_count',0)}")
+
+            # Fetch feedbacks (best-effort)
             feedbacks = client.get_feedbacks(days_back=self.days_back)
             if feedbacks:
                 aggregated = client.aggregate_feedback_by_server(feedbacks)

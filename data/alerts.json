@@ -1,11 +1,11 @@
 {
   "alerts": [
     {
-      "id": "alert_revenue",
-      "severity": "success",
-      "headline": "Revenue up 116% vs prior period",
-      "explanation": "Total net revenue reached $67,595 \u2014 up 116% period-over-period.",
-      "action": "Review top-performing days and server assignments to sustain the momentum.",
+      "id": "alert_thu_covers",
+      "severity": "critical",
+      "headline": "Thursday covers down 15% vs prior period",
+      "explanation": "Thursday dropped from 60 to 51 covers. Weeknight volume has softened \u2014 monitor competitor activity.",
+      "action": "Launch counter-promo: '$12 Negroni + Bruschetta Board' Thu 5\u20137 PM via Instagram Stories + email to 10-mile radius list.",
       "source": "SevenRooms"
     },
     {
@@ -19,7 +19,7 @@
     {
       "id": "alert_sat_vip",
       "severity": "success",
-      "headline": "Strong Saturday confirmed \u2014 651 covers this period",
+      "headline": "Strong Saturday confirmed \u2014 646 covers this period",
       "explanation": "0 VIP guests tracked. Ensure top server coverage for peak night.",
       "action": "Pre-assign top servers (Fab, Daniel) to VIP tables. Brief kitchen on timing. Confirm celebration packages are prepped.",
       "source": "SevenRooms"

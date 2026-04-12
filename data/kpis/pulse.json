@@ -1,6 +1,6 @@
 {
   "period": "30d",
-  "updated": "2026-04-11T23:38:46.095113",
+  "updated": "2026-04-12T00:03:19.726571",
   "dataSources": {
     "sevenrooms": true,
     "googleAnalytics": false,
@@ -12,35 +12,34 @@
     {
       "id": "total_covers",
       "label": "Total Covers",
-      "value": 1455,
-      "change": 205.0,
+      "value": 1522,
+      "change": 213.8,
       "trend": "up",
       "sparkline": [
-        13,
         28,
-        137,
-        58,
+        147,
+        60,
         22,
         3,
         30,
         39,
-        422,
+        432,
         11,
         42,
-        65
+        65,
+        50
       ]
     },
     {
       "id": "total_revenue",
       "label": "Total Revenue",
-      "value": 61974,
+      "value": 63385,
       "format": "currency",
-      "change": 114.8,
+      "change": 117.5,
       "trend": "up",
       "sparkline": [
-        552,
         2170,
-        6589,
+        7037,
         2315,
         1409,
         99,
@@ -49,28 +48,29 @@
         8077,
         570,
         3250,
-        449
+        537,
+        0
       ]
     },
     {
       "id": "avg_party_size",
       "label": "Avg Party Size",
-      "value": 6.3,
-      "change": 34.0,
+      "value": 6.5,
+      "change": 41.3,
       "trend": "up",
       "sparkline": [
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3
+        6.5,
+        6.5,
+        6.5,
+        6.5,
+        6.5,
+        6.5,
+        6.5,
+        6.5,
+        6.5,
+        6.5,
+        6.5,
+        6.5
       ]
     },
     {
@@ -141,9 +141,9 @@
     {
       "id": "reservation_conversion",
       "label": "Reservation Conversion",
-      "value": 84.3,
+      "value": 84.5,
       "format": "percent",
-      "change": 8.8,
+      "change": 9.6,
       "trend": "up",
       "sparkline": [
         65,
@@ -157,7 +157,7 @@
         72,
         71,
         72,
-        84.3
+        84.5
       ]
     },
     {

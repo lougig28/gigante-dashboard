@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-03T17:48:33.632109",
+  "timestamp": "2026-05-03T19:01:17.342168",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-04-03",
@@ -12,9 +12,9 @@
     "reservations": {
       "total_reservations": 230,
       "total_covers": 1510,
-      "no_shows": 8,
+      "no_shows": 9,
       "cancellations": 30,
-      "completed": 192,
+      "completed": 191,
       "vip_count": 8,
       "total_revenue": 58528.01,
       "total_gross_revenue": 73742.32,
@@ -562,12 +562,12 @@
         }
       },
       "by_status": {
-        "PAID": 49,
-        "NO_SHOW": 8,
+        "PAID": 50,
+        "NO_SHOW": 9,
         "COMPLETE": 112,
         "ARRIVED": 26,
         "CANCELED": 30,
-        "CONFIRMED": 4,
+        "CONFIRMED": 2,
         "ARRIVED_PARTIAL": 1
       },
       "by_day_of_week": {
@@ -1600,10 +1600,10 @@
       },
       "no_shows": {
         "label": "No Shows",
-        "current": 8,
+        "current": 9,
         "previous": 5,
-        "delta": 3,
-        "pct_change": 60.0,
+        "delta": 4,
+        "pct_change": 80.0,
         "direction": "up"
       },
       "cancellations": {
@@ -1616,10 +1616,10 @@
       },
       "completed": {
         "label": "Completed",
-        "current": 192,
+        "current": 191,
         "previous": 73,
-        "delta": 119,
-        "pct_change": 163.0,
+        "delta": 118,
+        "pct_change": 161.6,
         "direction": "up"
       },
       "vip_count": {
@@ -1724,13 +1724,6 @@
           "current_covers": 54,
           "previous_covers": 38
         },
-        "Kim (M)": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 32,
-          "previous_covers": 0
-        },
         "Stefanny (M)": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
@@ -1738,32 +1731,11 @@
           "current_covers": 13,
           "previous_covers": 0
         },
-        "Jesus E (M)": {
+        "Kim (M)": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
-          "current_covers": 37,
-          "previous_covers": 0
-        },
-        "Bottle Girls": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 20,
-          "previous_covers": 0
-        },
-        "Manny (M)": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 20,
-          "previous_covers": 0
-        },
-        "Adamary (M)": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 47,
+          "current_covers": 32,
           "previous_covers": 0
         },
         "Flo": {
@@ -1773,11 +1745,39 @@
           "current_covers": 2,
           "previous_covers": 0
         },
+        "Adamary (M)": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 47,
+          "previous_covers": 0
+        },
+        "Jesus E (M)": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 37,
+          "previous_covers": 0
+        },
+        "Manny (M)": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 20,
+          "previous_covers": 0
+        },
         "Moises (M)": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
           "current_covers": 22,
+          "previous_covers": 0
+        },
+        "Bottle Girls": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 20,
           "previous_covers": 0
         },
         "Salvador": {

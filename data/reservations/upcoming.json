@@ -32,55 +32,60 @@
     },
     {
       "date": "Thu",
-      "booked": 17,
+      "booked": 21,
       "walkin": 6
     },
     {
       "date": "Thu+1",
-      "booked": 15,
+      "booked": 19,
       "walkin": 5
     },
     {
       "date": "Fri",
-      "booked": 35,
-      "walkin": 10
+      "booked": 52,
+      "walkin": 15
     },
     {
       "date": "Fri+1",
-      "booked": 32,
-      "walkin": 9
+      "booked": 47,
+      "walkin": 13
     },
     {
       "date": "Sat",
-      "booked": 92,
-      "walkin": 26
+      "booked": 120,
+      "walkin": 35
     },
     {
       "date": "Sat+1",
-      "booked": 84,
-      "walkin": 23
+      "booked": 110,
+      "walkin": 32
     },
     {
       "date": "Sun",
-      "booked": 141,
-      "walkin": 41
+      "booked": 68,
+      "walkin": 20
     },
     {
       "date": "Sun+1",
-      "booked": 129,
-      "walkin": 37
+      "booked": 62,
+      "walkin": 18
     }
   ],
   "shiftBreakdown": [
     {
       "name": "Dinner",
-      "value": 52,
+      "value": 72,
       "color": "hsl(160 60% 45%)"
     },
     {
       "name": "Brunch",
-      "value": 48,
+      "value": 25,
       "color": "hsl(270 60% 55%)"
+    },
+    {
+      "name": "Lunch",
+      "value": 3,
+      "color": "hsl(42 52% 54%)"
     }
   ],
   "upcoming": [
@@ -205,5 +210,5 @@
       "recommendation": "Approaching VIP threshold (15 visits) \u2014 recognize loyalty. Have Aperol Spritz ready at bar."
     }
   ],
-  "updated": "2026-05-05T23:40:06.009599"
+  "updated": "2026-05-06T01:15:42.148098"
 }

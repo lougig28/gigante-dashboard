@@ -1,6 +1,6 @@
 {
   "period": "30d",
-  "updated": "2026-05-05T23:40:06.009599",
+  "updated": "2026-05-06T01:15:42.148098",
   "dataSources": {
     "sevenrooms": true,
     "googleAnalytics": false,
@@ -12,65 +12,65 @@
     {
       "id": "total_covers",
       "label": "Total Covers",
-      "value": 1506,
-      "change": 188.5,
+      "value": 1390,
+      "change": 60.5,
       "trend": "up",
       "sparkline": [
-        10,
-        11,
+        15,
         17,
-        54,
-        156,
-        54,
+        85,
+        236,
+        107,
         2,
         2,
-        21,
-        36,
-        109,
-        42
+        35,
+        54,
+        124,
+        42,
+        3
       ]
     },
     {
       "id": "total_revenue",
       "label": "Total Revenue",
-      "value": 59536,
+      "value": 58038,
       "format": "currency",
-      "change": 166.6,
+      "change": 111.8,
       "trend": "up",
       "sparkline": [
-        0,
         523,
         1256,
-        2152,
-        5131,
+        2946,
+        6013,
         990,
         0,
         0,
-        1044,
-        943,
-        4960,
-        1914
+        1278,
+        1749,
+        5937,
+        1914,
+        0
       ]
     },
     {
       "id": "avg_party_size",
       "label": "Avg Party Size",
-      "value": 6.5,
-      "change": 20.4,
+      "value": 6.7,
+      "change": 8.1,
       "trend": "up",
       "sparkline": [
-        6.5,
-        6.5,
-        6.5,
-        6.5,
-        6.5,
-        6.5,
-        6.5,
-        6.5,
-        6.5,
-        6.5,
-        6.5,
-        6.5
+        6.7,
+        6.7,
+        6.7,
+        6.7,
+        6.7,
+        6.7,
+        6.7,
+        6.7,
+        6.7,
+        6.7,
+        6.7,
+        6.7
       ]
     },
     {
@@ -141,10 +141,10 @@
     {
       "id": "reservation_conversion",
       "label": "Reservation Conversion",
-      "value": 83.5,
+      "value": 81.2,
       "format": "percent",
-      "change": 5.2,
-      "trend": "up",
+      "change": -2.1,
+      "trend": "down",
       "sparkline": [
         65,
         66,
@@ -157,7 +157,7 @@
         72,
         71,
         72,
-        83.5
+        81.2
       ]
     },
     {

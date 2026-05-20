@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-20T16:52:56.744447",
+  "timestamp": "2026-05-20T19:25:32.453276",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-04-20",
@@ -10,16 +10,16 @@
   "toast": {},
   "sevenrooms": {
     "reservations": {
-      "total_reservations": 239,
-      "total_covers": 1423,
+      "total_reservations": 240,
+      "total_covers": 1425,
       "no_shows": 15,
       "cancellations": 41,
-      "completed": 183,
+      "completed": 184,
       "vip_count": 4,
       "total_revenue": 51523.15,
       "total_gross_revenue": 66997.84,
       "total_prepayment": 1792.72,
-      "avg_party_size": 6.0,
+      "avg_party_size": 5.9,
       "avg_duration_min": 136.0,
       "by_server": {
         "Danny O": {
@@ -214,6 +214,11 @@
           "covers": 98,
           "revenue": 7659.52
         },
+        "2026-05-20": {
+          "reservations": 2,
+          "covers": 10,
+          "revenue": 0.0
+        },
         "2026-05-17": {
           "reservations": 8,
           "covers": 74,
@@ -233,17 +238,12 @@
           "reservations": 1,
           "covers": 3,
           "revenue": 0.0
-        },
-        "2026-05-20": {
-          "reservations": 1,
-          "covers": 8,
-          "revenue": 0.0
         }
       },
       "by_shift": {
         "DINNER": {
-          "reservations": 131,
-          "covers": 816,
+          "reservations": 132,
+          "covers": 818,
           "revenue": 41304.25
         },
         "BRUNCH": {
@@ -289,8 +289,8 @@
           "revenue": 343.52
         },
         "Unknown": {
-          "reservations": 10,
-          "covers": 155,
+          "reservations": 11,
+          "covers": 157,
           "revenue": 6487.5
         },
         "Lounge": {
@@ -301,8 +301,8 @@
       },
       "by_reservation_type": {
         "Standard": {
-          "reservations": 91,
-          "covers": 475,
+          "reservations": 92,
+          "covers": 477,
           "revenue": 19491.66
         },
         "PDR - Buyout, Engagement": {
@@ -642,13 +642,13 @@
         "ARRIVED": 27,
         "NO_SHOW": 15,
         "CANCELED": 41,
-        "NOT_RECONCILED": 1,
-        "CONFIRMED": 2
+        "CONFIRMED": 3,
+        "NOT_RECONCILED": 1
       },
       "by_day_of_week": {
         "Wednesday": {
-          "reservations": 5,
-          "covers": 22,
+          "reservations": 6,
+          "covers": 24,
           "revenue": 310.0
         },
         "Saturday": {
@@ -1111,14 +1111,14 @@
       }
     },
     "previous_period": {
-      "total_reservations": 114,
-      "total_covers": 729,
+      "total_reservations": 113,
+      "total_covers": 727,
       "no_shows": 4,
       "cancellations": 14,
-      "completed": 96,
+      "completed": 95,
       "vip_count": 4,
-      "total_revenue": 25586.78,
-      "total_gross_revenue": 33378.97,
+      "total_revenue": 25332.26,
+      "total_gross_revenue": 33103.13,
       "total_prepayment": 351.12,
       "avg_party_size": 6.4,
       "avg_duration_min": 128.0,
@@ -1133,11 +1133,6 @@
           "covers": 33,
           "revenue": 2315.56
         },
-        "Ana": {
-          "reservations": 12,
-          "covers": 42,
-          "revenue": 1900.77
-        },
         "Daniel": {
           "reservations": 10,
           "covers": 53,
@@ -1147,6 +1142,11 @@
           "reservations": 14,
           "covers": 48,
           "revenue": 1658.52
+        },
+        "Ana": {
+          "reservations": 11,
+          "covers": 40,
+          "revenue": 1646.25
         },
         "Salvador": {
           "reservations": 3,
@@ -1291,9 +1291,9 @@
           "revenue": 368.0
         },
         "2026-04-04": {
-          "reservations": 4,
-          "covers": 13,
-          "revenue": 997.04
+          "reservations": 3,
+          "covers": 11,
+          "revenue": 742.52
         },
         "2026-04-12": {
           "reservations": 2,
@@ -1318,9 +1318,9 @@
       },
       "by_shift": {
         "DINNER": {
-          "reservations": 60,
-          "covers": 266,
-          "revenue": 12043.280000000002
+          "reservations": 59,
+          "covers": 264,
+          "revenue": 11788.760000000002
         },
         "BRUNCH": {
           "reservations": 54,
@@ -1330,9 +1330,9 @@
       },
       "by_seating_area": {
         "Main Dining": {
-          "reservations": 65,
-          "covers": 242,
-          "revenue": 9960.850000000002
+          "reservations": 64,
+          "covers": 240,
+          "revenue": 9706.330000000002
         },
         "Unknown": {
           "reservations": 15,
@@ -1362,9 +1362,9 @@
           "revenue": 0.0
         },
         "Standard": {
-          "reservations": 60,
-          "covers": 277,
-          "revenue": 7192.290000000001
+          "reservations": 59,
+          "covers": 275,
+          "revenue": 6937.77
         },
         "Celebration Package (unpaid)": {
           "reservations": 6,
@@ -1461,15 +1461,15 @@
           "covers": 5,
           "revenue": 300.0
         },
-        "Female birthday, PDR - Buyout": {
-          "reservations": 1,
-          "covers": 25,
-          "revenue": 1964.0
-        },
         "Lactose Intolerant, Easter, Dairy-free, Allergy, Highchair": {
           "reservations": 1,
           "covers": 4,
           "revenue": 383.0
+        },
+        "Female birthday, PDR - Buyout": {
+          "reservations": 1,
+          "covers": 25,
+          "revenue": 1964.0
         },
         "Comp round of drinks (house)": {
           "reservations": 1,
@@ -1515,16 +1515,16 @@
       "by_status": {
         "ARRIVED": 10,
         "CANCELED": 14,
-        "COMPLETE": 68,
+        "COMPLETE": 67,
         "NO_SHOW": 4,
         "PAID": 17,
         "NOT_RECONCILED": 1
       },
       "by_day_of_week": {
         "Saturday": {
-          "reservations": 36,
-          "covers": 185,
-          "revenue": 7250.120000000001
+          "reservations": 35,
+          "covers": 183,
+          "revenue": 6995.6
         },
         "Sunday": {
           "reservations": 54,
@@ -1779,9 +1779,9 @@
           "revenue": 535.0
         },
         "62": {
-          "reservations": 3,
-          "covers": 6,
-          "revenue": 586.52
+          "reservations": 2,
+          "covers": 4,
+          "revenue": 332.0
         },
         "91": {
           "reservations": 2,
@@ -1873,34 +1873,34 @@
     "comparison": {
       "total_reservations": {
         "label": "Reservations",
-        "current": 239,
-        "previous": 114,
-        "delta": 125,
-        "pct_change": 109.6,
+        "current": 240,
+        "previous": 113,
+        "delta": 127,
+        "pct_change": 112.4,
         "direction": "up"
       },
       "total_covers": {
         "label": "Covers",
-        "current": 1423,
-        "previous": 729,
-        "delta": 694,
-        "pct_change": 95.2,
+        "current": 1425,
+        "previous": 727,
+        "delta": 698,
+        "pct_change": 96.0,
         "direction": "up"
       },
       "total_revenue": {
         "label": "Net Revenue",
         "current": 51523.15,
-        "previous": 25586.78,
-        "delta": 25936.37,
-        "pct_change": 101.4,
+        "previous": 25332.26,
+        "delta": 26190.89,
+        "pct_change": 103.4,
         "direction": "up"
       },
       "total_gross_revenue": {
         "label": "Gross Revenue",
         "current": 66997.84,
-        "previous": 33378.97,
-        "delta": 33618.87,
-        "pct_change": 100.7,
+        "previous": 33103.13,
+        "delta": 33894.71,
+        "pct_change": 102.4,
         "direction": "up"
       },
       "no_shows": {
@@ -1921,10 +1921,10 @@
       },
       "completed": {
         "label": "Completed",
-        "current": 183,
-        "previous": 96,
-        "delta": 87,
-        "pct_change": 90.6,
+        "current": 184,
+        "previous": 95,
+        "delta": 89,
+        "pct_change": 93.7,
         "direction": "up"
       },
       "vip_count": {
@@ -1937,10 +1937,10 @@
       },
       "avg_party_size": {
         "label": "Avg Party Size",
-        "current": 6.0,
+        "current": 5.9,
         "previous": 6.4,
-        "delta": -0.4,
-        "pct_change": -6.3,
+        "delta": -0.5,
+        "pct_change": -7.8,
         "direction": "down"
       },
       "avg_duration_min": {
@@ -1975,10 +1975,10 @@
         },
         "Ana": {
           "current_revenue": 7630.08,
-          "previous_revenue": 1900.77,
-          "delta": 5729.31,
+          "previous_revenue": 1646.25,
+          "delta": 5983.83,
           "current_covers": 144,
-          "previous_covers": 42
+          "previous_covers": 40
         },
         "Angela": {
           "current_revenue": 6697.02,
@@ -2008,18 +2008,25 @@
           "current_covers": 38,
           "previous_covers": 8
         },
-        "Moises Mulinos": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
+        "Moises (M)": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
           "delta": 0.0,
-          "current_covers": 27,
-          "previous_covers": 0
+          "current_covers": 0,
+          "previous_covers": 22
         },
-        "Jesus E Mulinos": {
+        "Jesus E (M)": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 27
+        },
+        "Kim Mulinos": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
-          "current_covers": 22,
+          "current_covers": 20,
           "previous_covers": 0
         },
         "Manny Mulinos": {
@@ -2028,6 +2035,34 @@
           "delta": 0.0,
           "current_covers": 18,
           "previous_covers": 0
+        },
+        "Manny (M)": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 10
+        },
+        "Mario Mulinos": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 23,
+          "previous_covers": 0
+        },
+        "Moises Mulinos": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 27,
+          "previous_covers": 0
+        },
+        "Adamary (M)": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 30
         },
         "Chris Rod": {
           "current_revenue": 0.0,
@@ -2043,13 +2078,6 @@
           "current_covers": 0,
           "previous_covers": 16
         },
-        "Adamary Mulinos": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 33,
-          "previous_covers": 0
-        },
         "Stefanny (M)": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
@@ -2057,11 +2085,18 @@
           "current_covers": 0,
           "previous_covers": 13
         },
-        "Alejandra Mulinos": {
+        "Florencio": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
-          "current_covers": 20,
+          "current_covers": 35,
+          "previous_covers": 0
+        },
+        "Jesus E Mulinos": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 22,
           "previous_covers": 0
         },
         "Stefanny Mulinos": {
@@ -2071,47 +2106,12 @@
           "current_covers": 29,
           "previous_covers": 0
         },
-        "Moises (M)": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 22
-        },
-        "Mario Mulinos": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 23,
-          "previous_covers": 0
-        },
-        "Kim Mulinos": {
+        "Alejandra Mulinos": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
           "current_covers": 20,
           "previous_covers": 0
-        },
-        "Manny (M)": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 10
-        },
-        "Adamary (M)": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 30
-        },
-        "Jesus E (M)": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 27
         },
         "Samantha Mulinos": {
           "current_revenue": 0.0,
@@ -2120,11 +2120,11 @@
           "current_covers": 16,
           "previous_covers": 0
         },
-        "Florencio": {
+        "Adamary Mulinos": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
-          "current_covers": 35,
+          "current_covers": 33,
           "previous_covers": 0
         },
         "Junior": {
@@ -2179,7 +2179,7 @@
         "Wednesday": {
           "current_revenue": 310.0,
           "previous_revenue": 0,
-          "current_covers": 22,
+          "current_covers": 24,
           "previous_covers": 0
         },
         "Thursday": {
@@ -2196,9 +2196,9 @@
         },
         "Saturday": {
           "current_revenue": 15682.13,
-          "previous_revenue": 7250.12,
+          "previous_revenue": 6995.6,
           "current_covers": 417,
-          "previous_covers": 185
+          "previous_covers": 183
         },
         "Sunday": {
           "current_revenue": 10218.9,

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-07T14:53:05.072131",
+  "timestamp": "2026-06-07T16:17:48.929739",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-05-08",
@@ -570,15 +570,15 @@
           "covers": 4,
           "revenue": 575.0
         },
-        "Congratulations, Anniversary": {
-          "reservations": 1,
-          "covers": 2,
-          "revenue": 283.0
-        },
         "Graduation, Congratulations": {
           "reservations": 1,
           "covers": 5,
           "revenue": 0.0
+        },
+        "Congratulations, Anniversary": {
+          "reservations": 1,
+          "covers": 2,
+          "revenue": 283.0
         },
         "Mother's Day, See notes, Wheelchair, Wheelchair access": {
           "reservations": 1,
@@ -672,7 +672,8 @@
         "NO_SHOW": 16,
         "CANCELED": 40,
         "PAID": 18,
-        "CONFIRMED": 4,
+        "CONFIRMED": 3,
+        "ARRIVED_PARTIAL": 1,
         "NOT_RECONCILED": 2
       },
       "by_day_of_week": {
@@ -769,8 +770,8 @@
           "revenue": 0.0
         },
         "60": {
-          "reservations": 4,
-          "covers": 28,
+          "reservations": 5,
+          "covers": 36,
           "revenue": 648.0
         },
         "10039": {
@@ -1049,8 +1050,8 @@
           "revenue": 112.0
         },
         "61": {
-          "reservations": 5,
-          "covers": 51,
+          "reservations": 4,
+          "covers": 43,
           "revenue": 3229.48
         },
         "10012": {
@@ -1891,46 +1892,11 @@
           "current_covers": 18,
           "previous_covers": 0
         },
-        "Alejandra Mulinos": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 20,
-          "previous_covers": 0
-        },
         "Samantha Mulinos": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
           "current_covers": 13,
-          "previous_covers": 0
-        },
-        "Kim Mulinos": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 20,
-          "previous_covers": 0
-        },
-        "Jesus E Mulinos": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 22,
-          "previous_covers": 0
-        },
-        "Mario Mulinos": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 23,
-          "previous_covers": 0
-        },
-        "Moises Mulinos": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 27,
           "previous_covers": 0
         },
         "Stefanny Mulinos": {
@@ -1940,11 +1906,46 @@
           "current_covers": 18,
           "previous_covers": 0
         },
+        "Moises Mulinos": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 27,
+          "previous_covers": 0
+        },
+        "Jesus E Mulinos": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 22,
+          "previous_covers": 0
+        },
+        "Alejandra Mulinos": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 20,
+          "previous_covers": 0
+        },
+        "Kim Mulinos": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 20,
+          "previous_covers": 0
+        },
         "Adamary Mulinos": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
           "current_covers": 33,
+          "previous_covers": 0
+        },
+        "Mario Mulinos": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 23,
           "previous_covers": 0
         },
         "Chris Rod": {

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-07T12:21:07.352945",
+  "timestamp": "2026-06-07T14:53:05.072131",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-05-08",
@@ -58,8 +58,8 @@
           "revenue": 3076.52
         },
         "Gabi": {
-          "reservations": 9,
-          "covers": 54,
+          "reservations": 10,
+          "covers": 86,
           "revenue": 637.8
         },
         "Florencio": {
@@ -115,6 +115,16 @@
         "Samantha Mulinos": {
           "reservations": 1,
           "covers": 13,
+          "revenue": 0.0
+        },
+        "Junior": {
+          "reservations": 1,
+          "covers": 2,
+          "revenue": 0.0
+        },
+        "Chris Luna": {
+          "reservations": 1,
+          "covers": 8,
           "revenue": 0.0
         },
         "Chris Rod": {
@@ -560,15 +570,15 @@
           "covers": 4,
           "revenue": 575.0
         },
-        "Graduation, Congratulations": {
-          "reservations": 1,
-          "covers": 5,
-          "revenue": 0.0
-        },
         "Congratulations, Anniversary": {
           "reservations": 1,
           "covers": 2,
           "revenue": 283.0
+        },
+        "Graduation, Congratulations": {
+          "reservations": 1,
+          "covers": 5,
+          "revenue": 0.0
         },
         "Mother's Day, See notes, Wheelchair, Wheelchair access": {
           "reservations": 1,
@@ -734,8 +744,8 @@
           "revenue": 4465.0
         },
         "20": {
-          "reservations": 10,
-          "covers": 20,
+          "reservations": 11,
+          "covers": 22,
           "revenue": 995.0
         },
         "58": {
@@ -1871,7 +1881,7 @@
           "current_revenue": 637.8,
           "previous_revenue": 167.25,
           "delta": 470.55,
-          "current_covers": 54,
+          "current_covers": 86,
           "previous_covers": 4
         },
         "Manny Mulinos": {
@@ -1881,60 +1891,11 @@
           "current_covers": 18,
           "previous_covers": 0
         },
-        "Moises Mulinos": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 27,
-          "previous_covers": 0
-        },
         "Alejandra Mulinos": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
           "current_covers": 20,
-          "previous_covers": 0
-        },
-        "Stefanny Mulinos": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 18,
-          "previous_covers": 0
-        },
-        "Mario Mulinos": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 23,
-          "previous_covers": 0
-        },
-        "Jesus E Mulinos": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 22,
-          "previous_covers": 0
-        },
-        "Kim Mulinos": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 20,
-          "previous_covers": 0
-        },
-        "Chris Rod": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 2,
-          "previous_covers": 0
-        },
-        "Adamary Mulinos": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 33,
           "previous_covers": 0
         },
         "Samantha Mulinos": {
@@ -1944,11 +1905,60 @@
           "current_covers": 13,
           "previous_covers": 0
         },
+        "Kim Mulinos": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 20,
+          "previous_covers": 0
+        },
+        "Jesus E Mulinos": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 22,
+          "previous_covers": 0
+        },
+        "Mario Mulinos": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 23,
+          "previous_covers": 0
+        },
+        "Moises Mulinos": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 27,
+          "previous_covers": 0
+        },
+        "Stefanny Mulinos": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 18,
+          "previous_covers": 0
+        },
+        "Adamary Mulinos": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 33,
+          "previous_covers": 0
+        },
+        "Chris Rod": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 2,
+          "previous_covers": 0
+        },
         "Junior": {
-          "current_revenue": 0,
+          "current_revenue": 0.0,
           "previous_revenue": 204.0,
           "delta": -204.0,
-          "current_covers": 0,
+          "current_covers": 2,
           "previous_covers": 7
         },
         "Genti": {
@@ -1973,10 +1983,10 @@
           "previous_covers": 21
         },
         "Chris Luna": {
-          "current_revenue": 0,
+          "current_revenue": 0.0,
           "previous_revenue": 4061.0,
           "delta": -4061.0,
-          "current_covers": 0,
+          "current_covers": 8,
           "previous_covers": 50
         }
       },

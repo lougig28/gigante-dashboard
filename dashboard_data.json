@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-28T17:12:40.807155",
+  "timestamp": "2026-06-28T19:21:01.407798",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-05-29",
@@ -597,7 +597,7 @@
         "ARRIVED": 27,
         "NO_SHOW": 10,
         "PAID": 11,
-        "CONFIRMED": 1
+        "PRE_PARTIALLY_ARRIVED": 1
       },
       "by_day_of_week": {
         "Wednesday": {
@@ -1974,7 +1974,14 @@
           "current_covers": 19,
           "previous_covers": 0
         },
-        "Jess": {
+        "Alejandra Mulinos": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 10
+        },
+        "Bar": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
@@ -1988,12 +1995,12 @@
           "current_covers": 0,
           "previous_covers": 12
         },
-        "Alejandra Mulinos": {
+        "Stefanny Mulinos": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
-          "previous_covers": 10
+          "previous_covers": 18
         },
         "Mario Mulinos": {
           "current_revenue": 0,
@@ -2001,6 +2008,13 @@
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 5
+        },
+        "Kim Mulinos": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 15
         },
         "Moises Mulinos": {
           "current_revenue": 0,
@@ -2016,13 +2030,6 @@
           "current_covers": 10,
           "previous_covers": 0
         },
-        "Kim Mulinos": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 15
-        },
         "Manny Mulinos": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
@@ -2030,18 +2037,11 @@
           "current_covers": 0,
           "previous_covers": 3
         },
-        "Bar": {
+        "Jess": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
           "current_covers": 10,
-          "previous_covers": 0
-        },
-        "Chris Luna": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 21,
           "previous_covers": 0
         },
         "Jesus E Mulinos": {
@@ -2051,12 +2051,12 @@
           "current_covers": 0,
           "previous_covers": 8
         },
-        "Stefanny Mulinos": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
+        "Chris Luna": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
           "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 18
+          "current_covers": 21,
+          "previous_covers": 0
         },
         "Daniel": {
           "current_revenue": 1527.52,

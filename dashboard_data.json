@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-09T21:12:41.385027",
+  "timestamp": "2026-07-09T22:42:37.953693",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-06-09",
@@ -271,8 +271,8 @@
       },
       "by_reservation_type": {
         "Standard": {
-          "reservations": 74,
-          "covers": 468,
+          "reservations": 75,
+          "covers": 471,
           "revenue": 15259.070000000002
         },
         "Patio requested": {
@@ -286,8 +286,8 @@
           "revenue": 704.0
         },
         "Celebration Package (unpaid)": {
-          "reservations": 9,
-          "covers": 71,
+          "reservations": 8,
+          "covers": 68,
           "revenue": 3350.52
         },
         "Father's Day": {
@@ -579,11 +579,10 @@
       "by_status": {
         "COMPLETE": 131,
         "CANCELED": 31,
-        "ARRIVED": 23,
+        "ARRIVED": 26,
         "PAID": 13,
         "NO_SHOW": 11,
-        "CONFIRMED": 3,
-        "NOT_RECONCILED": 1
+        "CONFIRMED": 1
       },
       "by_day_of_week": {
         "Saturday": {
@@ -848,15 +847,15 @@
           "covers": 14,
           "revenue": 895.0
         },
+        "13": {
+          "reservations": 9,
+          "covers": 100,
+          "revenue": 4948.52
+        },
         "71": {
           "reservations": 1,
           "covers": 12,
           "revenue": 955.0
-        },
-        "13": {
-          "reservations": 8,
-          "covers": 96,
-          "revenue": 4948.52
         },
         "61": {
           "reservations": 5,
@@ -1987,33 +1986,19 @@
           "current_covers": 10,
           "previous_covers": 14
         },
-        "Adamary Mulinos": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
+        "Jess": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
           "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 19
+          "current_covers": 10,
+          "previous_covers": 0
         },
-        "Mario Mulinos": {
+        "Alejandra Mulinos": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
-          "previous_covers": 5
-        },
-        "Manny Mulinos": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 3
-        },
-        "Moises Mulinos": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 6
+          "previous_covers": 10
         },
         "Bar": {
           "current_revenue": 0.0,
@@ -2029,19 +2014,26 @@
           "current_covers": 0,
           "previous_covers": 18
         },
-        "Alejandra Mulinos": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 10
-        },
-        "Jess": {
+        "Tianna": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
           "current_covers": 10,
           "previous_covers": 0
+        },
+        "Moises Mulinos": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 6
+        },
+        "Adamary Mulinos": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 19
         },
         "Kim Mulinos": {
           "current_revenue": 0,
@@ -2057,12 +2049,19 @@
           "current_covers": 0,
           "previous_covers": 8
         },
-        "Tianna": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
+        "Manny Mulinos": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
           "delta": 0.0,
-          "current_covers": 10,
-          "previous_covers": 0
+          "current_covers": 0,
+          "previous_covers": 3
+        },
+        "Mario Mulinos": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 5
         },
         "Salvador": {
           "current_revenue": 0,

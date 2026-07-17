@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-17T15:13:42.178134",
+  "timestamp": "2026-07-17T17:12:18.506713",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-06-17",
@@ -11,7 +11,7 @@
   "sevenrooms": {
     "reservations": {
       "total_reservations": 222,
-      "total_covers": 1458,
+      "total_covers": 1460,
       "no_shows": 8,
       "cancellations": 31,
       "completed": 183,
@@ -101,7 +101,7 @@
         },
         "2026-07-17": {
           "reservations": 29,
-          "covers": 134,
+          "covers": 136,
           "revenue": 0.0
         },
         "2026-06-21": {
@@ -203,7 +203,7 @@
       "by_shift": {
         "DINNER": {
           "reservations": 172,
-          "covers": 1090,
+          "covers": 1092,
           "revenue": 42659.81999999999
         },
         "BRUNCH": {
@@ -220,7 +220,7 @@
         },
         "Main Dining": {
           "reservations": 147,
-          "covers": 704,
+          "covers": 706,
           "revenue": 27747.780000000002
         },
         "Unknown": {
@@ -272,7 +272,7 @@
         },
         "Standard": {
           "reservations": 83,
-          "covers": 445,
+          "covers": 447,
           "revenue": 11756.060000000001
         },
         "Celebration Package (unpaid)": {
@@ -599,7 +599,7 @@
         },
         "Friday": {
           "reservations": 63,
-          "covers": 423,
+          "covers": 425,
           "revenue": 19422.120000000003
         },
         "Sunday": {
@@ -776,7 +776,7 @@
         },
         "29": {
           "reservations": 10,
-          "covers": 22,
+          "covers": 24,
           "revenue": 323.0
         },
         "70": {
@@ -1692,10 +1692,10 @@
       },
       "total_covers": {
         "label": "Covers",
-        "current": 1458,
+        "current": 1460,
         "previous": 584,
-        "delta": 874,
-        "pct_change": 149.7,
+        "delta": 876,
+        "pct_change": 150.0,
         "direction": "up"
       },
       "total_revenue": {
@@ -1819,12 +1819,12 @@
           "current_covers": 16,
           "previous_covers": 3
         },
-        "Chris Luna": {
+        "Tianna": {
           "current_revenue": 0.0,
-          "previous_revenue": 0.0,
+          "previous_revenue": 0,
           "delta": 0.0,
-          "current_covers": 26,
-          "previous_covers": 2
+          "current_covers": 10,
+          "previous_covers": 0
         },
         "Bar": {
           "current_revenue": 0,
@@ -1833,14 +1833,14 @@
           "current_covers": 0,
           "previous_covers": 10
         },
-        "Jess": {
+        "Chris Luna": {
           "current_revenue": 0.0,
-          "previous_revenue": 0,
+          "previous_revenue": 0.0,
           "delta": 0.0,
-          "current_covers": 10,
-          "previous_covers": 0
+          "current_covers": 26,
+          "previous_covers": 2
         },
-        "Tianna": {
+        "Jess": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
@@ -1890,7 +1890,7 @@
         "Friday": {
           "current_revenue": 19422.12,
           "previous_revenue": 5381.04,
-          "current_covers": 423,
+          "current_covers": 425,
           "previous_covers": 108
         },
         "Saturday": {

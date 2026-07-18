@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-18T14:52:46.931736",
+  "timestamp": "2026-07-18T15:57:26.222881",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-06-18",
@@ -914,15 +914,15 @@
           "covers": 87,
           "revenue": 5416.04
         },
-        "V1": {
-          "reservations": 1,
-          "covers": 9,
-          "revenue": 0.0
-        },
         "10": {
           "reservations": 7,
           "covers": 48,
           "revenue": 2435.04
+        },
+        "V1": {
+          "reservations": 1,
+          "covers": 9,
+          "revenue": 0.0
         },
         "50": {
           "reservations": 6,
@@ -1839,6 +1839,13 @@
           "current_covers": 16,
           "previous_covers": 3
         },
+        "Bar": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 10
+        },
         "Jess": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
@@ -1846,12 +1853,12 @@
           "current_covers": 23,
           "previous_covers": 0
         },
-        "Bar": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
+        "Tianna": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
           "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 10
+          "current_covers": 10,
+          "previous_covers": 0
         },
         "Chris Luna": {
           "current_revenue": 0.0,
@@ -1865,13 +1872,6 @@
           "previous_revenue": 0,
           "delta": 0.0,
           "current_covers": 39,
-          "previous_covers": 0
-        },
-        "Tianna": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 10,
           "previous_covers": 0
         },
         "Brianna": {

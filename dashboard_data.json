@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-18T17:03:41.230615",
+  "timestamp": "2026-07-18T19:04:46.305250",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-06-18",
@@ -10,11 +10,11 @@
   "toast": {},
   "sevenrooms": {
     "reservations": {
-      "total_reservations": 227,
-      "total_covers": 1478,
+      "total_reservations": 228,
+      "total_covers": 1482,
       "no_shows": 8,
       "cancellations": 29,
-      "completed": 190,
+      "completed": 191,
       "vip_count": 5,
       "total_revenue": 52752.82,
       "total_gross_revenue": 66756.19,
@@ -104,6 +104,11 @@
           "covers": 76,
           "revenue": 4740.52
         },
+        "2026-07-18": {
+          "reservations": 8,
+          "covers": 42,
+          "revenue": 0.0
+        },
         "2026-07-17": {
           "reservations": 35,
           "covers": 168,
@@ -133,11 +138,6 @@
           "reservations": 5,
           "covers": 43,
           "revenue": 572.52
-        },
-        "2026-07-18": {
-          "reservations": 7,
-          "covers": 38,
-          "revenue": 0.0
         },
         "2026-07-04": {
           "reservations": 1,
@@ -212,8 +212,8 @@
       },
       "by_shift": {
         "DINNER": {
-          "reservations": 179,
-          "covers": 1116,
+          "reservations": 180,
+          "covers": 1120,
           "revenue": 45518.81999999999
         },
         "BRUNCH": {
@@ -229,8 +229,8 @@
           "revenue": 2909.52
         },
         "Main Dining": {
-          "reservations": 152,
-          "covers": 733,
+          "reservations": 153,
+          "covers": 737,
           "revenue": 31171.780000000002
         },
         "Unknown": {
@@ -281,8 +281,8 @@
           "revenue": 2009.52
         },
         "Standard": {
-          "reservations": 85,
-          "covers": 456,
+          "reservations": 86,
+          "covers": 460,
           "revenue": 13652.060000000001
         },
         "Celebration Package (unpaid)": {
@@ -598,18 +598,18 @@
       },
       "by_status": {
         "COMPLETE": 132,
+        "CONFIRMED": 6,
         "PAID": 18,
         "CANCELED": 29,
         "NO_SHOW": 8,
         "ARRIVED": 30,
-        "CONFIRMED": 5,
         "NOT_RECONCILED": 4,
         "ARRIVED_PARTIAL": 1
       },
       "by_day_of_week": {
         "Saturday": {
-          "reservations": 51,
-          "covers": 328,
+          "reservations": 52,
+          "covers": 332,
           "revenue": 12815.1
         },
         "Friday": {
@@ -1704,18 +1704,18 @@
     "comparison": {
       "total_reservations": {
         "label": "Reservations",
-        "current": 227,
+        "current": 228,
         "previous": 89,
-        "delta": 138,
-        "pct_change": 155.1,
+        "delta": 139,
+        "pct_change": 156.2,
         "direction": "up"
       },
       "total_covers": {
         "label": "Covers",
-        "current": 1478,
+        "current": 1482,
         "previous": 569,
-        "delta": 909,
-        "pct_change": 159.8,
+        "delta": 913,
+        "pct_change": 160.5,
         "direction": "up"
       },
       "total_revenue": {
@@ -1752,10 +1752,10 @@
       },
       "completed": {
         "label": "Completed",
-        "current": 190,
+        "current": 191,
         "previous": 67,
-        "delta": 123,
-        "pct_change": 183.6,
+        "delta": 124,
+        "pct_change": 185.1,
         "direction": "up"
       },
       "vip_count": {
@@ -1846,19 +1846,19 @@
           "current_covers": 10,
           "previous_covers": 0
         },
-        "Grace": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 39,
-          "previous_covers": 0
-        },
         "Bar": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 10
+        },
+        "Grace": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 39,
+          "previous_covers": 0
         },
         "Jess": {
           "current_revenue": 0.0,
@@ -1923,7 +1923,7 @@
         "Saturday": {
           "current_revenue": 12815.1,
           "previous_revenue": 8727.55,
-          "current_covers": 328,
+          "current_covers": 332,
           "previous_covers": 190
         },
         "Sunday": {

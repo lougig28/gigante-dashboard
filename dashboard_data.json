@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-19T02:38:55.689125",
+  "timestamp": "2026-07-19T05:37:52.476682",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-06-19",
@@ -11,13 +11,13 @@
   "sevenrooms": {
     "reservations": {
       "total_reservations": 226,
-      "total_covers": 1529,
+      "total_covers": 1528,
       "no_shows": 9,
       "cancellations": 30,
       "completed": 187,
       "vip_count": 5,
-      "total_revenue": 53876.78,
-      "total_gross_revenue": 67794.35,
+      "total_revenue": 53893.78,
+      "total_gross_revenue": 67812.77,
       "total_prepayment": 897.24,
       "avg_party_size": 6.8,
       "avg_duration_min": 140.0,
@@ -39,8 +39,8 @@
         },
         "Ana": {
           "reservations": 27,
-          "covers": 119,
-          "revenue": 6655.02
+          "covers": 118,
+          "revenue": 6672.02
         },
         "Fab": {
           "reservations": 9,
@@ -101,8 +101,8 @@
         },
         "2026-07-18": {
           "reservations": 11,
-          "covers": 50,
-          "revenue": 2811.0
+          "covers": 49,
+          "revenue": 2828.0
         },
         "2026-07-17": {
           "reservations": 40,
@@ -213,8 +213,8 @@
       "by_shift": {
         "DINNER": {
           "reservations": 169,
-          "covers": 1087,
-          "revenue": 46044.77999999999
+          "covers": 1086,
+          "revenue": 46061.77999999999
         },
         "BRUNCH": {
           "reservations": 57,
@@ -230,8 +230,8 @@
         },
         "Main Dining": {
           "reservations": 153,
-          "covers": 774,
-          "revenue": 33706.26
+          "covers": 773,
+          "revenue": 33723.26
         },
         "Unknown": {
           "reservations": 25,
@@ -317,7 +317,7 @@
         },
         "Birthday, Patio requested, Female birthday": {
           "reservations": 1,
-          "covers": 5,
+          "covers": 4,
           "revenue": 0.0
         },
         "G Room buyout, Birthday": {
@@ -473,7 +473,7 @@
         "Celebration Package (paid), Patio requested, Female birthday": {
           "reservations": 1,
           "covers": 8,
-          "revenue": 468.0
+          "revenue": 485.0
         },
         "Female birthday, Celebration Package (unpaid), Cake in fridge": {
           "reservations": 1,
@@ -587,21 +587,21 @@
         }
       },
       "by_status": {
-        "COMPLETE": 136,
+        "COMPLETE": 139,
         "CANCELED": 30,
         "PAID": 12,
         "NO_SHOW": 9,
-        "ARRIVED": 30,
-        "LATE": 2,
+        "ARRIVED": 28,
         "ARRIVED_PARTIAL": 1,
         "CONFIRMED": 4,
-        "NOT_RECONCILED": 2
+        "NOT_RECONCILED": 2,
+        "LATE": 1
       },
       "by_day_of_week": {
         "Saturday": {
           "reservations": 59,
-          "covers": 372,
-          "revenue": 16669.1
+          "covers": 371,
+          "revenue": 16686.1
         },
         "Friday": {
           "reservations": 74,
@@ -637,17 +637,17 @@
         },
         "27": {
           "reservations": 10,
-          "covers": 47,
+          "covers": 46,
           "revenue": 1689.0
         },
         "28": {
           "reservations": 8,
-          "covers": 37,
+          "covers": 36,
           "revenue": 795.0
         },
         "26": {
           "reservations": 7,
-          "covers": 39,
+          "covers": 38,
           "revenue": 1292.0
         },
         "62": {
@@ -803,7 +803,7 @@
         "30": {
           "reservations": 13,
           "covers": 120,
-          "revenue": 4741.04
+          "revenue": 4758.04
         },
         "40u": {
           "reservations": 6,
@@ -1748,25 +1748,25 @@
       },
       "total_covers": {
         "label": "Covers",
-        "current": 1529,
+        "current": 1528,
         "previous": 628,
-        "delta": 901,
-        "pct_change": 143.5,
+        "delta": 900,
+        "pct_change": 143.3,
         "direction": "up"
       },
       "total_revenue": {
         "label": "Net Revenue",
-        "current": 53876.78,
+        "current": 53893.78,
         "previous": 24176.15,
-        "delta": 29700.63,
+        "delta": 29717.63,
         "pct_change": 122.9,
         "direction": "up"
       },
       "total_gross_revenue": {
         "label": "Gross Revenue",
-        "current": 67794.35,
+        "current": 67812.77,
         "previous": 30460.78,
-        "delta": 37333.57,
+        "delta": 37351.99,
         "pct_change": 122.6,
         "direction": "up"
       },
@@ -1862,10 +1862,10 @@
           "previous_covers": 64
         },
         "Ana": {
-          "current_revenue": 6655.02,
+          "current_revenue": 6672.02,
           "previous_revenue": 5520.99,
-          "delta": 1134.03,
-          "current_covers": 119,
+          "delta": 1151.03,
+          "current_covers": 118,
           "previous_covers": 83
         },
         "Chris Luna": {
@@ -1889,12 +1889,12 @@
           "current_covers": 32,
           "previous_covers": 3
         },
-        "Jess": {
-          "current_revenue": 0.0,
+        "Tianna": {
+          "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
-          "current_covers": 19,
-          "previous_covers": 6
+          "current_covers": 0,
+          "previous_covers": 4
         },
         "Grace": {
           "current_revenue": 0.0,
@@ -1903,12 +1903,12 @@
           "current_covers": 39,
           "previous_covers": 0
         },
-        "Tianna": {
-          "current_revenue": 0,
+        "Jess": {
+          "current_revenue": 0.0,
           "previous_revenue": 0.0,
           "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 4
+          "current_covers": 19,
+          "previous_covers": 6
         },
         "Bar": {
           "current_revenue": 0,
@@ -1957,9 +1957,9 @@
           "previous_covers": 106
         },
         "Saturday": {
-          "current_revenue": 16669.1,
+          "current_revenue": 16686.1,
           "previous_revenue": 8727.55,
-          "current_covers": 372,
+          "current_covers": 371,
           "previous_covers": 190
         },
         "Sunday": {

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-24T13:46:16.666564",
+  "timestamp": "2026-07-24T15:25:40.360851",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-06-24",
@@ -537,9 +537,9 @@
         "NO_SHOW": 10,
         "ARRIVED": 24,
         "CANCELED": 21,
-        "NOT_RECONCILED": 8,
+        "NOT_RECONCILED": 6,
+        "CONFIRMED": 8,
         "ARRIVED_PARTIAL": 1,
-        "CONFIRMED": 6,
         "LATE": 1
       },
       "by_day_of_week": {
@@ -1793,13 +1793,6 @@
           "current_covers": 37,
           "previous_covers": 2
         },
-        "Bar": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 10
-        },
         "Tianna": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
@@ -1820,6 +1813,13 @@
           "delta": 0.0,
           "current_covers": 19,
           "previous_covers": 6
+        },
+        "Bar": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 10
         },
         "Drilon": {
           "current_revenue": 7364.08,

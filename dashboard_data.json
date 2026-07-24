@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-24T20:55:14.625146",
+  "timestamp": "2026-07-24T21:56:05.841207",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-06-24",
@@ -13,8 +13,8 @@
       "total_reservations": 206,
       "total_covers": 1480,
       "no_shows": 10,
-      "cancellations": 20,
-      "completed": 176,
+      "cancellations": 21,
+      "completed": 175,
       "vip_count": 3,
       "total_revenue": 42350.24,
       "total_gross_revenue": 52898.8,
@@ -520,7 +520,7 @@
           "covers": 42,
           "revenue": 3297.0
         },
-        "PDR - Buyout, Graduation": {
+        "PDR - Buyout, Graduation, Cake in fridge": {
           "reservations": 1,
           "covers": 15,
           "revenue": 0.0
@@ -531,10 +531,10 @@
         "PAID": 16,
         "NO_SHOW": 10,
         "ARRIVED": 24,
-        "CANCELED": 20,
-        "NOT_RECONCILED": 6,
+        "CANCELED": 21,
+        "NOT_RECONCILED": 4,
         "CONFIRMED": 10,
-        "ARRIVED_PARTIAL": 1,
+        "ARRIVED_PARTIAL": 2,
         "LATE": 1
       },
       "by_day_of_week": {
@@ -1714,18 +1714,18 @@
       },
       "cancellations": {
         "label": "Cancellations",
-        "current": 20,
+        "current": 21,
         "previous": 20,
-        "delta": 0,
-        "pct_change": 0.0,
-        "direction": "flat"
+        "delta": 1,
+        "pct_change": 5.0,
+        "direction": "up"
       },
       "completed": {
         "label": "Completed",
-        "current": 176,
+        "current": 175,
         "previous": 98,
-        "delta": 78,
-        "pct_change": 79.6,
+        "delta": 77,
+        "pct_change": 78.6,
         "direction": "up"
       },
       "vip_count": {
@@ -1788,13 +1788,6 @@
           "current_covers": 37,
           "previous_covers": 2
         },
-        "Tianna": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 4
-        },
         "Jess": {
           "current_revenue": 0.0,
           "previous_revenue": 0.0,
@@ -1815,6 +1808,13 @@
           "delta": 0.0,
           "current_covers": 39,
           "previous_covers": 0
+        },
+        "Tianna": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 4
         },
         "Drilon": {
           "current_revenue": 7364.08,

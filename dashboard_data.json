@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-26T13:23:14.989825",
+  "timestamp": "2026-07-26T15:05:28.266733",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-06-26",
@@ -540,10 +540,10 @@
         "COMPLETE": 142,
         "NO_SHOW": 10,
         "PAID": 13,
-        "ARRIVED": 22,
+        "ARRIVED": 23,
         "CANCELED": 19,
-        "CONFIRMED": 6,
         "ARRIVED_PARTIAL": 1,
+        "CONFIRMED": 5,
         "NOT_RECONCILED": 3,
         "LATE": 1
       },
@@ -1826,6 +1826,13 @@
           "current_covers": 39,
           "previous_covers": 0
         },
+        "Jess": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 19,
+          "previous_covers": 6
+        },
         "Bar": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
@@ -1839,13 +1846,6 @@
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 4
-        },
-        "Jess": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 19,
-          "previous_covers": 6
         },
         "Brianna": {
           "current_revenue": 0,

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-05T18:21:38.661987",
+  "timestamp": "2026-08-05T20:26:14.673518",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-06",
@@ -214,8 +214,8 @@
       },
       "by_seating_area": {
         "Main Dining": {
-          "reservations": 153,
-          "covers": 727,
+          "reservations": 154,
+          "covers": 729,
           "revenue": 28569.61
         },
         "Poolside VIP Nightlife Table": {
@@ -224,8 +224,8 @@
           "revenue": 0.0
         },
         "Unknown": {
-          "reservations": 22,
-          "covers": 493,
+          "reservations": 21,
+          "covers": 491,
           "revenue": 2976.0
         },
         "PDR": {
@@ -537,8 +537,8 @@
           "revenue": 1653.0
         },
         "28": {
-          "reservations": 7,
-          "covers": 27,
+          "reservations": 8,
+          "covers": 29,
           "revenue": 1189.0
         },
         "26": {
@@ -587,8 +587,8 @@
           "revenue": 2005.0
         },
         "56": {
-          "reservations": 7,
-          "covers": 38,
+          "reservations": 8,
+          "covers": 41,
           "revenue": 2005.0
         },
         "57": {
@@ -612,14 +612,19 @@
           "revenue": 0.0
         },
         "55": {
-          "reservations": 3,
-          "covers": 6,
+          "reservations": 4,
+          "covers": 9,
           "revenue": 127.0
         },
         "60": {
           "reservations": 5,
           "covers": 55,
           "revenue": 3102.04
+        },
+        "59": {
+          "reservations": 12,
+          "covers": 24,
+          "revenue": 260.5
         },
         "91": {
           "reservations": 13,
@@ -670,11 +675,6 @@
           "reservations": 8,
           "covers": 29,
           "revenue": 1663.0
-        },
-        "59": {
-          "reservations": 11,
-          "covers": 22,
-          "revenue": 260.5
         },
         "13": {
           "reservations": 6,
@@ -1820,6 +1820,13 @@
           "current_covers": 86,
           "previous_covers": 21
         },
+        "Bar": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 10
+        },
         "Grace": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
@@ -1840,13 +1847,6 @@
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 4
-        },
-        "Bar": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 10
         },
         "Jess": {
           "current_revenue": 0.0,

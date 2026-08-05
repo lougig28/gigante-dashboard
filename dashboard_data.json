@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-05T20:26:14.673518",
+  "timestamp": "2026-08-05T20:57:24.116290",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-06",
@@ -10,11 +10,11 @@
   "toast": {},
   "sevenrooms": {
     "reservations": {
-      "total_reservations": 216,
-      "total_covers": 1543,
+      "total_reservations": 217,
+      "total_covers": 1545,
       "no_shows": 7,
       "cancellations": 18,
-      "completed": 191,
+      "completed": 192,
       "vip_count": 1,
       "total_revenue": 37083.65,
       "total_gross_revenue": 46338.11,
@@ -115,8 +115,8 @@
           "revenue": 1815.0
         },
         "2026-08-05": {
-          "reservations": 4,
-          "covers": 42,
+          "reservations": 5,
+          "covers": 44,
           "revenue": 0.0
         },
         "2026-07-10": {
@@ -202,8 +202,8 @@
       },
       "by_shift": {
         "DINNER": {
-          "reservations": 185,
-          "covers": 1242,
+          "reservations": 186,
+          "covers": 1244,
           "revenue": 34426.65
         },
         "BRUNCH": {
@@ -214,8 +214,8 @@
       },
       "by_seating_area": {
         "Main Dining": {
-          "reservations": 154,
-          "covers": 729,
+          "reservations": 155,
+          "covers": 731,
           "revenue": 28569.61
         },
         "Poolside VIP Nightlife Table": {
@@ -261,8 +261,8 @@
           "revenue": 12349.02
         },
         "Patio requested": {
-          "reservations": 18,
-          "covers": 59,
+          "reservations": 19,
+          "covers": 61,
           "revenue": 2181.0
         },
         "Birthday, Patio requested, Female birthday": {
@@ -491,7 +491,7 @@
         "NO_SHOW": 7,
         "ARRIVED": 28,
         "NOT_RECONCILED": 2,
-        "CONFIRMED": 3,
+        "CONFIRMED": 4,
         "PAID": 17,
         "CANCELED": 18,
         "ARRIVED_PARTIAL": 1,
@@ -505,8 +505,8 @@
           "revenue": 15282.07
         },
         "Wednesday": {
-          "reservations": 17,
-          "covers": 229,
+          "reservations": 18,
+          "covers": 231,
           "revenue": 763.0
         },
         "Friday": {
@@ -1706,18 +1706,18 @@
     "comparison": {
       "total_reservations": {
         "label": "Reservations",
-        "current": 216,
+        "current": 217,
         "previous": 126,
-        "delta": 90,
-        "pct_change": 71.4,
+        "delta": 91,
+        "pct_change": 72.2,
         "direction": "up"
       },
       "total_covers": {
         "label": "Covers",
-        "current": 1543,
+        "current": 1545,
         "previous": 805,
-        "delta": 738,
-        "pct_change": 91.7,
+        "delta": 740,
+        "pct_change": 91.9,
         "direction": "up"
       },
       "total_revenue": {
@@ -1754,10 +1754,10 @@
       },
       "completed": {
         "label": "Completed",
-        "current": 191,
+        "current": 192,
         "previous": 99,
-        "delta": 92,
-        "pct_change": 92.9,
+        "delta": 93,
+        "pct_change": 93.9,
         "direction": "up"
       },
       "vip_count": {
@@ -1820,19 +1820,12 @@
           "current_covers": 86,
           "previous_covers": 21
         },
-        "Bar": {
-          "current_revenue": 0,
+        "Jess": {
+          "current_revenue": 0.0,
           "previous_revenue": 0.0,
           "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 10
-        },
-        "Grace": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 39,
-          "previous_covers": 0
+          "current_covers": 19,
+          "previous_covers": 6
         },
         "Chris Luna": {
           "current_revenue": 0.0,
@@ -1841,6 +1834,13 @@
           "current_covers": 67,
           "previous_covers": 2
         },
+        "Bar": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 10
+        },
         "Tianna": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
@@ -1848,12 +1848,12 @@
           "current_covers": 0,
           "previous_covers": 4
         },
-        "Jess": {
+        "Grace": {
           "current_revenue": 0.0,
-          "previous_revenue": 0.0,
+          "previous_revenue": 0,
           "delta": 0.0,
-          "current_covers": 19,
-          "previous_covers": 6
+          "current_covers": 39,
+          "previous_covers": 0
         },
         "Brianna": {
           "current_revenue": 0,
@@ -1907,7 +1907,7 @@
         "Wednesday": {
           "current_revenue": 763.0,
           "previous_revenue": 68.0,
-          "current_covers": 229,
+          "current_covers": 231,
           "previous_covers": 2
         },
         "Thursday": {

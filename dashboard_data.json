@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-07T04:43:41.367227",
+  "timestamp": "2026-08-07T06:00:25.069107",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-08",
@@ -219,8 +219,8 @@
       },
       "by_seating_area": {
         "Main Dining": {
-          "reservations": 169,
-          "covers": 794,
+          "reservations": 168,
+          "covers": 792,
           "revenue": 28403.13
         },
         "Poolside VIP Nightlife Table": {
@@ -229,8 +229,8 @@
           "revenue": 0.0
         },
         "Unknown": {
-          "reservations": 25,
-          "covers": 494,
+          "reservations": 26,
+          "covers": 496,
           "revenue": 2976.0
         },
         "PDR": {
@@ -787,6 +787,11 @@
           "covers": 103,
           "revenue": 867.0
         },
+        "28-58": {
+          "reservations": 1,
+          "covers": 2,
+          "revenue": 0.0
+        },
         "V1": {
           "reservations": 1,
           "covers": 9,
@@ -810,6 +815,11 @@
         "Bar9": {
           "reservations": 1,
           "covers": 5,
+          "revenue": 0.0
+        },
+        "15": {
+          "reservations": 3,
+          "covers": 8,
           "revenue": 0.0
         },
         "M7": {
@@ -868,13 +878,8 @@
           "revenue": 0.0
         },
         "14": {
-          "reservations": 3,
-          "covers": 6,
-          "revenue": 0.0
-        },
-        "15": {
-          "reservations": 2,
-          "covers": 6,
+          "reservations": 4,
+          "covers": 8,
           "revenue": 0.0
         },
         "V9": {
@@ -1816,13 +1821,6 @@
           "current_covers": 86,
           "previous_covers": 21
         },
-        "Bar": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 10
-        },
         "Grace": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
@@ -1830,12 +1828,19 @@
           "current_covers": 39,
           "previous_covers": 0
         },
-        "Tianna": {
+        "Bar": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
-          "previous_covers": 4
+          "previous_covers": 10
+        },
+        "Jess": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 19,
+          "previous_covers": 6
         },
         "Chris Luna": {
           "current_revenue": 0.0,
@@ -1844,12 +1849,12 @@
           "current_covers": 37,
           "previous_covers": 0
         },
-        "Jess": {
-          "current_revenue": 0.0,
+        "Tianna": {
+          "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
-          "current_covers": 19,
-          "previous_covers": 6
+          "current_covers": 0,
+          "previous_covers": 4
         },
         "Brianna": {
           "current_revenue": 0,

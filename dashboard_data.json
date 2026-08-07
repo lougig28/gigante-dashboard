@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-07T21:53:29.513136",
+  "timestamp": "2026-08-07T22:25:57.041547",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-08",
@@ -519,14 +519,15 @@
       "by_status": {
         "COMPLETE": 131,
         "NO_SHOW": 7,
-        "ARRIVED": 27,
+        "ARRIVED": 28,
         "CANCELED": 23,
-        "CONFIRMED": 24,
+        "CONFIRMED": 23,
         "PAID": 15,
-        "LEFT_MESSAGE": 5,
+        "LEFT_MESSAGE": 4,
         "ARRIVED_PARTIAL": 1,
         "NO_ANSWER": 1,
-        "LATE": 1
+        "LATE": 1,
+        "PRE_ARRIVED": 1
       },
       "by_day_of_week": {
         "Saturday": {
@@ -1835,26 +1836,12 @@
           "current_covers": 114,
           "previous_covers": 21
         },
-        "Grace": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 39,
-          "previous_covers": 0
-        },
         "Bar": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 10
-        },
-        "Chris Luna": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 23,
-          "previous_covers": 0
         },
         "Jess": {
           "current_revenue": 0.0,
@@ -1863,12 +1850,26 @@
           "current_covers": 19,
           "previous_covers": 6
         },
+        "Chris Luna": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 23,
+          "previous_covers": 0
+        },
         "Tianna": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 4
+        },
+        "Grace": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 39,
+          "previous_covers": 0
         },
         "Brianna": {
           "current_revenue": 0,

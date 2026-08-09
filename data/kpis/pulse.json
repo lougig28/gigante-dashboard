@@ -1,6 +1,6 @@
 {
   "period": "30d",
-  "updated": "2026-08-08T23:51:09.731662",
+  "updated": "2026-08-09T01:40:40.823089",
   "dataSources": {
     "sevenrooms": true,
     "googleAnalytics": false,
@@ -12,34 +12,33 @@
     {
       "id": "total_covers",
       "label": "Total Covers",
-      "value": 1424,
-      "change": 98.6,
+      "value": 1472,
+      "change": 102.2,
       "trend": "up",
       "sparkline": [
-        54,
-        114,
+        116,
         36,
         25,
-        66,
+        96,
         193,
         66,
         3,
         14,
-        31,
-        145,
-        49
+        36,
+        150,
+        56,
+        15
       ]
     },
     {
       "id": "total_revenue",
       "label": "Total Revenue",
-      "value": 37525,
+      "value": 41263,
       "format": "currency",
-      "change": 16.8,
+      "change": 30.0,
       "trend": "up",
       "sparkline": [
-        3692,
-        4762,
+        4953,
         986,
         1354,
         1815,
@@ -47,30 +46,31 @@
         363,
         0,
         0,
-        1151,
-        3393,
+        2288,
+        3735,
+        2068,
         0
       ]
     },
     {
       "id": "avg_party_size",
       "label": "Avg Party Size",
-      "value": 6.0,
-      "change": -6.3,
+      "value": 6.1,
+      "change": -4.7,
       "trend": "down",
       "sparkline": [
-        6.0,
-        6.0,
-        6.0,
-        6.0,
-        6.0,
-        6.0,
-        6.0,
-        6.0,
-        6.0,
-        6.0,
-        6.0,
-        6.0
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1
       ]
     },
     {
@@ -141,9 +141,9 @@
     {
       "id": "reservation_conversion",
       "label": "Reservation Conversion",
-      "value": 83.9,
+      "value": 83.4,
       "format": "percent",
-      "change": 5.5,
+      "change": 5.7,
       "trend": "up",
       "sparkline": [
         65,
@@ -157,7 +157,7 @@
         72,
         71,
         72,
-        83.9
+        83.4
       ]
     },
     {

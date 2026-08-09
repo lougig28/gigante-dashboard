@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-09T14:34:22.453398",
+  "timestamp": "2026-08-09T15:31:26.257096",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-10",
@@ -53,8 +53,8 @@
           "revenue": 1693.99
         },
         "Junior": {
-          "reservations": 10,
-          "covers": 61,
+          "reservations": 11,
+          "covers": 63,
           "revenue": 1502.0
         },
         "Errol": {
@@ -700,6 +700,11 @@
           "covers": 246,
           "revenue": 907.0
         },
+        "50": {
+          "reservations": 8,
+          "covers": 17,
+          "revenue": 776.0
+        },
         "V6": {
           "reservations": 1,
           "covers": 2,
@@ -829,11 +834,6 @@
           "reservations": 1,
           "covers": 5,
           "revenue": 0.0
-        },
-        "50": {
-          "reservations": 7,
-          "covers": 15,
-          "revenue": 776.0
         },
         "M6": {
           "reservations": 1,
@@ -1822,7 +1822,7 @@
           "current_revenue": 1502.0,
           "previous_revenue": 197.0,
           "delta": 1305.0,
-          "current_covers": 61,
+          "current_covers": 63,
           "previous_covers": 5
         },
         "Fab": {
@@ -1839,19 +1839,12 @@
           "current_covers": 56,
           "previous_covers": 16
         },
-        "Chris Luna": {
+        "Grace": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
-          "current_covers": 23,
+          "current_covers": 39,
           "previous_covers": 0
-        },
-        "Tianna": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 4
         },
         "Jess": {
           "current_revenue": 0.0,
@@ -1860,19 +1853,26 @@
           "current_covers": 19,
           "previous_covers": 6
         },
-        "Grace": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 39,
-          "previous_covers": 0
-        },
         "Bar": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 10
+        },
+        "Tianna": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 4
+        },
+        "Chris Luna": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 23,
+          "previous_covers": 0
         },
         "Brianna": {
           "current_revenue": 0,

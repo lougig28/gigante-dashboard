@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-09T16:35:16.224154",
+  "timestamp": "2026-08-09T17:30:50.006809",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-10",
@@ -12,9 +12,9 @@
     "reservations": {
       "total_reservations": 242,
       "total_covers": 1474,
-      "no_shows": 10,
+      "no_shows": 11,
       "cancellations": 31,
-      "completed": 201,
+      "completed": 200,
       "vip_count": 1,
       "total_revenue": 40275.71,
       "total_gross_revenue": 50540.43,
@@ -518,14 +518,12 @@
       },
       "by_status": {
         "COMPLETE": 156,
-        "NO_SHOW": 10,
-        "LATE": 2,
-        "ARRIVED": 25,
+        "NO_SHOW": 11,
+        "ARRIVED": 27,
         "CANCELED": 31,
-        "PRE_PARTIALLY_ARRIVED": 1,
         "PAID": 15,
         "ARRIVED_PARTIAL": 1,
-        "NOT_RECONCILED": 1
+        "LATE": 1
       },
       "by_day_of_week": {
         "Saturday": {
@@ -601,13 +599,13 @@
           "revenue": 1148.52
         },
         "21": {
-          "reservations": 5,
-          "covers": 20,
+          "reservations": 6,
+          "covers": 24,
           "revenue": 1018.0
         },
         "22": {
-          "reservations": 7,
-          "covers": 28,
+          "reservations": 8,
+          "covers": 32,
           "revenue": 1453.99
         },
         "58": {
@@ -635,11 +633,6 @@
           "covers": 24,
           "revenue": 1241.52
         },
-        "13": {
-          "reservations": 7,
-          "covers": 36,
-          "revenue": 1639.0
-        },
         "V11": {
           "reservations": 1,
           "covers": 8,
@@ -654,6 +647,11 @@
           "reservations": 7,
           "covers": 76,
           "revenue": 3752.04
+        },
+        "13": {
+          "reservations": 7,
+          "covers": 34,
+          "revenue": 1639.0
         },
         "29": {
           "reservations": 11,
@@ -741,8 +739,8 @@
           "revenue": 4200.04
         },
         "20": {
-          "reservations": 14,
-          "covers": 28,
+          "reservations": 13,
+          "covers": 26,
           "revenue": 1259.49
         },
         "3": {
@@ -1757,10 +1755,10 @@
       },
       "no_shows": {
         "label": "No Shows",
-        "current": 10,
+        "current": 11,
         "previous": 7,
-        "delta": 3,
-        "pct_change": 42.9,
+        "delta": 4,
+        "pct_change": 57.1,
         "direction": "up"
       },
       "cancellations": {
@@ -1773,10 +1771,10 @@
       },
       "completed": {
         "label": "Completed",
-        "current": 201,
+        "current": 200,
         "previous": 90,
-        "delta": 111,
-        "pct_change": 123.3,
+        "delta": 110,
+        "pct_change": 122.2,
         "direction": "up"
       },
       "vip_count": {
@@ -1839,12 +1837,12 @@
           "current_covers": 56,
           "previous_covers": 16
         },
-        "Chris Luna": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
+        "Bar": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
           "delta": 0.0,
-          "current_covers": 23,
-          "previous_covers": 0
+          "current_covers": 0,
+          "previous_covers": 10
         },
         "Jess": {
           "current_revenue": 0.0,
@@ -1853,12 +1851,19 @@
           "current_covers": 19,
           "previous_covers": 6
         },
-        "Bar": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
+        "Grace": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
           "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 10
+          "current_covers": 39,
+          "previous_covers": 0
+        },
+        "Chris Luna": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 23,
+          "previous_covers": 0
         },
         "Tianna": {
           "current_revenue": 0,
@@ -1866,13 +1871,6 @@
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 4
-        },
-        "Grace": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 39,
-          "previous_covers": 0
         },
         "Brianna": {
           "current_revenue": 0,

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-09T13:50:01.080927",
+  "timestamp": "2026-08-09T14:34:22.453398",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-10",
@@ -13,8 +13,8 @@
       "total_reservations": 242,
       "total_covers": 1474,
       "no_shows": 10,
-      "cancellations": 30,
-      "completed": 202,
+      "cancellations": 31,
+      "completed": 201,
       "vip_count": 1,
       "total_revenue": 40275.71,
       "total_gross_revenue": 50540.43,
@@ -519,9 +519,9 @@
       "by_status": {
         "COMPLETE": 156,
         "NO_SHOW": 10,
-        "CONFIRMED": 3,
+        "CONFIRMED": 2,
         "ARRIVED": 25,
-        "CANCELED": 30,
+        "CANCELED": 31,
         "PAID": 15,
         "ARRIVED_PARTIAL": 1,
         "NOT_RECONCILED": 1,
@@ -1765,18 +1765,18 @@
       },
       "cancellations": {
         "label": "Cancellations",
-        "current": 30,
+        "current": 31,
         "previous": 17,
-        "delta": 13,
-        "pct_change": 76.5,
+        "delta": 14,
+        "pct_change": 82.4,
         "direction": "up"
       },
       "completed": {
         "label": "Completed",
-        "current": 202,
+        "current": 201,
         "previous": 90,
-        "delta": 112,
-        "pct_change": 124.4,
+        "delta": 111,
+        "pct_change": 123.3,
         "direction": "up"
       },
       "vip_count": {
@@ -1839,20 +1839,6 @@
           "current_covers": 56,
           "previous_covers": 16
         },
-        "Grace": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 39,
-          "previous_covers": 0
-        },
-        "Bar": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 10
-        },
         "Chris Luna": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
@@ -1873,6 +1859,20 @@
           "delta": 0.0,
           "current_covers": 19,
           "previous_covers": 6
+        },
+        "Grace": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 39,
+          "previous_covers": 0
+        },
+        "Bar": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 10
         },
         "Brianna": {
           "current_revenue": 0,

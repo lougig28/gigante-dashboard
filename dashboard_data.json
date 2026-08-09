@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-09T15:31:26.257096",
+  "timestamp": "2026-08-09T16:35:16.224154",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-10",
@@ -519,13 +519,13 @@
       "by_status": {
         "COMPLETE": 156,
         "NO_SHOW": 10,
-        "CONFIRMED": 2,
+        "LATE": 2,
         "ARRIVED": 25,
         "CANCELED": 31,
+        "PRE_PARTIALLY_ARRIVED": 1,
         "PAID": 15,
         "ARRIVED_PARTIAL": 1,
-        "NOT_RECONCILED": 1,
-        "LATE": 1
+        "NOT_RECONCILED": 1
       },
       "by_day_of_week": {
         "Saturday": {
@@ -1839,11 +1839,11 @@
           "current_covers": 56,
           "previous_covers": 16
         },
-        "Grace": {
+        "Chris Luna": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
-          "current_covers": 39,
+          "current_covers": 23,
           "previous_covers": 0
         },
         "Jess": {
@@ -1867,11 +1867,11 @@
           "current_covers": 0,
           "previous_covers": 4
         },
-        "Chris Luna": {
+        "Grace": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
-          "current_covers": 23,
+          "current_covers": 39,
           "previous_covers": 0
         },
         "Brianna": {

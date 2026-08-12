@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-12T01:51:41.776414",
+  "timestamp": "2026-08-12T04:06:40.662054",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-13",
@@ -17,7 +17,7 @@
       "completed": 201,
       "vip_count": 2,
       "total_revenue": 37273.15,
-      "total_gross_revenue": 47017.96,
+      "total_gross_revenue": 47070.21,
       "total_prepayment": 1530.76,
       "avg_party_size": 6.3,
       "avg_duration_min": 141.0,
@@ -509,9 +509,9 @@
       "by_status": {
         "COMPLETE": 156,
         "NO_SHOW": 9,
-        "ARRIVED": 26,
+        "ARRIVED": 25,
         "CANCELED": 27,
-        "PAID": 15,
+        "PAID": 16,
         "ARRIVED_PARTIAL": 1,
         "LATE": 1,
         "CONFIRMED": 2
@@ -1778,10 +1778,10 @@
       },
       "total_gross_revenue": {
         "label": "Gross Revenue",
-        "current": 47017.96,
+        "current": 47070.21,
         "previous": 44781.09,
-        "delta": 2236.87,
-        "pct_change": 5.0,
+        "delta": 2289.12,
+        "pct_change": 5.1,
         "direction": "up"
       },
       "no_shows": {
@@ -1875,20 +1875,6 @@
           "current_covers": 6,
           "previous_covers": 9
         },
-        "Tianna": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 4
-        },
-        "Grace": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 39,
-          "previous_covers": 0
-        },
         "Jess": {
           "current_revenue": 0.0,
           "previous_revenue": 0.0,
@@ -1902,6 +1888,20 @@
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 10
+        },
+        "Grace": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 39,
+          "previous_covers": 0
+        },
+        "Tianna": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 4
         },
         "Brianna": {
           "current_revenue": 0,

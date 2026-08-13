@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-13T22:09:19.259584",
+  "timestamp": "2026-08-13T22:58:36.683431",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-14",
@@ -519,13 +519,14 @@
       "by_status": {
         "COMPLETE": 156,
         "NO_SHOW": 9,
-        "NOT_RECONCILED": 2,
-        "ARRIVED": 24,
+        "ARRIVED": 25,
         "CANCELED": 28,
         "PAID": 16,
         "ARRIVED_PARTIAL": 1,
-        "CONFIRMED": 2,
-        "LATE": 1
+        "NOT_RECONCILED": 1,
+        "PRE_PARTIALLY_ARRIVED": 1,
+        "LATE": 1,
+        "CONFIRMED": 1
       },
       "by_day_of_week": {
         "Saturday": {
@@ -641,8 +642,8 @@
           "revenue": 294.5
         },
         "92": {
-          "reservations": 14,
-          "covers": 357,
+          "reservations": 13,
+          "covers": 355,
           "revenue": 216.0
         },
         "V11": {
@@ -790,6 +791,11 @@
           "covers": 116,
           "revenue": 1717.0
         },
+        "81": {
+          "reservations": 10,
+          "covers": 345,
+          "revenue": 0.0
+        },
         "V1": {
           "reservations": 1,
           "covers": 9,
@@ -866,11 +872,6 @@
           "revenue": 253.0
         },
         "82": {
-          "reservations": 9,
-          "covers": 343,
-          "revenue": 0.0
-        },
-        "81": {
           "reservations": 9,
           "covers": 343,
           "revenue": 0.0

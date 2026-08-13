@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-13T19:07:23.578062",
+  "timestamp": "2026-08-13T20:30:55.344112",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-14",
@@ -219,9 +219,14 @@
       },
       "by_seating_area": {
         "Main Dining": {
-          "reservations": 169,
-          "covers": 764,
+          "reservations": 168,
+          "covers": 762,
           "revenue": 29131.11
+        },
+        "G Room": {
+          "reservations": 14,
+          "covers": 76,
+          "revenue": 2239.52
         },
         "Poolside VIP Nightlife Table": {
           "reservations": 10,
@@ -252,11 +257,6 @@
           "reservations": 2,
           "covers": 7,
           "revenue": 0.0
-        },
-        "G Room": {
-          "reservations": 13,
-          "covers": 74,
-          "revenue": 2239.52
         },
         "Lounge": {
           "reservations": 1,
@@ -640,6 +640,11 @@
           "covers": 20,
           "revenue": 294.5
         },
+        "82": {
+          "reservations": 10,
+          "covers": 345,
+          "revenue": 0.0
+        },
         "V11": {
           "reservations": 1,
           "covers": 8,
@@ -864,11 +869,6 @@
           "reservations": 11,
           "covers": 349,
           "revenue": 253.0
-        },
-        "82": {
-          "reservations": 9,
-          "covers": 343,
-          "revenue": 0.0
         },
         "81": {
           "reservations": 9,
@@ -1834,13 +1834,6 @@
           "current_covers": 53,
           "previous_covers": 23
         },
-        "Jess": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 19,
-          "previous_covers": 6
-        },
         "Chris Luna": {
           "current_revenue": 0.0,
           "previous_revenue": 0.0,
@@ -1854,6 +1847,13 @@
           "delta": 0.0,
           "current_covers": 39,
           "previous_covers": 0
+        },
+        "Jess": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 19,
+          "previous_covers": 6
         },
         "Tianna": {
           "current_revenue": 0,

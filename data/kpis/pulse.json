@@ -1,6 +1,6 @@
 {
   "period": "30d",
-  "updated": "2026-08-14T23:59:34.972263",
+  "updated": "2026-08-15T01:10:12.171240",
   "dataSources": {
     "sevenrooms": true,
     "googleAnalytics": false,
@@ -12,33 +12,32 @@
     {
       "id": "total_covers",
       "label": "Total Covers",
-      "value": 1502,
-      "change": 113.7,
+      "value": 1321,
+      "change": 91.2,
       "trend": "up",
       "sparkline": [
-        195,
-        68,
+        66,
         3,
-        49,
+        14,
         36,
         150,
-        66,
+        56,
         17,
         11,
-        39,
+        4,
         13,
-        48
+        48,
+        15
       ]
     },
     {
       "id": "total_revenue",
       "label": "Total Revenue",
-      "value": 36918,
+      "value": 36826,
       "format": "currency",
-      "change": 29.0,
+      "change": 28.7,
       "trend": "up",
       "sparkline": [
-        4838,
         363,
         0,
         0,
@@ -49,28 +48,29 @@
         663,
         356,
         221,
-        430
+        594,
+        0
       ]
     },
     {
       "id": "avg_party_size",
       "label": "Avg Party Size",
-      "value": 6.2,
-      "change": 0.0,
-      "trend": "flat",
+      "value": 5.6,
+      "change": -11.1,
+      "trend": "down",
       "sparkline": [
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2
+        5.6,
+        5.6,
+        5.6,
+        5.6,
+        5.6,
+        5.6,
+        5.6,
+        5.6,
+        5.6,
+        5.6,
+        5.6,
+        5.6
       ]
     },
     {
@@ -141,9 +141,9 @@
     {
       "id": "reservation_conversion",
       "label": "Reservation Conversion",
-      "value": 84.0,
+      "value": 82.8,
       "format": "percent",
-      "change": 6.5,
+      "change": 3.8,
       "trend": "up",
       "sparkline": [
         65,
@@ -157,7 +157,7 @@
         72,
         71,
         72,
-        84.0
+        82.8
       ]
     },
     {

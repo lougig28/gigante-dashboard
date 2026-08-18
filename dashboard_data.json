@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-18T21:44:08.619408",
+  "timestamp": "2026-08-18T21:58:02.719535",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-19",
@@ -10,11 +10,11 @@
   "toast": {},
   "sevenrooms": {
     "reservations": {
-      "total_reservations": 235,
-      "total_covers": 1516,
+      "total_reservations": 234,
+      "total_covers": 1510,
       "no_shows": 13,
       "cancellations": 37,
-      "completed": 185,
+      "completed": 184,
       "vip_count": 3,
       "total_revenue": 39705.15,
       "total_gross_revenue": 50232.86,
@@ -169,11 +169,6 @@
           "covers": 11,
           "revenue": 663.0
         },
-        "2026-08-18": {
-          "reservations": 1,
-          "covers": 6,
-          "revenue": 0.0
-        },
         "2026-07-19": {
           "reservations": 5,
           "covers": 51,
@@ -192,8 +187,8 @@
       },
       "by_shift": {
         "DINNER": {
-          "reservations": 191,
-          "covers": 1179,
+          "reservations": 190,
+          "covers": 1173,
           "revenue": 34063.15
         },
         "BRUNCH": {
@@ -219,8 +214,8 @@
           "revenue": 0.0
         },
         "Unknown": {
-          "reservations": 31,
-          "covers": 532,
+          "reservations": 30,
+          "covers": 526,
           "revenue": 6536.52
         },
         "PDR": {
@@ -313,11 +308,6 @@
         "G Room buyout": {
           "reservations": 1,
           "covers": 40,
-          "revenue": 0.0
-        },
-        "VIP Table/Bottle Service (preselected)": {
-          "reservations": 1,
-          "covers": 6,
           "revenue": 0.0
         },
         "VIP Table/Bottle Service (preselected), Requests Bottle Service": {
@@ -482,8 +472,7 @@
         "CANCELED": 37,
         "ARRIVED": 20,
         "PAID": 19,
-        "PRE_ARRIVED": 2,
-        "CONFIRMED": 1
+        "PRE_ARRIVED": 2
       },
       "by_day_of_week": {
         "Saturday": {
@@ -512,8 +501,8 @@
           "revenue": 4525.04
         },
         "Tuesday": {
-          "reservations": 7,
-          "covers": 22,
+          "reservations": 6,
+          "covers": 16,
           "revenue": 663.0
         }
       },
@@ -1659,18 +1648,18 @@
     "comparison": {
       "total_reservations": {
         "label": "Reservations",
-        "current": 235,
+        "current": 234,
         "previous": 124,
-        "delta": 111,
-        "pct_change": 89.5,
+        "delta": 110,
+        "pct_change": 88.7,
         "direction": "up"
       },
       "total_covers": {
         "label": "Covers",
-        "current": 1516,
+        "current": 1510,
         "previous": 783,
-        "delta": 733,
-        "pct_change": 93.6,
+        "delta": 727,
+        "pct_change": 92.8,
         "direction": "up"
       },
       "total_revenue": {
@@ -1707,10 +1696,10 @@
       },
       "completed": {
         "label": "Completed",
-        "current": 185,
+        "current": 184,
         "previous": 102,
-        "delta": 83,
-        "pct_change": 81.4,
+        "delta": 82,
+        "pct_change": 80.4,
         "direction": "up"
       },
       "vip_count": {
@@ -1833,7 +1822,7 @@
         "Tuesday": {
           "current_revenue": 663.0,
           "previous_revenue": 385.0,
-          "current_covers": 22,
+          "current_covers": 16,
           "previous_covers": 28
         },
         "Wednesday": {

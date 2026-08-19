@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-19T01:10:32.543611",
+  "timestamp": "2026-08-19T02:31:44.139153",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-20",
@@ -10,10 +10,10 @@
   "toast": {},
   "sevenrooms": {
     "reservations": {
-      "total_reservations": 231,
-      "total_covers": 1499,
+      "total_reservations": 230,
+      "total_covers": 1494,
       "no_shows": 13,
-      "cancellations": 37,
+      "cancellations": 36,
       "completed": 181,
       "vip_count": 3,
       "total_revenue": 39288.15,
@@ -183,17 +183,12 @@
           "reservations": 1,
           "covers": 35,
           "revenue": 0.0
-        },
-        "2026-07-21": {
-          "reservations": 1,
-          "covers": 5,
-          "revenue": 0.0
         }
       },
       "by_shift": {
         "DINNER": {
-          "reservations": 192,
-          "covers": 1213,
+          "reservations": 191,
+          "covers": 1208,
           "revenue": 34063.15
         },
         "BRUNCH": {
@@ -224,8 +219,8 @@
           "revenue": 6536.52
         },
         "PDR": {
-          "reservations": 6,
-          "covers": 128,
+          "reservations": 5,
+          "covers": 123,
           "revenue": 32.0
         },
         "Patio 1": {
@@ -251,8 +246,8 @@
           "revenue": 2903.99
         },
         "Standard": {
-          "reservations": 123,
-          "covers": 635,
+          "reservations": 122,
+          "covers": 630,
           "revenue": 14449.56
         },
         "Patio requested": {
@@ -464,7 +459,7 @@
       "by_status": {
         "COMPLETE": 142,
         "NO_SHOW": 13,
-        "CANCELED": 37,
+        "CANCELED": 36,
         "ARRIVED": 18,
         "PAID": 18,
         "PRE_ARRIVED": 2,
@@ -497,8 +492,8 @@
           "revenue": 4525.04
         },
         "Tuesday": {
-          "reservations": 7,
-          "covers": 21,
+          "reservations": 6,
+          "covers": 16,
           "revenue": 663.0
         }
       },
@@ -624,28 +619,28 @@
           "revenue": 3520.52
         },
         "3": {
-          "reservations": 6,
-          "covers": 128,
+          "reservations": 5,
+          "covers": 123,
           "revenue": 32.0
         },
         "4": {
-          "reservations": 6,
-          "covers": 128,
+          "reservations": 5,
+          "covers": 123,
           "revenue": 32.0
         },
         "1": {
-          "reservations": 6,
-          "covers": 128,
+          "reservations": 5,
+          "covers": 123,
           "revenue": 32.0
         },
         "5": {
-          "reservations": 6,
-          "covers": 128,
+          "reservations": 5,
+          "covers": 123,
           "revenue": 32.0
         },
         "2": {
-          "reservations": 6,
-          "covers": 128,
+          "reservations": 5,
+          "covers": 123,
           "revenue": 32.0
         },
         "73": {
@@ -1629,18 +1624,18 @@
     "comparison": {
       "total_reservations": {
         "label": "Reservations",
-        "current": 231,
+        "current": 230,
         "previous": 120,
-        "delta": 111,
-        "pct_change": 92.5,
+        "delta": 110,
+        "pct_change": 91.7,
         "direction": "up"
       },
       "total_covers": {
         "label": "Covers",
-        "current": 1499,
+        "current": 1494,
         "previous": 754,
-        "delta": 745,
-        "pct_change": 98.8,
+        "delta": 740,
+        "pct_change": 98.1,
         "direction": "up"
       },
       "total_revenue": {
@@ -1669,10 +1664,10 @@
       },
       "cancellations": {
         "label": "Cancellations",
-        "current": 37,
+        "current": 36,
         "previous": 15,
-        "delta": 22,
-        "pct_change": 146.7,
+        "delta": 21,
+        "pct_change": 140.0,
         "direction": "up"
       },
       "completed": {
@@ -1803,7 +1798,7 @@
         "Tuesday": {
           "current_revenue": 663.0,
           "previous_revenue": 385.0,
-          "current_covers": 21,
+          "current_covers": 16,
           "previous_covers": 28
         },
         "Wednesday": {

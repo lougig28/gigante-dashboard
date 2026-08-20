@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-20T19:30:57.292647",
+  "timestamp": "2026-08-20T20:17:40.906431",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-21",
@@ -13,8 +13,8 @@
       "total_reservations": 234,
       "total_covers": 1528,
       "no_shows": 13,
-      "cancellations": 36,
-      "completed": 185,
+      "cancellations": 37,
+      "completed": 184,
       "vip_count": 3,
       "total_revenue": 39288.15,
       "total_gross_revenue": 49697.53,
@@ -469,11 +469,11 @@
       "by_status": {
         "COMPLETE": 143,
         "NO_SHOW": 13,
-        "CANCELED": 36,
+        "CANCELED": 37,
         "ARRIVED": 18,
         "PAID": 18,
         "PRE_ARRIVED": 2,
-        "NOT_RECONCILED": 2,
+        "NOT_RECONCILED": 1,
         "CONFIRMED": 2
       },
       "by_day_of_week": {
@@ -1675,18 +1675,18 @@
       },
       "cancellations": {
         "label": "Cancellations",
-        "current": 36,
+        "current": 37,
         "previous": 15,
-        "delta": 21,
-        "pct_change": 140.0,
+        "delta": 22,
+        "pct_change": 146.7,
         "direction": "up"
       },
       "completed": {
         "label": "Completed",
-        "current": 185,
+        "current": 184,
         "previous": 95,
-        "delta": 90,
-        "pct_change": 94.7,
+        "delta": 89,
+        "pct_change": 93.7,
         "direction": "up"
       },
       "vip_count": {
@@ -1763,19 +1763,19 @@
           "current_covers": 113,
           "previous_covers": 36
         },
-        "Grace": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 39
-        },
         "Jess": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 5
+        },
+        "Grace": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 39
         },
         "Errol": {
           "current_revenue": 1620.0,

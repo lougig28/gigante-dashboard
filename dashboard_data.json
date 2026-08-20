@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-20T22:16:19.318324",
+  "timestamp": "2026-08-20T22:51:20.559206",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-21",
@@ -13,8 +13,8 @@
       "total_reservations": 234,
       "total_covers": 1527,
       "no_shows": 13,
-      "cancellations": 37,
-      "completed": 184,
+      "cancellations": 38,
+      "completed": 183,
       "vip_count": 3,
       "total_revenue": 39001.15,
       "total_gross_revenue": 49386.47,
@@ -204,8 +204,8 @@
       },
       "by_seating_area": {
         "Main Dining": {
-          "reservations": 165,
-          "covers": 704,
+          "reservations": 166,
+          "covers": 706,
           "revenue": 26321.11
         },
         "G Room": {
@@ -234,8 +234,8 @@
           "revenue": 2650.0
         },
         "Grand Ballroom (Mulino\u2019s)": {
-          "reservations": 3,
-          "covers": 9,
+          "reservations": 2,
+          "covers": 7,
           "revenue": 0.0
         },
         "Lounge": {
@@ -464,11 +464,10 @@
       "by_status": {
         "COMPLETE": 142,
         "NO_SHOW": 13,
-        "CANCELED": 37,
+        "CANCELED": 38,
         "ARRIVED": 18,
         "PAID": 18,
         "PRE_ARRIVED": 2,
-        "NOT_RECONCILED": 1,
         "CONFIRMED": 3
       },
       "by_day_of_week": {
@@ -510,8 +509,8 @@
           "revenue": 2060.0
         },
         "28": {
-          "reservations": 7,
-          "covers": 32,
+          "reservations": 8,
+          "covers": 34,
           "revenue": 2060.0
         },
         "26": {
@@ -655,8 +654,8 @@
           "revenue": 950.0
         },
         "205": {
-          "reservations": 13,
-          "covers": 390,
+          "reservations": 12,
+          "covers": 388,
           "revenue": 3016.0
         },
         "20": {
@@ -1670,18 +1669,18 @@
       },
       "cancellations": {
         "label": "Cancellations",
-        "current": 37,
+        "current": 38,
         "previous": 15,
-        "delta": 22,
-        "pct_change": 146.7,
+        "delta": 23,
+        "pct_change": 153.3,
         "direction": "up"
       },
       "completed": {
         "label": "Completed",
-        "current": 184,
+        "current": 183,
         "previous": 94,
-        "delta": 90,
-        "pct_change": 95.7,
+        "delta": 89,
+        "pct_change": 94.7,
         "direction": "up"
       },
       "vip_count": {
@@ -1758,19 +1757,19 @@
           "current_covers": 113,
           "previous_covers": 36
         },
-        "Jess": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 5
-        },
         "Grace": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 39
+        },
+        "Jess": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 5
         },
         "Errol": {
           "current_revenue": 1620.0,

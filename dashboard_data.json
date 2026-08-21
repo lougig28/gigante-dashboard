@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-21T23:23:55.159017",
+  "timestamp": "2026-08-21T23:44:38.132761",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-22",
@@ -469,7 +469,8 @@
         "ARRIVED": 20,
         "PAID": 18,
         "PRE_ARRIVED": 1,
-        "CONFIRMED": 6
+        "ARRIVED_PARTIAL": 1,
+        "CONFIRMED": 5
       },
       "by_day_of_week": {
         "Saturday": {
@@ -1706,13 +1707,6 @@
           "current_covers": 111,
           "previous_covers": 47
         },
-        "Chris Luna": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 46,
-          "previous_covers": 9
-        },
         "Grace": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
@@ -1725,6 +1719,13 @@
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
+          "previous_covers": 9
+        },
+        "Chris Luna": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 46,
           "previous_covers": 9
         },
         "Errol": {

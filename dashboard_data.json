@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-21T20:58:55.841427",
+  "timestamp": "2026-08-21T21:24:38.656259",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-22",
@@ -13,8 +13,8 @@
       "total_reservations": 239,
       "total_covers": 1524,
       "no_shows": 12,
-      "cancellations": 39,
-      "completed": 188,
+      "cancellations": 40,
+      "completed": 187,
       "vip_count": 3,
       "total_revenue": 37136.15,
       "total_gross_revenue": 47041.58,
@@ -464,8 +464,8 @@
       "by_status": {
         "COMPLETE": 140,
         "NO_SHOW": 12,
-        "CANCELED": 39,
-        "NOT_RECONCILED": 3,
+        "CANCELED": 40,
+        "NOT_RECONCILED": 2,
         "ARRIVED": 20,
         "PAID": 19,
         "PRE_ARRIVED": 1,
@@ -1625,18 +1625,18 @@
       },
       "cancellations": {
         "label": "Cancellations",
-        "current": 39,
+        "current": 40,
         "previous": 8,
-        "delta": 31,
-        "pct_change": 387.5,
+        "delta": 32,
+        "pct_change": 400.0,
         "direction": "up"
       },
       "completed": {
         "label": "Completed",
-        "current": 188,
+        "current": 187,
         "previous": 83,
-        "delta": 105,
-        "pct_change": 126.5,
+        "delta": 104,
+        "pct_change": 125.3,
         "direction": "up"
       },
       "vip_count": {
@@ -1706,19 +1706,19 @@
           "current_covers": 111,
           "previous_covers": 47
         },
-        "Grace": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 39
-        },
         "Jess": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 9
+        },
+        "Grace": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 39
         },
         "Chris Luna": {
           "current_revenue": 0.0,

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-21T20:14:39.066836",
+  "timestamp": "2026-08-21T20:41:33.852891",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-22",
@@ -465,11 +465,11 @@
         "COMPLETE": 140,
         "NO_SHOW": 12,
         "CANCELED": 39,
-        "NOT_RECONCILED": 4,
+        "NOT_RECONCILED": 3,
         "ARRIVED": 20,
         "PAID": 19,
         "PRE_ARRIVED": 1,
-        "CONFIRMED": 4
+        "CONFIRMED": 5
       },
       "by_day_of_week": {
         "Saturday": {
@@ -1706,19 +1706,19 @@
           "current_covers": 111,
           "previous_covers": 47
         },
-        "Grace": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 39
-        },
         "Chris Luna": {
           "current_revenue": 0.0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 46,
           "previous_covers": 9
+        },
+        "Grace": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 39
         },
         "Jess": {
           "current_revenue": 0,

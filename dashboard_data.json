@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-21T17:28:27.084550",
+  "timestamp": "2026-08-21T18:36:11.893972",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-22",
@@ -13,8 +13,8 @@
       "total_reservations": 239,
       "total_covers": 1524,
       "no_shows": 12,
-      "cancellations": 38,
-      "completed": 189,
+      "cancellations": 39,
+      "completed": 188,
       "vip_count": 3,
       "total_revenue": 37136.15,
       "total_gross_revenue": 47041.58,
@@ -464,8 +464,8 @@
       "by_status": {
         "COMPLETE": 140,
         "NO_SHOW": 12,
-        "CANCELED": 38,
-        "NOT_RECONCILED": 5,
+        "CANCELED": 39,
+        "NOT_RECONCILED": 4,
         "ARRIVED": 20,
         "PAID": 19,
         "PRE_ARRIVED": 1,
@@ -1625,18 +1625,18 @@
       },
       "cancellations": {
         "label": "Cancellations",
-        "current": 38,
+        "current": 39,
         "previous": 8,
-        "delta": 30,
-        "pct_change": 375.0,
+        "delta": 31,
+        "pct_change": 387.5,
         "direction": "up"
       },
       "completed": {
         "label": "Completed",
-        "current": 189,
+        "current": 188,
         "previous": 83,
-        "delta": 106,
-        "pct_change": 127.7,
+        "delta": 105,
+        "pct_change": 126.5,
         "direction": "up"
       },
       "vip_count": {
@@ -1713,18 +1713,18 @@
           "current_covers": 0,
           "previous_covers": 39
         },
-        "Jess": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 9
-        },
         "Chris Luna": {
           "current_revenue": 0.0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 46,
+          "previous_covers": 9
+        },
+        "Jess": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
           "previous_covers": 9
         },
         "Errol": {

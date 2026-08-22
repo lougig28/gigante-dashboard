@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-22T02:20:26.004867",
+  "timestamp": "2026-08-22T03:20:49.441377",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-23",
@@ -17,7 +17,7 @@
       "completed": 183,
       "vip_count": 3,
       "total_revenue": 35893.15,
-      "total_gross_revenue": 45402.64,
+      "total_gross_revenue": 45497.04,
       "total_prepayment": 1550.76,
       "avg_party_size": 6.3,
       "avg_duration_min": 140.0,
@@ -457,11 +457,11 @@
         }
       },
       "by_status": {
-        "COMPLETE": 133,
+        "COMPLETE": 135,
         "NOT_RECONCILED": 6,
         "NO_SHOW": 14,
         "CANCELED": 40,
-        "ARRIVED": 24,
+        "ARRIVED": 22,
         "PAID": 16,
         "PRE_ARRIVED": 1,
         "CONFIRMED": 3
@@ -1599,10 +1599,10 @@
       },
       "total_gross_revenue": {
         "label": "Gross Revenue",
-        "current": 45402.64,
+        "current": 45497.04,
         "previous": 24762.0,
-        "delta": 20640.64,
-        "pct_change": 83.4,
+        "delta": 20735.04,
+        "pct_change": 83.7,
         "direction": "up"
       },
       "no_shows": {

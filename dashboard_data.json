@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-22T22:58:34.694949",
+  "timestamp": "2026-08-22T23:19:59.326002",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-23",
@@ -12,12 +12,12 @@
     "reservations": {
       "total_reservations": 236,
       "total_covers": 1483,
-      "no_shows": 14,
+      "no_shows": 15,
       "cancellations": 40,
-      "completed": 182,
+      "completed": 181,
       "vip_count": 2,
       "total_revenue": 36180.15,
-      "total_gross_revenue": 45769.31,
+      "total_gross_revenue": 45937.11,
       "total_prepayment": 1492.24,
       "avg_party_size": 6.3,
       "avg_duration_min": 139.0,
@@ -209,8 +209,8 @@
       },
       "by_seating_area": {
         "Main Dining": {
-          "reservations": 172,
-          "covers": 717,
+          "reservations": 173,
+          "covers": 731,
           "revenue": 27004.11
         },
         "G Room": {
@@ -229,8 +229,8 @@
           "revenue": 0.0
         },
         "Unknown": {
-          "reservations": 29,
-          "covers": 498,
+          "reservations": 28,
+          "covers": 484,
           "revenue": 4138.52
         },
         "PDR": {
@@ -459,12 +459,14 @@
       "by_status": {
         "COMPLETE": 133,
         "NOT_RECONCILED": 2,
-        "NO_SHOW": 14,
+        "NO_SHOW": 15,
         "CANCELED": 40,
-        "CONFIRMED": 8,
+        "CONFIRMED": 5,
+        "LATE": 1,
         "ARRIVED": 22,
         "PAID": 16,
-        "PRE_ARRIVED": 1
+        "PRE_ARRIVED": 1,
+        "PRE_PARTIALLY_ARRIVED": 1
       },
       "by_day_of_week": {
         "Saturday": {
@@ -625,8 +627,8 @@
           "revenue": 0.0
         },
         "40u": {
-          "reservations": 14,
-          "covers": 119,
+          "reservations": 13,
+          "covers": 105,
           "revenue": 4138.52
         },
         "3": {
@@ -740,8 +742,8 @@
           "revenue": 1247.0
         },
         "10": {
-          "reservations": 7,
-          "covers": 96,
+          "reservations": 8,
+          "covers": 110,
           "revenue": 3836.52
         },
         "28-58": {
@@ -750,8 +752,8 @@
           "revenue": 0.0
         },
         "11": {
-          "reservations": 8,
-          "covers": 121,
+          "reservations": 9,
+          "covers": 135,
           "revenue": 3947.52
         },
         "M6": {
@@ -1594,18 +1596,18 @@
       },
       "total_gross_revenue": {
         "label": "Gross Revenue",
-        "current": 45769.31,
+        "current": 45937.11,
         "previous": 24762.0,
-        "delta": 21007.31,
-        "pct_change": 84.8,
+        "delta": 21175.11,
+        "pct_change": 85.5,
         "direction": "up"
       },
       "no_shows": {
         "label": "No Shows",
-        "current": 14,
+        "current": 15,
         "previous": 6,
-        "delta": 8,
-        "pct_change": 133.3,
+        "delta": 9,
+        "pct_change": 150.0,
         "direction": "up"
       },
       "cancellations": {
@@ -1618,10 +1620,10 @@
       },
       "completed": {
         "label": "Completed",
-        "current": 182,
+        "current": 181,
         "previous": 83,
-        "delta": 99,
-        "pct_change": 119.3,
+        "delta": 98,
+        "pct_change": 118.1,
         "direction": "up"
       },
       "vip_count": {
@@ -1705,19 +1707,19 @@
           "current_covers": 192,
           "previous_covers": 177
         },
-        "Jess": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 5
-        },
         "Grace": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 39
+        },
+        "Jess": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 5
         },
         "Chris Luna": {
           "current_revenue": 0.0,

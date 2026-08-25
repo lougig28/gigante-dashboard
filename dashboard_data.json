@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-25T22:51:28.032070",
+  "timestamp": "2026-08-25T23:16:40.318091",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-26",
@@ -478,7 +478,8 @@
         "ARRIVED": 25,
         "PAID": 20,
         "PRE_ARRIVED": 2,
-        "CONFIRMED": 2
+        "CONFIRMED": 1,
+        "ARRIVED_PARTIAL": 1
       },
       "by_day_of_week": {
         "Saturday": {
@@ -679,8 +680,8 @@
           "revenue": 4349.52
         },
         "90": {
-          "reservations": 14,
-          "covers": 444,
+          "reservations": 15,
+          "covers": 456,
           "revenue": 5000.52
         },
         "61": {
@@ -1710,12 +1711,12 @@
           "current_covers": 113,
           "previous_covers": 36
         },
-        "Grace": {
+        "Jess": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
-          "previous_covers": 39
+          "previous_covers": 5
         },
         "Bar": {
           "current_revenue": 0.0,
@@ -1724,12 +1725,12 @@
           "current_covers": 2,
           "previous_covers": 0
         },
-        "Jess": {
+        "Grace": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
-          "previous_covers": 5
+          "previous_covers": 39
         },
         "Ana": {
           "current_revenue": 4017.61,

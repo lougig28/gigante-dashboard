@@ -1,8 +1,8 @@
 {
   "period": "30d",
-  "updated": "2026-08-25T01:11:41.146253",
+  "updated": "2026-08-25T02:31:06.183310",
   "dataSources": {
-    "sevenrooms": false,
+    "sevenrooms": true,
     "googleAnalytics": false,
     "meta": false,
     "mailchimp": true,
@@ -12,65 +12,65 @@
     {
       "id": "total_covers",
       "label": "Total Covers",
-      "value": 1323,
-      "change": 102.3,
+      "value": 1503,
+      "change": 123.0,
       "trend": "up",
       "sparkline": [
-        100,
-        100,
-        100,
-        100,
-        100,
-        100,
-        100,
-        100,
-        100,
-        100,
-        100,
-        100
+        36,
+        11,
+        39,
+        13,
+        58,
+        44,
+        111,
+        40,
+        38,
+        55,
+        99,
+        66
       ]
     },
     {
       "id": "total_revenue",
       "label": "Total Revenue",
-      "value": 69850,
+      "value": 36045,
       "format": "currency",
-      "change": 54.6,
+      "change": 60.0,
       "trend": "up",
       "sparkline": [
-        10000,
-        10000,
-        10000,
-        10000,
-        10000,
-        10000,
-        10000,
-        10000,
-        10000,
-        10000,
-        10000,
-        10000
+        162,
+        663,
+        356,
+        221,
+        1303,
+        2311,
+        404,
+        0,
+        1397,
+        2354,
+        2681,
+        315
       ]
     },
     {
       "id": "avg_party_size",
       "label": "Avg Party Size",
-      "value": 3.4,
-      "change": 0.0,
-      "trend": "flat",
+      "value": 6.6,
+      "change": 4.8,
+      "trend": "up",
       "sparkline": [
-        3.4,
-        3.4,
-        3.4,
-        3.4,
-        3.4,
-        3.4,
-        3.4,
-        3.4,
-        3.4,
-        3.4,
-        3.4,
-        3.4
+        6.6,
+        6.6,
+        6.6,
+        6.6,
+        6.6,
+        6.6,
+        6.6,
+        6.6,
+        6.6,
+        6.6,
+        6.6,
+        6.6
       ]
     },
     {
@@ -141,10 +141,10 @@
     {
       "id": "reservation_conversion",
       "label": "Reservation Conversion",
-      "value": 79.6,
+      "value": 74.2,
       "format": "percent",
-      "change": 13.7,
-      "trend": "up",
+      "change": -12.7,
+      "trend": "down",
       "sparkline": [
         65,
         66,
@@ -157,7 +157,7 @@
         72,
         71,
         72,
-        79.6
+        74.2
       ]
     },
     {

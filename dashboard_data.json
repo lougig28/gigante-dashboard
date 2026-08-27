@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-27T07:42:59.163008",
+  "timestamp": "2026-08-27T18:07:00.681253",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-07-28",
@@ -10,17 +10,17 @@
   "toast": {},
   "sevenrooms": {
     "reservations": {
-      "total_reservations": 228,
-      "total_covers": 1510,
+      "total_reservations": 230,
+      "total_covers": 1517,
       "no_shows": 17,
       "cancellations": 42,
-      "completed": 169,
+      "completed": 171,
       "vip_count": 3,
       "total_revenue": 31438.65,
       "total_gross_revenue": 39812.47,
       "total_prepayment": 1346.68,
       "avg_party_size": 6.6,
-      "avg_duration_min": 139.0,
+      "avg_duration_min": 138.0,
       "by_server": {
         "Florencio": {
           "reservations": 31,
@@ -48,8 +48,8 @@
           "revenue": 3275.0
         },
         "Fab": {
-          "reservations": 25,
-          "covers": 151,
+          "reservations": 26,
+          "covers": 156,
           "revenue": 2498.0
         },
         "Gabi": {
@@ -135,8 +135,8 @@
           "revenue": 2574.52
         },
         "2026-08-27": {
-          "reservations": 5,
-          "covers": 58,
+          "reservations": 7,
+          "covers": 65,
           "revenue": 0.0
         },
         "2026-08-15": {
@@ -202,8 +202,8 @@
       },
       "by_shift": {
         "DINNER": {
-          "reservations": 189,
-          "covers": 1224,
+          "reservations": 191,
+          "covers": 1231,
           "revenue": 29900.65
         },
         "BRUNCH": {
@@ -214,8 +214,8 @@
       },
       "by_seating_area": {
         "Main Dining": {
-          "reservations": 165,
-          "covers": 689,
+          "reservations": 167,
+          "covers": 696,
           "revenue": 22614.61
         },
         "G Room": {
@@ -261,13 +261,13 @@
           "revenue": 14578.06
         },
         "Patio requested": {
-          "reservations": 28,
-          "covers": 89,
+          "reservations": 29,
+          "covers": 91,
           "revenue": 1913.0
         },
         "Birthday": {
-          "reservations": 19,
-          "covers": 123,
+          "reservations": 20,
+          "covers": 128,
           "revenue": 2983.99
         },
         "Patio requested, Anniversary": {
@@ -481,10 +481,10 @@
         "NO_SHOW": 17,
         "CANCELED": 42,
         "ARRIVED": 22,
-        "CONFIRMED": 1,
+        "CONFIRMED": 4,
         "PAID": 20,
         "PRE_ARRIVED": 1,
-        "NOT_RECONCILED": 4
+        "NOT_RECONCILED": 3
       },
       "by_day_of_week": {
         "Saturday": {
@@ -508,8 +508,8 @@
           "revenue": 356.0
         },
         "Thursday": {
-          "reservations": 24,
-          "covers": 173,
+          "reservations": 26,
+          "covers": 180,
           "revenue": 5546.040000000001
         },
         "Tuesday": {
@@ -720,8 +720,8 @@
           "revenue": 547.0
         },
         "12": {
-          "reservations": 6,
-          "covers": 93,
+          "reservations": 7,
+          "covers": 98,
           "revenue": 2247.0
         },
         "L2": {
@@ -1575,18 +1575,18 @@
     "comparison": {
       "total_reservations": {
         "label": "Reservations",
-        "current": 228,
+        "current": 230,
         "previous": 94,
-        "delta": 134,
-        "pct_change": 142.6,
+        "delta": 136,
+        "pct_change": 144.7,
         "direction": "up"
       },
       "total_covers": {
         "label": "Covers",
-        "current": 1510,
+        "current": 1517,
         "previous": 657,
-        "delta": 853,
-        "pct_change": 129.8,
+        "delta": 860,
+        "pct_change": 130.9,
         "direction": "up"
       },
       "total_revenue": {
@@ -1623,10 +1623,10 @@
       },
       "completed": {
         "label": "Completed",
-        "current": 169,
+        "current": 171,
         "previous": 83,
-        "delta": 86,
-        "pct_change": 103.6,
+        "delta": 88,
+        "pct_change": 106.0,
         "direction": "up"
       },
       "vip_count": {
@@ -1647,10 +1647,10 @@
       },
       "avg_duration_min": {
         "label": "Avg Duration (min)",
-        "current": 139.0,
+        "current": 138.0,
         "previous": 141.0,
-        "delta": -2.0,
-        "pct_change": -1.4,
+        "delta": -3.0,
+        "pct_change": -2.1,
         "direction": "down"
       },
       "server_changes": {
@@ -1679,7 +1679,7 @@
           "current_revenue": 2498.0,
           "previous_revenue": 733.0,
           "delta": 1765.0,
-          "current_covers": 151,
+          "current_covers": 156,
           "previous_covers": 17
         },
         "Junior": {
@@ -1696,25 +1696,11 @@
           "current_covers": 80,
           "previous_covers": 52
         },
-        "Grace": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 39
-        },
         "Chris Luna": {
           "current_revenue": 0.0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 90,
-          "previous_covers": 9
-        },
-        "Jess": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
           "previous_covers": 9
         },
         "Bar": {
@@ -1723,6 +1709,20 @@
           "delta": 0.0,
           "current_covers": 2,
           "previous_covers": 0
+        },
+        "Grace": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 39
+        },
+        "Jess": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 9
         },
         "Daniel": {
           "current_revenue": 4370.04,
@@ -1761,7 +1761,7 @@
         "Thursday": {
           "current_revenue": 5546.04,
           "previous_revenue": 2065.52,
-          "current_covers": 173,
+          "current_covers": 180,
           "previous_covers": 80
         },
         "Friday": {

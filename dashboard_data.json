@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-01T01:58:32.780837",
+  "timestamp": "2026-09-01T03:45:36.382238",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-08-02",
@@ -43,8 +43,8 @@
           "revenue": 3016.52
         },
         "Fab": {
-          "reservations": 25,
-          "covers": 153,
+          "reservations": 24,
+          "covers": 151,
           "revenue": 1715.0
         },
         "Drilon": {
@@ -90,8 +90,8 @@
           "revenue": 3747.0
         },
         "2026-08-14": {
-          "reservations": 12,
-          "covers": 58,
+          "reservations": 11,
+          "covers": 56,
           "revenue": 1303.0
         },
         "2026-08-09": {
@@ -184,15 +184,15 @@
           "covers": 5,
           "revenue": 0.0
         },
+        "2026-09-01": {
+          "reservations": 3,
+          "covers": 8,
+          "revenue": 0.0
+        },
         "2026-08-25": {
           "reservations": 2,
           "covers": 14,
           "revenue": 747.0
-        },
-        "2026-09-01": {
-          "reservations": 2,
-          "covers": 6,
-          "revenue": 0.0
         },
         "2026-08-19": {
           "reservations": 2,
@@ -256,8 +256,8 @@
       },
       "by_reservation_type": {
         "Patio requested": {
-          "reservations": 26,
-          "covers": 78,
+          "reservations": 25,
+          "covers": 76,
           "revenue": 1472.0
         },
         "Standard": {
@@ -276,8 +276,8 @@
           "revenue": 3184.05
         },
         "Patio requested, Anniversary": {
-          "reservations": 1,
-          "covers": 2,
+          "reservations": 2,
+          "covers": 4,
           "revenue": 144.0
         },
         "Female birthday": {
@@ -480,10 +480,10 @@
         "NO_SHOW": 15,
         "COMPLETE": 122,
         "CANCELED": 46,
-        "ARRIVED": 23,
+        "ARRIVED": 22,
         "PAID": 21,
         "PRE_ARRIVED": 1,
-        "NOT_RECONCILED": 2
+        "NOT_RECONCILED": 3
       },
       "by_day_of_week": {
         "Saturday": {
@@ -497,8 +497,8 @@
           "revenue": 2881.5
         },
         "Friday": {
-          "reservations": 77,
-          "covers": 317,
+          "reservations": 76,
+          "covers": 315,
           "revenue": 9381.630000000001
         },
         "Wednesday": {
@@ -512,8 +512,8 @@
           "revenue": 4826.52
         },
         "Tuesday": {
-          "reservations": 10,
-          "covers": 36,
+          "reservations": 11,
+          "covers": 38,
           "revenue": 1410.0
         }
       },
@@ -544,8 +544,8 @@
           "revenue": 2281.52
         },
         "59": {
-          "reservations": 8,
-          "covers": 16,
+          "reservations": 7,
+          "covers": 14,
           "revenue": 591.0
         },
         "92": {
@@ -1675,7 +1675,7 @@
           "current_revenue": 1715.0,
           "previous_revenue": 1137.0,
           "delta": 578.0,
-          "current_covers": 153,
+          "current_covers": 151,
           "previous_covers": 22
         },
         "Gabi": {
@@ -1685,19 +1685,19 @@
           "current_covers": 60,
           "previous_covers": 27
         },
-        "Grace": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 39
-        },
         "Bar": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
           "delta": 0.0,
           "current_covers": 2,
           "previous_covers": 0
+        },
+        "Grace": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 39
         },
         "Jess": {
           "current_revenue": 0,
@@ -1738,7 +1738,7 @@
         "Tuesday": {
           "current_revenue": 1410.0,
           "previous_revenue": 81.0,
-          "current_covers": 36,
+          "current_covers": 38,
           "previous_covers": 21
         },
         "Wednesday": {
@@ -1756,7 +1756,7 @@
         "Friday": {
           "current_revenue": 9381.63,
           "previous_revenue": 7366.54,
-          "current_covers": 317,
+          "current_covers": 315,
           "previous_covers": 235
         },
         "Saturday": {

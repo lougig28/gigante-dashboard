@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-01T17:11:02.169871",
+  "timestamp": "2026-09-01T20:39:26.820395",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-08-02",
@@ -476,10 +476,11 @@
         "COMPLETE": 120,
         "CANCELED": 46,
         "ARRIVED": 22,
-        "CONFIRMED": 1,
+        "CONFIRMED": 2,
         "PAID": 21,
         "PRE_ARRIVED": 1,
-        "NOT_RECONCILED": 3
+        "NO_ANSWER": 1,
+        "LEFT_MESSAGE": 1
       },
       "by_day_of_week": {
         "Saturday": {
@@ -1681,13 +1682,6 @@
           "current_covers": 60,
           "previous_covers": 27
         },
-        "Grace": {
-          "current_revenue": 0,
-          "previous_revenue": 0.0,
-          "delta": 0.0,
-          "current_covers": 0,
-          "previous_covers": 39
-        },
         "Bar": {
           "current_revenue": 0.0,
           "previous_revenue": 0,
@@ -1701,6 +1695,13 @@
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 9
+        },
+        "Grace": {
+          "current_revenue": 0,
+          "previous_revenue": 0.0,
+          "delta": 0.0,
+          "current_covers": 0,
+          "previous_covers": 39
         },
         "Drilon": {
           "current_revenue": 1596.0,

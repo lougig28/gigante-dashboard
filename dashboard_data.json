@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-03T19:39:48.473423",
+  "timestamp": "2026-09-03T22:00:32.501704",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-08-04",
@@ -481,9 +481,10 @@
         "COMPLETE": 125,
         "CANCELED": 47,
         "ARRIVED": 14,
-        "CONFIRMED": 4,
+        "CONFIRMED": 3,
         "PAID": 17,
-        "PRE_ARRIVED": 1
+        "PRE_ARRIVED": 1,
+        "LATE": 1
       },
       "by_day_of_week": {
         "Saturday": {
@@ -544,8 +545,8 @@
           "revenue": 2281.52
         },
         "59": {
-          "reservations": 8,
-          "covers": 16,
+          "reservations": 9,
+          "covers": 18,
           "revenue": 710.0
         },
         "92": {

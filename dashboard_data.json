@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-04T11:59:26.952773",
+  "timestamp": "2026-09-04T16:14:35.597242",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-08-05",
@@ -13,8 +13,8 @@
       "total_reservations": 230,
       "total_covers": 1455,
       "no_shows": 16,
-      "cancellations": 46,
-      "completed": 168,
+      "cancellations": 47,
+      "completed": 167,
       "vip_count": 3,
       "total_revenue": 35482.69,
       "total_gross_revenue": 44206.25,
@@ -484,13 +484,13 @@
       "by_status": {
         "NO_SHOW": 16,
         "COMPLETE": 131,
-        "CANCELED": 46,
+        "CANCELED": 47,
         "ARRIVED": 14,
         "CONFIRMED": 2,
         "NO_ANSWER": 1,
         "PAID": 16,
         "PRE_ARRIVED": 1,
-        "NOT_RECONCILED": 2,
+        "NOT_RECONCILED": 1,
         "LEFT_MESSAGE": 1
       },
       "by_day_of_week": {
@@ -1591,18 +1591,18 @@
       },
       "cancellations": {
         "label": "Cancellations",
-        "current": 46,
+        "current": 47,
         "previous": 4,
-        "delta": 42,
-        "pct_change": 1050.0,
+        "delta": 43,
+        "pct_change": 1075.0,
         "direction": "up"
       },
       "completed": {
         "label": "Completed",
-        "current": 168,
+        "current": 167,
         "previous": 87,
-        "delta": 81,
-        "pct_change": 93.1,
+        "delta": 80,
+        "pct_change": 92.0,
         "direction": "up"
       },
       "vip_count": {

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-04T03:06:04.280114",
+  "timestamp": "2026-09-04T07:58:21.478348",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-08-05",
@@ -17,7 +17,7 @@
       "completed": 168,
       "vip_count": 3,
       "total_revenue": 35482.69,
-      "total_gross_revenue": 44297.35,
+      "total_gross_revenue": 44206.25,
       "total_prepayment": 1346.68,
       "avg_party_size": 6.3,
       "avg_duration_min": 137.0,
@@ -483,12 +483,12 @@
       },
       "by_status": {
         "NO_SHOW": 16,
-        "COMPLETE": 129,
+        "COMPLETE": 131,
         "CANCELED": 46,
-        "ARRIVED": 15,
+        "ARRIVED": 14,
         "CONFIRMED": 2,
         "NO_ANSWER": 1,
-        "PAID": 17,
+        "PAID": 16,
         "PRE_ARRIVED": 1,
         "NOT_RECONCILED": 2,
         "LEFT_MESSAGE": 1
@@ -1575,10 +1575,10 @@
       },
       "total_gross_revenue": {
         "label": "Gross Revenue",
-        "current": 44297.35,
+        "current": 44206.25,
         "previous": 24066.08,
-        "delta": 20231.27,
-        "pct_change": 84.1,
+        "delta": 20140.17,
+        "pct_change": 83.7,
         "direction": "up"
       },
       "no_shows": {
@@ -1672,13 +1672,6 @@
           "current_covers": 64,
           "previous_covers": 24
         },
-        "Bar": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 2,
-          "previous_covers": 0
-        },
         "Jess": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
@@ -1692,6 +1685,13 @@
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 39
+        },
+        "Bar": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 2,
+          "previous_covers": 0
         },
         "Drilon": {
           "current_revenue": 1596.0,

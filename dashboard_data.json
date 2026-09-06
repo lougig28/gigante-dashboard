@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-06T18:04:09.620665",
+  "timestamp": "2026-09-06T21:05:22.237487",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-08-07",
@@ -12,9 +12,9 @@
     "reservations": {
       "total_reservations": 232,
       "total_covers": 1394,
-      "no_shows": 17,
+      "no_shows": 18,
       "cancellations": 45,
-      "completed": 170,
+      "completed": 169,
       "vip_count": 4,
       "total_revenue": 34199.64,
       "total_gross_revenue": 42994.3,
@@ -462,14 +462,12 @@
         }
       },
       "by_status": {
-        "NO_SHOW": 17,
+        "NO_SHOW": 18,
         "COMPLETE": 143,
         "CANCELED": 45,
-        "ARRIVED": 11,
+        "ARRIVED": 13,
         "PAID": 12,
-        "PRE_ARRIVED": 1,
-        "CONFIRMED": 2,
-        "NOT_RECONCILED": 1
+        "PRE_ARRIVED": 1
       },
       "by_day_of_week": {
         "Friday": {
@@ -530,13 +528,13 @@
           "revenue": 1134.0
         },
         "53": {
-          "reservations": 9,
-          "covers": 35,
+          "reservations": 8,
+          "covers": 31,
           "revenue": 1659.52
         },
         "54": {
-          "reservations": 8,
-          "covers": 30,
+          "reservations": 7,
+          "covers": 26,
           "revenue": 1333.0
         },
         "61": {
@@ -570,8 +568,8 @@
           "revenue": 0.0
         },
         "13": {
-          "reservations": 4,
-          "covers": 37,
+          "reservations": 5,
+          "covers": 39,
           "revenue": 2441.0
         },
         "62": {
@@ -750,8 +748,8 @@
           "revenue": 799.0
         },
         "10": {
-          "reservations": 5,
-          "covers": 55,
+          "reservations": 6,
+          "covers": 59,
           "revenue": 2906.0
         },
         "28-58": {
@@ -1511,10 +1509,10 @@
       },
       "no_shows": {
         "label": "No Shows",
-        "current": 17,
+        "current": 18,
         "previous": 6,
-        "delta": 11,
-        "pct_change": 183.3,
+        "delta": 12,
+        "pct_change": 200.0,
         "direction": "up"
       },
       "cancellations": {
@@ -1527,10 +1525,10 @@
       },
       "completed": {
         "label": "Completed",
-        "current": 170,
+        "current": 169,
         "previous": 82,
-        "delta": 88,
-        "pct_change": 107.3,
+        "delta": 87,
+        "pct_change": 106.1,
         "direction": "up"
       },
       "vip_count": {
@@ -1614,19 +1612,19 @@
           "current_covers": 0,
           "previous_covers": 5
         },
-        "Bar": {
-          "current_revenue": 0.0,
-          "previous_revenue": 0,
-          "delta": 0.0,
-          "current_covers": 2,
-          "previous_covers": 0
-        },
         "Grace": {
           "current_revenue": 0,
           "previous_revenue": 0.0,
           "delta": 0.0,
           "current_covers": 0,
           "previous_covers": 39
+        },
+        "Bar": {
+          "current_revenue": 0.0,
+          "previous_revenue": 0,
+          "delta": 0.0,
+          "current_covers": 2,
+          "previous_covers": 0
         },
         "Drilon": {
           "current_revenue": 1596.0,

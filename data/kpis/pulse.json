@@ -1,6 +1,6 @@
 {
   "period": "30d",
-  "updated": "2026-09-05T23:27:23.753043",
+  "updated": "2026-09-06T01:11:29.300639",
   "dataSources": {
     "sevenrooms": true,
     "googleAnalytics": false,
@@ -12,65 +12,65 @@
     {
       "id": "total_covers",
       "label": "Total Covers",
-      "value": 1398,
-      "change": 149.6,
+      "value": 1396,
+      "change": 145.8,
       "trend": "up",
       "sparkline": [
-        56,
         14,
         37,
         65,
-        9,
+        15,
         132,
         61,
         13,
         35,
         38,
         111,
-        40
+        46,
+        11
       ]
     },
     {
       "id": "total_revenue",
       "label": "Total Revenue",
-      "value": 34470,
+      "value": 34822,
       "format": "currency",
-      "change": 108.4,
+      "change": 108.8,
       "trend": "up",
       "sparkline": [
-        315,
         747,
         3327,
         634,
-        286,
+        872,
         3662,
         1344,
         417,
         0,
         2154,
         1208,
-        397
+        1847,
+        0
       ]
     },
     {
       "id": "avg_party_size",
       "label": "Avg Party Size",
-      "value": 6.2,
-      "change": 0.0,
-      "trend": "flat",
+      "value": 6.0,
+      "change": -1.6,
+      "trend": "down",
       "sparkline": [
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2,
-        6.2
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ]
     },
     {
@@ -141,9 +141,9 @@
     {
       "id": "reservation_conversion",
       "label": "Reservation Conversion",
-      "value": 73.1,
+      "value": 73.7,
       "format": "percent",
-      "change": -17.9,
+      "change": -16.4,
       "trend": "down",
       "sparkline": [
         65,
@@ -157,7 +157,7 @@
         72,
         71,
         72,
-        73.1
+        73.7
       ]
     },
     {

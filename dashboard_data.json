@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-10T16:54:14.873982",
+  "timestamp": "2026-09-10T19:27:45.529445",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-08-11",
@@ -13,8 +13,8 @@
       "total_reservations": 214,
       "total_covers": 1341,
       "no_shows": 15,
-      "cancellations": 37,
-      "completed": 162,
+      "cancellations": 38,
+      "completed": 161,
       "vip_count": 3,
       "total_revenue": 35972.63,
       "total_gross_revenue": 44724.4,
@@ -444,9 +444,9 @@
       "by_status": {
         "NO_SHOW": 15,
         "COMPLETE": 123,
-        "CANCELED": 37,
+        "CANCELED": 38,
         "ARRIVED": 15,
-        "NOT_RECONCILED": 6,
+        "NOT_RECONCILED": 5,
         "PAID": 17,
         "PRE_ARRIVED": 1
       },
@@ -489,23 +489,23 @@
           "revenue": 1377.0
         },
         "21": {
-          "reservations": 8,
-          "covers": 25,
+          "reservations": 9,
+          "covers": 28,
           "revenue": 518.0
         },
         "22": {
-          "reservations": 8,
-          "covers": 25,
+          "reservations": 9,
+          "covers": 28,
           "revenue": 705.0
         },
         "24": {
-          "reservations": 11,
-          "covers": 37,
+          "reservations": 10,
+          "covers": 33,
           "revenue": 2204.0
         },
         "23": {
-          "reservations": 9,
-          "covers": 33,
+          "reservations": 8,
+          "covers": 29,
           "revenue": 1906.0
         },
         "53": {
@@ -574,14 +574,24 @@
           "revenue": 918.0
         },
         "58": {
-          "reservations": 9,
-          "covers": 37,
+          "reservations": 8,
+          "covers": 34,
           "revenue": 1399.52
         },
         "57": {
-          "reservations": 8,
-          "covers": 35,
+          "reservations": 7,
+          "covers": 32,
           "revenue": 1399.52
+        },
+        "27": {
+          "reservations": 8,
+          "covers": 37,
+          "revenue": 1232.05
+        },
+        "28": {
+          "reservations": 11,
+          "covers": 43,
+          "revenue": 1361.05
         },
         "56": {
           "reservations": 4,
@@ -627,16 +637,6 @@
           "reservations": 7,
           "covers": 15,
           "revenue": 786.0
-        },
-        "27": {
-          "reservations": 7,
-          "covers": 33,
-          "revenue": 1232.05
-        },
-        "28": {
-          "reservations": 10,
-          "covers": 39,
-          "revenue": 1361.05
         },
         "25": {
           "reservations": 5,
@@ -1583,18 +1583,18 @@
       },
       "cancellations": {
         "label": "Cancellations",
-        "current": 37,
+        "current": 38,
         "previous": 14,
-        "delta": 23,
-        "pct_change": 164.3,
+        "delta": 24,
+        "pct_change": 171.4,
         "direction": "up"
       },
       "completed": {
         "label": "Completed",
-        "current": 162,
+        "current": 161,
         "previous": 96,
-        "delta": 66,
-        "pct_change": 68.8,
+        "delta": 65,
+        "pct_change": 67.7,
         "direction": "up"
       },
       "vip_count": {

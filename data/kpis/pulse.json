@@ -1,6 +1,6 @@
 {
   "period": "30d",
-  "updated": "2026-09-10T22:05:30.348950",
+  "updated": "2026-09-11T00:07:03.660552",
   "dataSources": {
     "sevenrooms": true,
     "googleAnalytics": false,
@@ -12,14 +12,13 @@
     {
       "id": "total_covers",
       "label": "Total Covers",
-      "value": 1345,
-      "change": 101.0,
+      "value": 1323,
+      "change": 125.4,
       "trend": "up",
       "sparkline": [
-        68,
         30,
         141,
-        71,
+        69,
         15,
         35,
         38,
@@ -27,21 +26,21 @@
         60,
         21,
         2,
-        61
+        35,
+        17
       ]
     },
     {
       "id": "total_revenue",
       "label": "Total Revenue",
-      "value": 35973,
+      "value": 36115,
       "format": "currency",
-      "change": 104.5,
+      "change": 111.0,
       "trend": "up",
       "sparkline": [
-        823,
         1318,
         4309,
-        1576,
+        1468,
         590,
         0,
         2154,
@@ -49,28 +48,29 @@
         2868,
         108,
         0,
+        913,
         0
       ]
     },
     {
       "id": "avg_party_size",
       "label": "Avg Party Size",
-      "value": 6.3,
-      "change": 10.5,
+      "value": 6.1,
+      "change": 17.3,
       "trend": "up",
       "sparkline": [
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3,
-        6.3
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1,
+        6.1
       ]
     },
     {
@@ -141,9 +141,9 @@
     {
       "id": "reservation_conversion",
       "label": "Reservation Conversion",
-      "value": 75.3,
+      "value": 75.6,
       "format": "percent",
-      "change": -8.3,
+      "change": -7.1,
       "trend": "down",
       "sparkline": [
         65,
@@ -157,7 +157,7 @@
         72,
         71,
         72,
-        75.3
+        75.6
       ]
     },
     {

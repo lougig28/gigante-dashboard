@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-13T03:23:13.047632",
+  "timestamp": "2026-09-13T08:28:40.315849",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-08-14",
@@ -16,8 +16,8 @@
       "cancellations": 39,
       "completed": 170,
       "vip_count": 4,
-      "total_revenue": 34006.19,
-      "total_gross_revenue": 41941.38,
+      "total_revenue": 33971.19,
+      "total_gross_revenue": 42021.63,
       "total_prepayment": 585.2,
       "avg_party_size": 6.5,
       "avg_duration_min": 134.0,
@@ -25,7 +25,7 @@
         "Florencio": {
           "reservations": 32,
           "covers": 149,
-          "revenue": 7331.0
+          "revenue": 7296.0
         },
         "Errol": {
           "reservations": 25,
@@ -137,7 +137,7 @@
         "2026-09-12": {
           "reservations": 23,
           "covers": 181,
-          "revenue": 3024.04
+          "revenue": 2989.04
         },
         "2026-09-03": {
           "reservations": 10,
@@ -204,7 +204,7 @@
         "DINNER": {
           "reservations": 190,
           "covers": 1182,
-          "revenue": 31764.690000000002
+          "revenue": 31729.690000000002
         },
         "BRUNCH": {
           "reservations": 34,
@@ -226,7 +226,7 @@
         "Main Dining": {
           "reservations": 167,
           "covers": 668,
-          "revenue": 22673.65
+          "revenue": 22638.65
         },
         "Lounge": {
           "reservations": 4,
@@ -363,7 +363,7 @@
         "Cake in fridge": {
           "reservations": 1,
           "covers": 16,
-          "revenue": 765.0
+          "revenue": 730.0
         },
         "Female birthday, Birthday": {
           "reservations": 1,
@@ -463,11 +463,11 @@
       },
       "by_status": {
         "NO_SHOW": 16,
-        "COMPLETE": 128,
+        "COMPLETE": 136,
         "CANCELED": 39,
-        "ARRIVED": 24,
+        "ARRIVED": 17,
         "CONFIRMED": 3,
-        "PAID": 13,
+        "PAID": 12,
         "PRE_ARRIVED": 1,
         "NOT_RECONCILED": 1
       },
@@ -480,7 +480,7 @@
         "Saturday": {
           "reservations": 83,
           "covers": 516,
-          "revenue": 15037.560000000001
+          "revenue": 15002.560000000001
         },
         "Sunday": {
           "reservations": 34,
@@ -562,7 +562,7 @@
         "12": {
           "reservations": 5,
           "covers": 57,
-          "revenue": 2162.0
+          "revenue": 2127.0
         },
         "62": {
           "reservations": 10,
@@ -782,7 +782,7 @@
         "13": {
           "reservations": 4,
           "covers": 49,
-          "revenue": 2863.0
+          "revenue": 2828.0
         },
         "L1": {
           "reservations": 2,
@@ -1530,18 +1530,18 @@
       },
       "total_revenue": {
         "label": "Net Revenue",
-        "current": 34006.19,
+        "current": 33971.19,
         "previous": 14903.02,
-        "delta": 19103.17,
-        "pct_change": 128.2,
+        "delta": 19068.17,
+        "pct_change": 127.9,
         "direction": "up"
       },
       "total_gross_revenue": {
         "label": "Gross Revenue",
-        "current": 41941.38,
+        "current": 42021.63,
         "previous": 19278.84,
-        "delta": 22662.54,
-        "pct_change": 117.6,
+        "delta": 22742.79,
+        "pct_change": 118.0,
         "direction": "up"
       },
       "no_shows": {
@@ -1601,9 +1601,9 @@
           "previous_covers": 33
         },
         "Florencio": {
-          "current_revenue": 7331.0,
+          "current_revenue": 7296.0,
           "previous_revenue": 2016.49,
-          "delta": 5314.51,
+          "delta": 5279.51,
           "current_covers": 149,
           "previous_covers": 48
         },
@@ -1717,7 +1717,7 @@
           "previous_covers": 196
         },
         "Saturday": {
-          "current_revenue": 15037.56,
+          "current_revenue": 15002.56,
           "previous_revenue": 7143.51,
           "current_covers": 516,
           "previous_covers": 154

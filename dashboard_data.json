@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-16T00:47:33.543488",
+  "timestamp": "2026-09-16T03:31:24.782945",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-08-17",
@@ -16,8 +16,8 @@
       "cancellations": 35,
       "completed": 166,
       "vip_count": 4,
-      "total_revenue": 34340.71,
-      "total_gross_revenue": 42428.55,
+      "total_revenue": 34397.71,
+      "total_gross_revenue": 42585.92,
       "total_prepayment": 617.72,
       "avg_party_size": 6.1,
       "avg_duration_min": 133.0,
@@ -142,7 +142,7 @@
         "2026-09-15": {
           "reservations": 5,
           "covers": 19,
-          "revenue": 867.52
+          "revenue": 924.52
         },
         "2026-09-03": {
           "reservations": 10,
@@ -199,7 +199,7 @@
         "DINNER": {
           "reservations": 187,
           "covers": 1137,
-          "revenue": 31195.210000000003
+          "revenue": 31252.210000000003
         },
         "BRUNCH": {
           "reservations": 29,
@@ -219,9 +219,9 @@
           "revenue": 3110.0
         },
         "Main Dining": {
-          "reservations": 162,
-          "covers": 642,
-          "revenue": 23521.65
+          "reservations": 163,
+          "covers": 644,
+          "revenue": 23533.65
         },
         "Lounge": {
           "reservations": 4,
@@ -229,8 +229,8 @@
           "revenue": 0.0
         },
         "Unknown": {
-          "reservations": 18,
-          "covers": 489,
+          "reservations": 17,
+          "covers": 487,
           "revenue": 5330.04
         },
         "PDR": {
@@ -241,7 +241,7 @@
         "G Room": {
           "reservations": 4,
           "covers": 28,
-          "revenue": 1285.52
+          "revenue": 1330.52
         },
         "Bar": {
           "reservations": 1,
@@ -253,7 +253,7 @@
         "Standard": {
           "reservations": 112,
           "covers": 519,
-          "revenue": 13577.560000000001
+          "revenue": 13634.560000000001
         },
         "Patio requested": {
           "reservations": 20,
@@ -390,14 +390,14 @@
           "covers": 20,
           "revenue": 0.0
         },
-        "Cake in fridge, Patio requested": {
-          "reservations": 1,
-          "covers": 6,
-          "revenue": 0.0
-        },
         "Male birthday, Surprise Party, G Room buyout": {
           "reservations": 1,
           "covers": 53,
+          "revenue": 0.0
+        },
+        "Cake in fridge, Patio requested": {
+          "reservations": 1,
+          "covers": 6,
           "revenue": 0.0
         },
         "Celebration": {
@@ -456,9 +456,8 @@
         "COMPLETE": 139,
         "NOT_RECONCILED": 1,
         "CANCELED": 35,
-        "ARRIVED": 14,
-        "CONFIRMED": 1,
-        "PAID": 11
+        "ARRIVED": 12,
+        "PAID": 14
       },
       "by_day_of_week": {
         "Friday": {
@@ -489,7 +488,7 @@
         "Tuesday": {
           "reservations": 12,
           "covers": 48,
-          "revenue": 2204.52
+          "revenue": 2261.52
         }
       },
       "top_tables": {
@@ -544,8 +543,8 @@
           "revenue": 1617.05
         },
         "29": {
-          "reservations": 13,
-          "covers": 25,
+          "reservations": 14,
+          "covers": 27,
           "revenue": 587.0
         },
         "59": {
@@ -561,7 +560,7 @@
         "62": {
           "reservations": 9,
           "covers": 60,
-          "revenue": 1297.0
+          "revenue": 1309.0
         },
         "71": {
           "reservations": 4,
@@ -646,7 +645,7 @@
         "92": {
           "reservations": 10,
           "covers": 410,
-          "revenue": 3525.52
+          "revenue": 3570.52
         },
         "90": {
           "reservations": 11,
@@ -1479,18 +1478,18 @@
       },
       "total_revenue": {
         "label": "Net Revenue",
-        "current": 34340.71,
+        "current": 34397.71,
         "previous": 16553.02,
-        "delta": 17787.69,
-        "pct_change": 107.5,
+        "delta": 17844.69,
+        "pct_change": 107.8,
         "direction": "up"
       },
       "total_gross_revenue": {
         "label": "Gross Revenue",
-        "current": 42428.55,
+        "current": 42585.92,
         "previous": 21504.71,
-        "delta": 20923.84,
-        "pct_change": 97.3,
+        "delta": 21081.21,
+        "pct_change": 98.0,
         "direction": "up"
       },
       "no_shows": {
@@ -1628,7 +1627,7 @@
           "previous_covers": 0
         },
         "Tuesday": {
-          "current_revenue": 2204.52,
+          "current_revenue": 2261.52,
           "previous_revenue": 116.0,
           "current_covers": 48,
           "previous_covers": 5

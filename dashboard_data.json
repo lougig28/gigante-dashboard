@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-20T03:36:23.441332",
+  "timestamp": "2026-09-20T08:49:18.937393",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-08-21",
@@ -16,8 +16,8 @@
       "cancellations": 33,
       "completed": 184,
       "vip_count": 4,
-      "total_revenue": 37476.25,
-      "total_gross_revenue": 46272.03,
+      "total_revenue": 37231.25,
+      "total_gross_revenue": 46006.53,
       "total_prepayment": 697.72,
       "avg_party_size": 6.3,
       "avg_duration_min": 135.0,
@@ -25,7 +25,7 @@
         "Daniel": {
           "reservations": 39,
           "covers": 257,
-          "revenue": 7260.52
+          "revenue": 7015.52
         },
         "Florencio": {
           "reservations": 26,
@@ -92,7 +92,7 @@
         "2026-09-19": {
           "reservations": 21,
           "covers": 105,
-          "revenue": 4688.54
+          "revenue": 4443.54
         },
         "2026-09-06": {
           "reservations": 6,
@@ -214,7 +214,7 @@
         "DINNER": {
           "reservations": 199,
           "covers": 1188,
-          "revenue": 34617.75
+          "revenue": 34372.75
         },
         "Unknown": {
           "reservations": 1,
@@ -236,7 +236,7 @@
         "G Room": {
           "reservations": 9,
           "covers": 50,
-          "revenue": 2163.52
+          "revenue": 1918.52
         },
         "Lounge": {
           "reservations": 4,
@@ -478,7 +478,7 @@
         "G Room requested": {
           "reservations": 1,
           "covers": 4,
-          "revenue": 245.0
+          "revenue": 0.0
         },
         "Event Prospect, Alert GM, Alert chef": {
           "reservations": 1,
@@ -490,9 +490,9 @@
         "CANCELED": 33,
         "NO_SHOW": 18,
         "COMPLETE": 151,
-        "ARRIVED": 14,
-        "CONFIRMED": 9,
-        "PAID": 10
+        "ARRIVED": 12,
+        "PAID": 12,
+        "CONFIRMED": 9
       },
       "by_day_of_week": {
         "Sunday": {
@@ -508,7 +508,7 @@
         "Saturday": {
           "reservations": 89,
           "covers": 569,
-          "revenue": 17221.100000000002
+          "revenue": 16976.100000000002
         },
         "Thursday": {
           "reservations": 26,
@@ -710,7 +710,7 @@
         "92": {
           "reservations": 12,
           "covers": 432,
-          "revenue": 3815.52
+          "revenue": 3570.52
         },
         "90": {
           "reservations": 12,
@@ -1478,18 +1478,18 @@
       },
       "total_revenue": {
         "label": "Net Revenue",
-        "current": 37476.25,
+        "current": 37231.25,
         "previous": 12536.02,
-        "delta": 24940.23,
-        "pct_change": 198.9,
+        "delta": 24695.23,
+        "pct_change": 197.0,
         "direction": "up"
       },
       "total_gross_revenue": {
         "label": "Gross Revenue",
-        "current": 46272.03,
+        "current": 46006.53,
         "previous": 16487.52,
-        "delta": 29784.51,
-        "pct_change": 180.6,
+        "delta": 29519.01,
+        "pct_change": 179.0,
         "direction": "up"
       },
       "no_shows": {
@@ -1549,9 +1549,9 @@
           "previous_covers": 40
         },
         "Daniel": {
-          "current_revenue": 7260.52,
+          "current_revenue": 7015.52,
           "previous_revenue": 2003.02,
-          "delta": 5257.5,
+          "delta": 5012.5,
           "current_covers": 257,
           "previous_covers": 43
         },
@@ -1651,7 +1651,7 @@
           "previous_covers": 126
         },
         "Saturday": {
-          "current_revenue": 17221.1,
+          "current_revenue": 16976.1,
           "previous_revenue": 6451.51,
           "current_covers": 569,
           "previous_covers": 148

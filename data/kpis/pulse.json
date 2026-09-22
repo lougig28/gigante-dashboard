@@ -1,6 +1,6 @@
 {
   "period": "30d",
-  "updated": "2026-09-22T12:23:51.630367",
+  "updated": "2026-09-22T17:32:05.888565",
   "dataSources": {
     "sevenrooms": true,
     "googleAnalytics": false,
@@ -12,11 +12,10 @@
     {
       "id": "total_covers",
       "label": "Total Covers",
-      "value": 1401,
-      "change": 163.8,
+      "value": 1403,
+      "change": 164.2,
       "trend": "up",
       "sparkline": [
-        21,
         2,
         35,
         99,
@@ -27,18 +26,18 @@
         2,
         72,
         116,
-        112
+        112,
+        4
       ]
     },
     {
       "id": "total_revenue",
       "label": "Total Revenue",
-      "value": 40732,
+      "value": 40624,
       "format": "currency",
-      "change": 164.2,
+      "change": 163.5,
       "trend": "up",
       "sparkline": [
-        108,
         0,
         830,
         1046,
@@ -49,7 +48,8 @@
         0,
         3262,
         4578,
-        5863
+        5863,
+        0
       ]
     },
     {

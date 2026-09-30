@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-30T13:22:00.817854",
+  "timestamp": "2026-09-30T18:50:39.017921",
   "date_range": {
     "days_back": 30,
     "from_date": "2026-08-31",
@@ -13,8 +13,8 @@
       "total_reservations": 230,
       "total_covers": 1442,
       "no_shows": 16,
-      "cancellations": 39,
-      "completed": 175,
+      "cancellations": 40,
+      "completed": 174,
       "vip_count": 5,
       "total_revenue": 40303.22,
       "total_gross_revenue": 50790.79,
@@ -204,8 +204,8 @@
       },
       "by_seating_area": {
         "Main Dining": {
-          "reservations": 179,
-          "covers": 779,
+          "reservations": 180,
+          "covers": 781,
           "revenue": 26552.100000000002
         },
         "Patio 1": {
@@ -224,8 +224,8 @@
           "revenue": 0.0
         },
         "Unknown": {
-          "reservations": 15,
-          "covers": 484,
+          "reservations": 14,
+          "covers": 482,
           "revenue": 7832.08
         },
         "PDR": {
@@ -482,12 +482,12 @@
         }
       },
       "by_status": {
-        "CANCELED": 39,
+        "CANCELED": 40,
         "NO_SHOW": 16,
         "COMPLETE": 150,
         "ARRIVED": 8,
         "PAID": 13,
-        "CONFIRMED": 3,
+        "CONFIRMED": 2,
         "NOT_RECONCILED": 1
       },
       "by_day_of_week": {
@@ -604,8 +604,8 @@
           "revenue": 1813.52
         },
         "59": {
-          "reservations": 13,
-          "covers": 26,
+          "reservations": 14,
+          "covers": 28,
           "revenue": 926.0
         },
         "10": {
@@ -1568,18 +1568,18 @@
       },
       "cancellations": {
         "label": "Cancellations",
-        "current": 39,
+        "current": 40,
         "previous": 27,
-        "delta": 12,
-        "pct_change": 44.4,
+        "delta": 13,
+        "pct_change": 48.1,
         "direction": "up"
       },
       "completed": {
         "label": "Completed",
-        "current": 175,
+        "current": 174,
         "previous": 82,
-        "delta": 93,
-        "pct_change": 113.4,
+        "delta": 92,
+        "pct_change": 112.2,
         "direction": "up"
       },
       "vip_count": {

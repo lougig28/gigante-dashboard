@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-09-29T23:16:31.962500",
+  "timestamp": "2026-09-30T02:13:03.357835",
   "date_range": {
     "days_back": 30,
-    "from_date": "2026-08-30",
-    "to_date": "2026-09-29",
+    "from_date": "2026-08-31",
+    "to_date": "2026-09-30",
     "compare_from": null,
     "compare_to": null
   },
   "toast": {},
   "sevenrooms": {
     "reservations": {
-      "total_reservations": 233,
-      "total_covers": 1474,
+      "total_reservations": 229,
+      "total_covers": 1440,
       "no_shows": 16,
-      "cancellations": 41,
-      "completed": 176,
+      "cancellations": 39,
+      "completed": 174,
       "vip_count": 5,
-      "total_revenue": 41363.72,
-      "total_gross_revenue": 52198.88,
+      "total_revenue": 40303.22,
+      "total_gross_revenue": 50790.79,
       "total_prepayment": 639.2,
       "avg_party_size": 6.3,
       "avg_duration_min": 135.0,
@@ -28,9 +28,9 @@
           "revenue": 12995.52
         },
         "Gabi": {
-          "reservations": 40,
-          "covers": 192,
-          "revenue": 8000.560000000001
+          "reservations": 41,
+          "covers": 194,
+          "revenue": 8278.560000000001
         },
         "Errol": {
           "reservations": 18,
@@ -38,19 +38,19 @@
           "revenue": 5946.08
         },
         "Florencio": {
-          "reservations": 19,
-          "covers": 114,
-          "revenue": 4641.5
-        },
-        "Chris Luna": {
-          "reservations": 14,
-          "covers": 86,
-          "revenue": 2584.5
+          "reservations": 18,
+          "covers": 94,
+          "revenue": 4287.5
         },
         "Fab": {
           "reservations": 21,
           "covers": 189,
           "revenue": 1910.0
+        },
+        "Chris Luna": {
+          "reservations": 9,
+          "covers": 43,
+          "revenue": 1470.0
         },
         "Rylan": {
           "reservations": 12,
@@ -58,8 +58,8 @@
           "revenue": 1254.52
         },
         "Junior": {
-          "reservations": 4,
-          "covers": 23,
+          "reservations": 3,
+          "covers": 19,
           "revenue": 702.0
         }
       },
@@ -89,11 +89,6 @@
           "covers": 72,
           "revenue": 3261.52
         },
-        "2026-08-30": {
-          "reservations": 7,
-          "covers": 67,
-          "revenue": 1468.5
-        },
         "2026-09-10": {
           "reservations": 7,
           "covers": 35,
@@ -115,9 +110,9 @@
           "revenue": 2708.52
         },
         "2026-09-12": {
-          "reservations": 27,
-          "covers": 189,
-          "revenue": 2989.04
+          "reservations": 28,
+          "covers": 191,
+          "revenue": 3267.04
         },
         "2026-09-15": {
           "reservations": 5,
@@ -159,6 +154,11 @@
           "covers": 97,
           "revenue": 3554.0
         },
+        "2026-09-30": {
+          "reservations": 2,
+          "covers": 31,
+          "revenue": 0.0
+        },
         "2026-09-23": {
           "reservations": 3,
           "covers": 11,
@@ -182,19 +182,19 @@
         "2026-09-29": {
           "reservations": 1,
           "covers": 4,
-          "revenue": 0.0
+          "revenue": 130.0
         }
       },
       "by_shift": {
         "BRUNCH": {
-          "reservations": 42,
-          "covers": 331,
-          "revenue": 12139.5
+          "reservations": 35,
+          "covers": 264,
+          "revenue": 10671.0
         },
         "DINNER": {
-          "reservations": 190,
-          "covers": 1141,
-          "revenue": 29224.220000000005
+          "reservations": 193,
+          "covers": 1174,
+          "revenue": 29632.220000000005
         },
         "Unknown": {
           "reservations": 1,
@@ -204,9 +204,9 @@
       },
       "by_seating_area": {
         "Main Dining": {
-          "reservations": 183,
-          "covers": 812,
-          "revenue": 26748.100000000002
+          "reservations": 178,
+          "covers": 777,
+          "revenue": 26552.100000000002
         },
         "Patio 1": {
           "reservations": 18,
@@ -224,14 +224,14 @@
           "revenue": 0.0
         },
         "Unknown": {
-          "reservations": 13,
-          "covers": 453,
+          "reservations": 15,
+          "covers": 484,
           "revenue": 7832.08
         },
         "PDR": {
-          "reservations": 4,
-          "covers": 77,
-          "revenue": 3293.02
+          "reservations": 3,
+          "covers": 47,
+          "revenue": 2428.52
         },
         "Bar": {
           "reservations": 1,
@@ -246,9 +246,9 @@
           "revenue": 2817.04
         },
         "Standard": {
-          "reservations": 122,
-          "covers": 606,
-          "revenue": 13569.580000000002
+          "reservations": 120,
+          "covers": 607,
+          "revenue": 13243.580000000002
         },
         "Celebration Package (unpaid), Sweet 16": {
           "reservations": 1,
@@ -264,11 +264,6 @@
           "reservations": 1,
           "covers": 2,
           "revenue": 0.0
-        },
-        "Female birthday": {
-          "reservations": 4,
-          "covers": 14,
-          "revenue": 410.0
         },
         "Birthday, Patio requested": {
           "reservations": 6,
@@ -320,6 +315,11 @@
           "covers": 4,
           "revenue": 0.0
         },
+        "Female birthday": {
+          "reservations": 3,
+          "covers": 9,
+          "revenue": 540.0
+        },
         "Celebration Package (unpaid), Birthday": {
           "reservations": 3,
           "covers": 21,
@@ -341,9 +341,9 @@
           "revenue": 3623.0
         },
         "PDR - Buyout": {
-          "reservations": 2,
-          "covers": 56,
-          "revenue": 3293.02
+          "reservations": 1,
+          "covers": 26,
+          "revenue": 2428.52
         },
         "Celebration, G Room buyout": {
           "reservations": 1,
@@ -482,18 +482,19 @@
         }
       },
       "by_status": {
-        "CANCELED": 41,
+        "CANCELED": 39,
         "NO_SHOW": 16,
-        "COMPLETE": 152,
-        "ARRIVED": 9,
-        "PAID": 14,
-        "CONFIRMED": 1
+        "COMPLETE": 150,
+        "ARRIVED": 8,
+        "PAID": 13,
+        "CONFIRMED": 2,
+        "NOT_RECONCILED": 1
       },
       "by_day_of_week": {
         "Sunday": {
-          "reservations": 42,
-          "covers": 331,
-          "revenue": 12139.5
+          "reservations": 35,
+          "covers": 264,
+          "revenue": 10671.0
         },
         "Friday": {
           "reservations": 57,
@@ -501,9 +502,9 @@
           "revenue": 6409.040000000001
         },
         "Saturday": {
-          "reservations": 94,
-          "covers": 632,
-          "revenue": 18316.62
+          "reservations": 95,
+          "covers": 634,
+          "revenue": 18594.62
         },
         "Thursday": {
           "reservations": 20,
@@ -511,25 +512,25 @@
           "revenue": 2984.04
         },
         "Wednesday": {
-          "reservations": 9,
-          "covers": 56,
+          "reservations": 11,
+          "covers": 87,
           "revenue": 0.0
         },
         "Tuesday": {
           "reservations": 11,
           "covers": 38,
-          "revenue": 1514.52
+          "revenue": 1644.52
         }
       },
       "top_tables": {
         "24": {
-          "reservations": 13,
-          "covers": 54,
-          "revenue": 2290.52
+          "reservations": 12,
+          "covers": 52,
+          "revenue": 2165.52
         },
         "21": {
-          "reservations": 13,
-          "covers": 52,
+          "reservations": 12,
+          "covers": 48,
           "revenue": 1170.0
         },
         "23": {
@@ -538,8 +539,8 @@
           "revenue": 1992.52
         },
         "22": {
-          "reservations": 14,
-          "covers": 54,
+          "reservations": 13,
+          "covers": 50,
           "revenue": 1498.0
         },
         "73": {
@@ -557,16 +558,6 @@
           "covers": 59,
           "revenue": 1332.0
         },
-        "53": {
-          "reservations": 7,
-          "covers": 27,
-          "revenue": 739.0
-        },
-        "54": {
-          "reservations": 10,
-          "covers": 33,
-          "revenue": 937.0
-        },
         "27": {
           "reservations": 11,
           "covers": 56,
@@ -582,15 +573,20 @@
           "covers": 408,
           "revenue": 5233.0
         },
-        "12": {
-          "reservations": 8,
-          "covers": 67,
-          "revenue": 2481.0
-        },
         "62": {
+          "reservations": 8,
+          "covers": 85,
+          "revenue": 4270.0
+        },
+        "53": {
+          "reservations": 6,
+          "covers": 23,
+          "revenue": 739.0
+        },
+        "54": {
           "reservations": 9,
-          "covers": 105,
-          "revenue": 4624.0
+          "covers": 29,
+          "revenue": 937.0
         },
         "L2": {
           "reservations": 3,
@@ -600,12 +596,12 @@
         "52": {
           "reservations": 10,
           "covers": 35,
-          "revenue": 1837.52
+          "revenue": 1967.52
         },
         "51": {
           "reservations": 9,
           "covers": 33,
-          "revenue": 1683.52
+          "revenue": 1813.52
         },
         "59": {
           "reservations": 13,
@@ -673,18 +669,18 @@
           "revenue": 0.0
         },
         "91": {
-          "reservations": 7,
-          "covers": 397,
+          "reservations": 8,
+          "covers": 426,
           "revenue": 5233.0
         },
         "92": {
-          "reservations": 11,
-          "covers": 409,
+          "reservations": 12,
+          "covers": 438,
           "revenue": 5683.52
         },
         "90": {
-          "reservations": 9,
-          "covers": 412,
+          "reservations": 10,
+          "covers": 441,
           "revenue": 6018.0
         },
         "110": {
@@ -693,23 +689,23 @@
           "revenue": 0.0
         },
         "83": {
-          "reservations": 8,
-          "covers": 399,
+          "reservations": 9,
+          "covers": 428,
           "revenue": 5332.0
         },
         "82": {
-          "reservations": 7,
-          "covers": 397,
+          "reservations": 8,
+          "covers": 426,
           "revenue": 5233.0
         },
         "81": {
-          "reservations": 7,
-          "covers": 397,
+          "reservations": 8,
+          "covers": 426,
           "revenue": 5233.0
         },
         "80": {
-          "reservations": 8,
-          "covers": 405,
+          "reservations": 9,
+          "covers": 434,
           "revenue": 5233.0
         },
         "113": {
@@ -723,8 +719,8 @@
           "revenue": 0.0
         },
         "205": {
-          "reservations": 7,
-          "covers": 397,
+          "reservations": 8,
+          "covers": 426,
           "revenue": 5233.0
         },
         "111": {
@@ -733,19 +729,24 @@
           "revenue": 0.0
         },
         "20": {
-          "reservations": 10,
-          "covers": 20,
-          "revenue": 1237.0
+          "reservations": 9,
+          "covers": 18,
+          "revenue": 1112.0
         },
         "50": {
-          "reservations": 10,
-          "covers": 21,
-          "revenue": 953.0
+          "reservations": 11,
+          "covers": 23,
+          "revenue": 1231.0
         },
         "40u": {
           "reservations": 6,
           "covers": 56,
           "revenue": 2599.08
+        },
+        "12": {
+          "reservations": 7,
+          "covers": 62,
+          "revenue": 2481.0
         },
         "13": {
           "reservations": 5,
@@ -753,44 +754,44 @@
           "revenue": 1378.0
         },
         "3": {
-          "reservations": 4,
-          "covers": 77,
-          "revenue": 3293.02
+          "reservations": 3,
+          "covers": 47,
+          "revenue": 2428.52
         },
         "4": {
-          "reservations": 4,
-          "covers": 77,
-          "revenue": 3293.02
+          "reservations": 3,
+          "covers": 47,
+          "revenue": 2428.52
         },
         "1": {
-          "reservations": 4,
-          "covers": 77,
-          "revenue": 3293.02
+          "reservations": 3,
+          "covers": 47,
+          "revenue": 2428.52
         },
         "5": {
-          "reservations": 4,
-          "covers": 77,
-          "revenue": 3293.02
+          "reservations": 3,
+          "covers": 47,
+          "revenue": 2428.52
         },
         "2": {
-          "reservations": 4,
-          "covers": 77,
-          "revenue": 3293.02
-        },
-        "61": {
-          "reservations": 11,
-          "covers": 193,
-          "revenue": 6235.0
-        },
-        "60": {
-          "reservations": 9,
-          "covers": 174,
-          "revenue": 5842.0
+          "reservations": 3,
+          "covers": 47,
+          "revenue": 2428.52
         },
         "11": {
           "reservations": 4,
           "covers": 34,
           "revenue": 1568.0
+        },
+        "61": {
+          "reservations": 10,
+          "covers": 173,
+          "revenue": 5881.0
+        },
+        "60": {
+          "reservations": 8,
+          "covers": 154,
+          "revenue": 5488.0
         },
         "70": {
           "reservations": 4,
@@ -830,62 +831,62 @@
       }
     },
     "previous_period": {
-      "total_reservations": 115,
-      "total_covers": 624,
-      "no_shows": 9,
-      "cancellations": 25,
-      "completed": 81,
+      "total_reservations": 117,
+      "total_covers": 682,
+      "no_shows": 8,
+      "cancellations": 27,
+      "completed": 82,
       "vip_count": 0,
-      "total_revenue": 14138.0,
-      "total_gross_revenue": 18079.65,
-      "total_prepayment": 845.56,
-      "avg_party_size": 5.4,
+      "total_revenue": 14931.5,
+      "total_gross_revenue": 19139.76,
+      "total_prepayment": 787.04,
+      "avg_party_size": 5.8,
       "avg_duration_min": 134.0,
       "by_server": {
+        "Florencio": {
+          "reservations": 16,
+          "covers": 79,
+          "revenue": 3610.49
+        },
         "Ana": {
           "reservations": 14,
           "covers": 52,
           "revenue": 2987.52
-        },
-        "Florencio": {
-          "reservations": 14,
-          "covers": 52,
-          "revenue": 2726.49
         },
         "Errol": {
           "reservations": 9,
           "covers": 67,
           "revenue": 1900.0
         },
-        "Fab": {
-          "reservations": 16,
-          "covers": 113,
-          "revenue": 1602.0
+        "Daniel": {
+          "reservations": 9,
+          "covers": 79,
+          "revenue": 1379.0
         },
         "Drilon": {
-          "reservations": 4,
-          "covers": 28,
-          "revenue": 1429.0
-        },
-        "Daniel": {
-          "reservations": 8,
-          "covers": 65,
-          "revenue": 1171.0
+          "reservations": 3,
+          "covers": 26,
+          "revenue": 1278.0
         },
         "Gabi": {
-          "reservations": 8,
-          "covers": 32,
+          "reservations": 7,
+          "covers": 26,
           "revenue": 1041.99
         },
-        "Junior": {
-          "reservations": 9,
-          "covers": 36,
-          "revenue": 242.0
-        },
         "Chris Luna": {
-          "reservations": 2,
-          "covers": 46,
-          "revenue": 0.0
+          "reservations": 5,
+          "covers": 83,
+          "revenue": 989.5
+        },
+        "Fab": {
+          "reservations": 12,
+          "covers": 91,
+          "revenue": 465.0
+        },
+        "Junior": {
+          "reservations": 10,
+          "covers": 40,
+          "revenue": 242.0
         },
         "Bar": {
           "reservations": 1,
@@ -904,6 +905,11 @@
           "covers": 32,
           "revenue": 1254.0
         },
+        "2026-08-30": {
+          "reservations": 5,
+          "covers": 61,
+          "revenue": 1343.5
+        },
         "2026-08-29": {
           "reservations": 9,
           "covers": 91,
@@ -920,9 +926,9 @@
           "revenue": 0.0
         },
         "2026-08-07": {
-          "reservations": 20,
-          "covers": 70,
-          "revenue": 736.49
+          "reservations": 23,
+          "covers": 97,
+          "revenue": 1474.49
         },
         "2026-08-12": {
           "reservations": 2,
@@ -938,11 +944,6 @@
           "reservations": 8,
           "covers": 38,
           "revenue": 1626.0
-        },
-        "2026-07-31": {
-          "reservations": 6,
-          "covers": 30,
-          "revenue": 1288.0
         },
         "2026-08-23": {
           "reservations": 1,
@@ -1012,36 +1013,36 @@
       },
       "by_shift": {
         "DINNER": {
-          "reservations": 98,
-          "covers": 497,
-          "revenue": 13896.0
+          "reservations": 95,
+          "covers": 494,
+          "revenue": 13346.0
         },
         "BRUNCH": {
-          "reservations": 17,
-          "covers": 127,
-          "revenue": 242.0
+          "reservations": 22,
+          "covers": 188,
+          "revenue": 1585.5
         }
       },
       "by_seating_area": {
         "Main Dining": {
-          "reservations": 85,
-          "covers": 324,
-          "revenue": 11124.0
+          "reservations": 87,
+          "covers": 348,
+          "revenue": 11744.0
         },
         "G Room": {
-          "reservations": 4,
-          "covers": 13,
-          "revenue": 131.0
+          "reservations": 5,
+          "covers": 27,
+          "revenue": 339.0
         },
         "Patio 1": {
-          "reservations": 8,
-          "covers": 21,
-          "revenue": 1401.0
+          "reservations": 7,
+          "covers": 19,
+          "revenue": 1250.0
         },
         "Unknown": {
-          "reservations": 12,
-          "covers": 195,
-          "revenue": 1366.0
+          "reservations": 11,
+          "covers": 187,
+          "revenue": 618.0
         },
         "Patio 2": {
           "reservations": 1,
@@ -1049,9 +1050,9 @@
           "revenue": 0.0
         },
         "PDR": {
-          "reservations": 2,
-          "covers": 59,
-          "revenue": 0.0
+          "reservations": 3,
+          "covers": 89,
+          "revenue": 864.5
         },
         "Grand Ballroom (Mulino\u2019s)": {
           "reservations": 1,
@@ -1066,13 +1067,13 @@
       },
       "by_reservation_type": {
         "Standard": {
-          "reservations": 58,
-          "covers": 213,
-          "revenue": 7126.49
+          "reservations": 57,
+          "covers": 224,
+          "revenue": 7595.49
         },
         "Patio requested": {
-          "reservations": 10,
-          "covers": 31,
+          "reservations": 11,
+          "covers": 37,
           "revenue": 787.0
         },
         "Celebration Package (paid), Birthday, Patio requested": {
@@ -1089,6 +1090,11 @@
           "reservations": 1,
           "covers": 2,
           "revenue": 144.0
+        },
+        "Female birthday": {
+          "reservations": 2,
+          "covers": 17,
+          "revenue": 836.52
         },
         "Birthday, Patio requested": {
           "reservations": 2,
@@ -1116,9 +1122,9 @@
           "revenue": 0.0
         },
         "PDR - Buyout": {
-          "reservations": 2,
-          "covers": 59,
-          "revenue": 0.0
+          "reservations": 3,
+          "covers": 89,
+          "revenue": 864.5
         },
         "#GiganteThursdays": {
           "reservations": 1,
@@ -1134,11 +1140,6 @@
           "reservations": 1,
           "covers": 3,
           "revenue": 0.0
-        },
-        "Female birthday": {
-          "reservations": 1,
-          "covers": 12,
-          "revenue": 836.52
         },
         "Celebration": {
           "reservations": 3,
@@ -1190,23 +1191,23 @@
           "covers": 2,
           "revenue": 0.0
         },
-        "Celebration Package (paid)": {
-          "reservations": 1,
-          "covers": 8,
-          "revenue": 748.0
-        },
         "Celebration, Patio requested": {
           "reservations": 1,
           "covers": 4,
           "revenue": 131.0
+        },
+        "Celebration Package (unpaid), Birthday, Patio requested": {
+          "reservations": 1,
+          "covers": 14,
+          "revenue": 208.0
         }
       },
       "by_status": {
-        "COMPLETE": 69,
-        "NO_SHOW": 9,
-        "CANCELED": 25,
+        "COMPLETE": 68,
+        "NO_SHOW": 8,
+        "CANCELED": 27,
         "ARRIVED": 8,
-        "PAID": 3,
+        "PAID": 5,
         "PRE_ARRIVED": 1
       },
       "by_day_of_week": {
@@ -1215,15 +1216,15 @@
           "covers": 245,
           "revenue": 8301.51
         },
-        "Friday": {
-          "reservations": 41,
-          "covers": 154,
-          "revenue": 4355.49
-        },
         "Sunday": {
-          "reservations": 17,
-          "covers": 127,
-          "revenue": 242.0
+          "reservations": 22,
+          "covers": 188,
+          "revenue": 1585.5
+        },
+        "Friday": {
+          "reservations": 38,
+          "covers": 151,
+          "revenue": 3805.49
         },
         "Wednesday": {
           "reservations": 7,
@@ -1245,12 +1246,12 @@
         "53": {
           "reservations": 3,
           "covers": 12,
-          "revenue": 734.0
+          "revenue": 345.0
         },
         "54": {
           "reservations": 4,
           "covers": 14,
-          "revenue": 975.0
+          "revenue": 586.0
         },
         "21": {
           "reservations": 5,
@@ -1274,13 +1275,13 @@
         },
         "61": {
           "reservations": 5,
-          "covers": 36,
-          "revenue": 1869.52
+          "covers": 50,
+          "revenue": 2223.52
         },
         "24": {
-          "reservations": 1,
-          "covers": 6,
-          "revenue": 435.99
+          "reservations": 2,
+          "covers": 8,
+          "revenue": 560.99
         },
         "23": {
           "reservations": 1,
@@ -1297,20 +1298,15 @@
           "covers": 142,
           "revenue": 131.0
         },
-        "58": {
-          "reservations": 4,
-          "covers": 18,
-          "revenue": 644.0
-        },
-        "57": {
-          "reservations": 4,
-          "covers": 18,
-          "revenue": 644.0
-        },
         "73": {
           "reservations": 3,
           "covers": 6,
           "revenue": 560.0
+        },
+        "12": {
+          "reservations": 2,
+          "covers": 13,
+          "revenue": 0.0
         },
         "71": {
           "reservations": 1,
@@ -1338,9 +1334,9 @@
           "revenue": 340.0
         },
         "62": {
-          "reservations": 5,
-          "covers": 13,
-          "revenue": 896.0
+          "reservations": 6,
+          "covers": 33,
+          "revenue": 1250.0
         },
         "50": {
           "reservations": 4,
@@ -1353,8 +1349,8 @@
           "revenue": 67.49
         },
         "56": {
-          "reservations": 4,
-          "covers": 18,
+          "reservations": 3,
+          "covers": 12,
           "revenue": 506.0
         },
         "55": {
@@ -1363,9 +1359,9 @@
           "revenue": 0.0
         },
         "40u": {
-          "reservations": 5,
-          "covers": 40,
-          "revenue": 1366.0
+          "reservations": 4,
+          "covers": 32,
+          "revenue": 618.0
         },
         "112": {
           "reservations": 1,
@@ -1373,29 +1369,29 @@
           "revenue": 0.0
         },
         "3": {
-          "reservations": 2,
-          "covers": 59,
-          "revenue": 0.0
+          "reservations": 3,
+          "covers": 89,
+          "revenue": 864.5
         },
         "4": {
-          "reservations": 2,
-          "covers": 59,
-          "revenue": 0.0
+          "reservations": 3,
+          "covers": 89,
+          "revenue": 864.5
         },
         "1": {
-          "reservations": 2,
-          "covers": 59,
-          "revenue": 0.0
+          "reservations": 3,
+          "covers": 89,
+          "revenue": 864.5
         },
         "5": {
-          "reservations": 2,
-          "covers": 59,
-          "revenue": 0.0
+          "reservations": 3,
+          "covers": 89,
+          "revenue": 864.5
         },
         "2": {
-          "reservations": 2,
-          "covers": 59,
-          "revenue": 0.0
+          "reservations": 3,
+          "covers": 89,
+          "revenue": 864.5
         },
         "205": {
           "reservations": 4,
@@ -1408,9 +1404,9 @@
           "revenue": 436.0
         },
         "60": {
-          "reservations": 2,
-          "covers": 14,
-          "revenue": 1057.52
+          "reservations": 3,
+          "covers": 34,
+          "revenue": 1411.52
         },
         "25": {
           "reservations": 3,
@@ -1427,11 +1423,6 @@
           "covers": 6,
           "revenue": 203.0
         },
-        "12": {
-          "reservations": 1,
-          "covers": 8,
-          "revenue": 0.0
-        },
         "L2": {
           "reservations": 1,
           "covers": 2,
@@ -1443,14 +1434,14 @@
           "revenue": 0.0
         },
         "91": {
-          "reservations": 3,
-          "covers": 133,
-          "revenue": 0.0
+          "reservations": 4,
+          "covers": 147,
+          "revenue": 208.0
         },
         "90": {
-          "reservations": 3,
-          "covers": 133,
-          "revenue": 0.0
+          "reservations": 4,
+          "covers": 147,
+          "revenue": 208.0
         },
         "93": {
           "reservations": 4,
@@ -1478,14 +1469,14 @@
           "revenue": 0.0
         },
         "30": {
-          "reservations": 3,
-          "covers": 32,
-          "revenue": 984.0
+          "reservations": 4,
+          "covers": 39,
+          "revenue": 1514.0
         },
         "72": {
-          "reservations": 2,
-          "covers": 5,
-          "revenue": 512.0
+          "reservations": 1,
+          "covers": 3,
+          "revenue": 361.0
         },
         "10": {
           "reservations": 3,
@@ -1507,6 +1498,16 @@
           "covers": 2,
           "revenue": 0.0
         },
+        "58": {
+          "reservations": 2,
+          "covers": 8,
+          "revenue": 644.0
+        },
+        "57": {
+          "reservations": 2,
+          "covers": 8,
+          "revenue": 644.0
+        },
         "M6": {
           "reservations": 1,
           "covers": 5,
@@ -1527,58 +1528,58 @@
     "comparison": {
       "total_reservations": {
         "label": "Reservations",
-        "current": 233,
-        "previous": 115,
-        "delta": 118,
-        "pct_change": 102.6,
+        "current": 229,
+        "previous": 117,
+        "delta": 112,
+        "pct_change": 95.7,
         "direction": "up"
       },
       "total_covers": {
         "label": "Covers",
-        "current": 1474,
-        "previous": 624,
-        "delta": 850,
-        "pct_change": 136.2,
+        "current": 1440,
+        "previous": 682,
+        "delta": 758,
+        "pct_change": 111.1,
         "direction": "up"
       },
       "total_revenue": {
         "label": "Net Revenue",
-        "current": 41363.72,
-        "previous": 14138.0,
-        "delta": 27225.72,
-        "pct_change": 192.6,
+        "current": 40303.22,
+        "previous": 14931.5,
+        "delta": 25371.72,
+        "pct_change": 169.9,
         "direction": "up"
       },
       "total_gross_revenue": {
         "label": "Gross Revenue",
-        "current": 52198.88,
-        "previous": 18079.65,
-        "delta": 34119.23,
-        "pct_change": 188.7,
+        "current": 50790.79,
+        "previous": 19139.76,
+        "delta": 31651.03,
+        "pct_change": 165.4,
         "direction": "up"
       },
       "no_shows": {
         "label": "No Shows",
         "current": 16,
-        "previous": 9,
-        "delta": 7,
-        "pct_change": 77.8,
+        "previous": 8,
+        "delta": 8,
+        "pct_change": 100.0,
         "direction": "up"
       },
       "cancellations": {
         "label": "Cancellations",
-        "current": 41,
-        "previous": 25,
-        "delta": 16,
-        "pct_change": 64.0,
+        "current": 39,
+        "previous": 27,
+        "delta": 12,
+        "pct_change": 44.4,
         "direction": "up"
       },
       "completed": {
         "label": "Completed",
-        "current": 176,
-        "previous": 81,
-        "delta": 95,
-        "pct_change": 117.3,
+        "current": 174,
+        "previous": 82,
+        "delta": 92,
+        "pct_change": 112.2,
         "direction": "up"
       },
       "vip_count": {
@@ -1592,9 +1593,9 @@
       "avg_party_size": {
         "label": "Avg Party Size",
         "current": 6.3,
-        "previous": 5.4,
-        "delta": 0.9,
-        "pct_change": 16.7,
+        "previous": 5.8,
+        "delta": 0.5,
+        "pct_change": 8.6,
         "direction": "up"
       },
       "avg_duration_min": {
@@ -1608,17 +1609,17 @@
       "server_changes": {
         "Daniel": {
           "current_revenue": 12995.52,
-          "previous_revenue": 1171.0,
-          "delta": 11824.52,
+          "previous_revenue": 1379.0,
+          "delta": 11616.52,
           "current_covers": 287,
-          "previous_covers": 65
+          "previous_covers": 79
         },
         "Gabi": {
-          "current_revenue": 8000.56,
+          "current_revenue": 8278.56,
           "previous_revenue": 1041.99,
-          "delta": 6958.57,
-          "current_covers": 192,
-          "previous_covers": 32
+          "delta": 7236.57,
+          "current_covers": 194,
+          "previous_covers": 26
         },
         "Errol": {
           "current_revenue": 5946.08,
@@ -1627,19 +1628,12 @@
           "current_covers": 101,
           "previous_covers": 67
         },
-        "Chris Luna": {
-          "current_revenue": 2584.5,
-          "previous_revenue": 0.0,
-          "delta": 2584.5,
-          "current_covers": 86,
-          "previous_covers": 46
-        },
-        "Florencio": {
-          "current_revenue": 4641.5,
-          "previous_revenue": 2726.49,
-          "delta": 1915.01,
-          "current_covers": 114,
-          "previous_covers": 52
+        "Fab": {
+          "current_revenue": 1910.0,
+          "previous_revenue": 465.0,
+          "delta": 1445.0,
+          "current_covers": 189,
+          "previous_covers": 91
         },
         "Rylan": {
           "current_revenue": 1254.52,
@@ -1648,19 +1642,26 @@
           "current_covers": 44,
           "previous_covers": 0
         },
+        "Florencio": {
+          "current_revenue": 4287.5,
+          "previous_revenue": 3610.49,
+          "delta": 677.01,
+          "current_covers": 94,
+          "previous_covers": 79
+        },
+        "Chris Luna": {
+          "current_revenue": 1470.0,
+          "previous_revenue": 989.5,
+          "delta": 480.5,
+          "current_covers": 43,
+          "previous_covers": 83
+        },
         "Junior": {
           "current_revenue": 702.0,
           "previous_revenue": 242.0,
           "delta": 460.0,
-          "current_covers": 23,
-          "previous_covers": 36
-        },
-        "Fab": {
-          "current_revenue": 1910.0,
-          "previous_revenue": 1602.0,
-          "delta": 308.0,
-          "current_covers": 189,
-          "previous_covers": 113
+          "current_covers": 19,
+          "previous_covers": 40
         },
         "Bar": {
           "current_revenue": 0,
@@ -1671,10 +1672,10 @@
         },
         "Drilon": {
           "current_revenue": 0,
-          "previous_revenue": 1429.0,
-          "delta": -1429.0,
+          "previous_revenue": 1278.0,
+          "delta": -1278.0,
           "current_covers": 0,
-          "previous_covers": 28
+          "previous_covers": 26
         },
         "Ana": {
           "current_revenue": 0,
@@ -1692,7 +1693,7 @@
           "previous_covers": 0
         },
         "Tuesday": {
-          "current_revenue": 1514.52,
+          "current_revenue": 1644.52,
           "previous_revenue": 116.0,
           "current_covers": 38,
           "previous_covers": 5
@@ -1700,7 +1701,7 @@
         "Wednesday": {
           "current_revenue": 0.0,
           "previous_revenue": 563.0,
-          "current_covers": 56,
+          "current_covers": 87,
           "previous_covers": 18
         },
         "Thursday": {
@@ -1711,21 +1712,21 @@
         },
         "Friday": {
           "current_revenue": 6409.04,
-          "previous_revenue": 4355.49,
+          "previous_revenue": 3805.49,
           "current_covers": 323,
-          "previous_covers": 154
+          "previous_covers": 151
         },
         "Saturday": {
-          "current_revenue": 18316.62,
+          "current_revenue": 18594.62,
           "previous_revenue": 8301.51,
-          "current_covers": 632,
+          "current_covers": 634,
           "previous_covers": 245
         },
         "Sunday": {
-          "current_revenue": 12139.5,
-          "previous_revenue": 242.0,
-          "current_covers": 331,
-          "previous_covers": 127
+          "current_revenue": 10671.0,
+          "previous_revenue": 1585.5,
+          "current_covers": 264,
+          "previous_covers": 188
         }
       }
     }

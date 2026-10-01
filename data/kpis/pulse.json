@@ -1,6 +1,6 @@
 {
   "period": "30d",
-  "updated": "2026-09-30T23:19:21.396771",
+  "updated": "2026-10-01T02:15:07.726540",
   "dataSources": {
     "sevenrooms": true,
     "googleAnalytics": false,
@@ -12,11 +12,10 @@
     {
       "id": "total_covers",
       "label": "Total Covers",
-      "value": 1441,
-      "change": 118.0,
+      "value": 1447,
+      "change": 131.9,
       "trend": "up",
       "sparkline": [
-        8,
         2,
         72,
         116,
@@ -24,21 +23,21 @@
         11,
         19,
         35,
-        267,
+        259,
         97,
         4,
-        36
+        39,
+        11
       ]
     },
     {
       "id": "total_revenue",
       "label": "Total Revenue",
-      "value": 40489,
+      "value": 40293,
       "format": "currency",
-      "change": 185.3,
+      "change": 201.1,
       "trend": "up",
       "sparkline": [
-        0,
         0,
         3262,
         4578,
@@ -49,14 +48,15 @@
         7958,
         3554,
         130,
-        548
+        352,
+        0
       ]
     },
     {
       "id": "avg_party_size",
       "label": "Avg Party Size",
       "value": 6.3,
-      "change": 10.5,
+      "change": 14.5,
       "trend": "up",
       "sparkline": [
         6.3,
@@ -141,9 +141,9 @@
     {
       "id": "reservation_conversion",
       "label": "Reservation Conversion",
-      "value": 75.5,
+      "value": 76.6,
       "format": "percent",
-      "change": 8.5,
+      "change": 9.1,
       "trend": "up",
       "sparkline": [
         65,
@@ -157,7 +157,7 @@
         72,
         71,
         72,
-        75.5
+        76.6
       ]
     },
     {
